@@ -156,22 +156,28 @@
 
         /* MOBILE */
         @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                gap: 8px;
-            }
+    header {
+        flex-direction: column;
+        gap: 8px;
+    }
 
-            nav a {
-                font-size: 18px;
-            }
+    nav a {
+        font-size: 18px;
+    }
 
-            .hero h1 {
-                font-size: 32px;
-            }
+    .hero {
+        padding: 40px 20px 50px; /* 🔥 reduced top spacing */
+    }
 
-            .logo {
-                height: 280px;
-            }
+    .hero h1 {
+        font-size: 32px;
+        margin-top: 5px; /* 🔥 pulls text closer to top */
+    }
+
+    .logo {
+        height: 280px;
+    }
+}
         }
     </style>
 </head>
