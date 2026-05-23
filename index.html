@@ -13,43 +13,51 @@
             color: white;
         }
 
-        /* NAVBAR */
+        /* 🔥 STICKY HEADER */
         header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: #1e293b;
-            padding: 15px 30px;
+            padding: 12px 25px;
         }
 
-        /* 🔥 UPDATED LOGO SIZE */
+        /* 🔥 LOGO FIXED + CENTRED + BIGGER */
         .logo {
-            height: 65px;
+            height: 70px;
             width: auto;
             max-width: 220px;
             object-fit: contain;
             display: block;
         }
 
+        nav {
+            display: flex;
+            gap: 18px;
+        }
+
         nav a {
             color: white;
             text-decoration: none;
-            margin-left: 20px;
             font-size: 16px;
+            transition: 0.2s;
         }
 
         nav a:hover {
             color: #3b82f6;
         }
 
-        /* HERO SECTION */
+        /* HERO */
         .hero {
             text-align: center;
-            padding: 80px 20px;
+            padding: 90px 20px 60px;
         }
 
         .hero h1 {
-            font-size: 40px;
+            font-size: 46px;
             margin-bottom: 10px;
         }
 
@@ -60,23 +68,66 @@
         }
 
         .hero p {
-            margin-top: 20px;
+            margin-top: 18px;
             font-size: 16px;
+            color: #cbd5e1;
         }
 
+        /* BUTTON */
         .btn {
             display: inline-block;
             margin-top: 25px;
             background: #3b82f6;
-            padding: 12px 25px;
+            padding: 12px 28px;
             color: white;
             text-decoration: none;
-            border-radius: 7px;
-            transition: 0.3s;
+            border-radius: 8px;
+            transition: 0.25s;
         }
 
         .btn:hover {
             background: #2563eb;
+        }
+
+        /* SERVICES PREVIEW */
+        .services {
+            padding: 60px 20px;
+            text-align: center;
+            background: #0b1220;
+        }
+
+        .services h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #cbd5e1;
+            font-size: 14px;
         }
 
         /* FOOTER */
@@ -84,8 +135,27 @@
             text-align: center;
             padding: 20px;
             background: #020617;
-            font-size: 14px;
+            font-size: 13px;
             color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            nav {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -93,7 +163,6 @@
 <body>
 
 <header>
-    <!-- LOGO -->
     <img src="logo.png" alt="NFJ Logo" class="logo">
 
     <nav>
@@ -111,11 +180,42 @@
 
     <p><strong>Coming Soon</strong></p>
 
-    <a class="btn" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">Contact us</a>
+    <a class="btn" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">
+        Contact Us
+    </a>
+</section>
+
+<section class="services">
+    <h2>What We Do</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Electrical Work</h3>
+            <p>Safe, reliable electrical installations and repairs.</p>
+        </div>
+
+        <div class="card">
+            <h3>Network Cabling</h3>
+            <p>Data cabling, office installs, and home networking.</p>
+        </div>
+
+        <div class="card">
+            <h3>Tech Installations</h3>
+            <p>TV mounting, CCTV, smart devices, and tech setup.</p>
+        </div>
+
+        <div class="card">
+            <h3>Maintenance</h3>
+            <p>General property maintenance and repair services.</p>
+        </div>
+
+    </div>
 </section>
 
 <footer>
-    © 2026 NFJ Services LTD — All rights reserved, Directors Keith Andrews & Chris Lawton.
+    © 2026 NFJ Services LTD — All rights reserved<br>
+    Directors: Keith Andrews & Chris Lawton
 </footer>
 
 </body>
