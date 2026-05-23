@@ -13,7 +13,7 @@
             color: white;
         }
 
-        /* 🔥 STICKY HEADER */
+        /* 🔥 PREMIUM GLASS HEADER */
         header {
             position: sticky;
             top: 0;
@@ -21,15 +21,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #1e293b;
-            padding: 25px 35px;
+
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            padding: 18px 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* 🔥 LOGO FIXED + BIG */
+        /* 🔥 LOGO BALANCED (BIG BUT CLEAN) */
         .logo {
-            height: 175px;
+            height: 110px;
             width: auto;
-            max-width: 590px;
+            max-width: 320px;
             object-fit: contain;
             display: block;
         }
@@ -44,27 +49,42 @@
         nav a {
             color: white;
             text-decoration: none;
-            font-size: 22px;
-            transition: 0.2s;
+            font-size: 20px;
             padding: 0 18px;
             position: relative;
+            transition: 0.25s;
+        }
+
+        /* 🔥 HOVER UNDERLINE ANIMATION */
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 18px;
+            bottom: -6px;
+            width: 0%;
+            height: 2px;
+            background: #3b82f6;
+            transition: 0.25s;
         }
 
         nav a:hover {
             color: #3b82f6;
         }
 
-        /* 🔥 WHITE SEPARATOR LINES */
-        nav a:not(:last-child)::after {
+        nav a:hover::after {
+            width: calc(100% - 36px);
+        }
+
+        /* 🔥 WHITE SEPARATORS */
+        nav a:not(:last-child)::before {
             content: "";
             position: absolute;
             right: 0;
             top: 50%;
             transform: translateY(-50%);
-            height: 26px;
+            height: 22px;
             width: 1px;
-            background: white;
-            opacity: 0.6;
+            background: rgba(255, 255, 255, 0.5);
         }
 
         /* HERO */
@@ -159,23 +179,23 @@
 
         /* MOBILE */
         @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 34px;
+            header {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .logo {
+                height: 85px;
             }
 
             nav {
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 5px;
             }
 
-            header {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            nav a {
-                font-size: 18px;
+            .hero h1 {
+                font-size: 34px;
             }
         }
     </style>
