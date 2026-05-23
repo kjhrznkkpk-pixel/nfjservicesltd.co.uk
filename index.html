@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NFJ Services LTD</title>
+    <title>Contact - NFJ Services LTD</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -13,74 +13,49 @@
             color: white;
         }
 
-        /* NAVBAR */
         header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             background: #1e293b;
-            padding: 15px 30px;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .logo {
-            height: 50px;
-        }
-
-        nav a {
+        a {
             color: white;
             text-decoration: none;
-            margin-left: 20px;
-            font-size: 16px;
         }
 
-        nav a:hover {
+        .container {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .card {
+            background: #1e293b;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .item {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .label {
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .value a {
             color: #3b82f6;
         }
 
-        /* HERO SECTION */
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-        }
-
-        .hero h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .hero h2 {
-            font-size: 22px;
-            font-weight: normal;
-            color: #94a3b8;
-        }
-
-        .hero p {
-            margin-top: 20px;
-            font-size: 16px;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 25px;
-            background: #3b82f6;
-            padding: 12px 25px;
-            color: white;
-            text-decoration: none;
-            border-radius: 7px;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background: #2563eb;
-        }
-
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #020617;
-            font-size: 14px;
-            color: #94a3b8;
+        .value a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -88,31 +63,40 @@
 <body>
 
 <header>
-    <!-- LOGO (replace logo.png with your file name) -->
-    <img src="logo.png" alt="NFJ Logo" class="logo">
-
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
-    </nav>
+    <h3>NFJ Services LTD</h3>
+    <a href="index.html">Home</a>
 </header>
 
-<section class="hero">
-    <h1>NFJ Services LTD</h1>
-    <h2>Tech • Cabling • Installations</h2>
+<div class="container">
+    <div class="card">
 
-    <p>Reliable, clean, and professional services you can trust.</p>
+        <h1>Contact Us</h1>
 
-    <p><strong>Coming Soon</strong></p>
+        <div class="item">
+            <span class="label">Email</span>
+            <span class="value">
+                <a href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from Website">
+                    info@nfjservicesltd.co.uk
+                </a>
+            </span>
+        </div>
 
-   <a class="btn" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">Contact Me</a>
-</section>
+        <div class="item">
+            <span class="label">Keith Andrews</span>
+            <span class="value">
+                <a href="tel:07469871468">07469 871468</a>
+            </span>
+        </div>
 
-<footer>
-    © 2026 NFJ Services LTD — All rights reserved, 
-    Company Directors Keith Andrews & Chris Lawton.
-</footer>
+        <div class="item">
+            <span class="label">Chris Lawton</span>
+            <span class="value">
+                <a href="tel:07709099811">07709 099811</a>
+            </span>
+        </div>
+
+    </div>
+</div>
 
 </body>
 </html>
