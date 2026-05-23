@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Services - NFJ Services LTD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #0f172a;
+            color: white;
+        }
+
+        header {
+            background: #1e293b;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: #3b82f6;
+            font-size: 20px;
+        }
+
+        .card p {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h3>NFJ Services LTD</h3>
+    <a href="index.html">Home</a>
+</header>
+
+<div class="container">
+    <h1>Our Services</h1>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>Electrical Work</h2>
+            <p>Safe and reliable electrical installations, repairs, and upgrades.</p>
+        </div>
+
+        <div class="card">
+            <h2>Network Cabling</h2>
+            <p>Structured data cabling, office installs, and home networking solutions.</p>
+        </div>
+
+        <div class="card">
+            <h2>Tech Installations</h2>
+            <p>TV mounting, smart devices, CCTV setup, and general tech installs.</p>
+        </div>
+
+        <div class="card">
+            <h2>Maintenance</h2>
+            <p>General property maintenance and repair services.</p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
