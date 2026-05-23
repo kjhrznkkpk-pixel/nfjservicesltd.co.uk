@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        html {
+            scroll-behavior: smooth; /* 🔥 smooth scroll */
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -59,7 +63,7 @@
             transform: translateY(-50%);
             height: 22px;
             width: 1px;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         /* HERO */
@@ -96,20 +100,26 @@
             border-radius: 8px;
             transition: 0.25s;
         }
+
         .btn:hover {
             background: #2563eb;
         }
-        /* 🔽 SCROLL ARROW */
+
+        /* 🔽 BIGGER FATTER SCROLL ARROW */
         .scroll-down {
-            margin-top: 20px;
-            font-size: 28px;
+            margin-top: 25px;
+            font-size: 48px; /* 🔥 bigger */
+            font-weight: bold; /* 🔥 thicker */
             color: white;
-            opacity: 0.7;
-            animation: bounce 1.5s infinite;
+            opacity: 0.85;
+            animation: bounce 1.4s infinite;
+            text-decoration: none;
+            display: inline-block;
         }
+
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(22px); }
+            50% { transform: translateY(10px); }
         }
 
         /* SERVICES */
@@ -187,9 +197,8 @@
                 height: 280px;
             }
 
-            /* 🔽 smaller arrow on mobile */
             .scroll-down {
-                font-size: 22px;
+                font-size: 38px; /* slightly smaller on mobile */
             }
         }
     </style>
@@ -218,12 +227,13 @@
     <a class="btn" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">
         Contact Us
     </a>
-    <!-- 🔽 SCROLL INDICATOR -->
-    <div class="scroll-down">↓</div>
+
+    <!-- 🔽 CLICKABLE SCROLL ARROW -->
+    <a href="#services" class="scroll-down">⬇</a>
 
 </section>
 
-<section class="services">
+<section id="services" class="services">
     <h2>What We Do</h2>
 
     <div class="grid">
