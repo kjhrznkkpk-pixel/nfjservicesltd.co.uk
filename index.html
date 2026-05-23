@@ -7,7 +7,7 @@
 
     <style>
         html {
-            scroll-behavior: smooth; /* 🔥 smooth scroll */
+            scroll-behavior: smooth;
         }
 
         body {
@@ -89,37 +89,42 @@
             color: #cbd5e1;
         }
 
-        /* BUTTON */
+        /* BUTTONS */
+        .button-group {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .btn {
             display: inline-block;
-            margin-top: 25px;
-            background: #3b82f6;
             padding: 12px 26px;
-            color: white;
-            text-decoration: none;
             border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
             transition: 0.25s;
         }
 
-        .btn:hover {
+        .btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn.primary:hover {
             background: #2563eb;
         }
 
-        /* 🔽 BIGGER FATTER SCROLL ARROW */
-        .scroll-down {
-            margin-top: 25px;
-            font-size: 48px; /* 🔥 bigger */
-            font-weight: bold; /* 🔥 thicker */
-            color: white;
-            opacity: 0.85;
-            animation: bounce 1.4s infinite;
-            text-decoration: none;
-            display: inline-block;
+        .btn.secondary {
+            background: transparent;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(10px); }
+        .btn.secondary:hover {
+            background: #3b82f6;
+            color: white;
         }
 
         /* SERVICES */
@@ -196,10 +201,6 @@
             .logo {
                 height: 280px;
             }
-
-            .scroll-down {
-                font-size: 38px; /* slightly smaller on mobile */
-            }
         }
     </style>
 </head>
@@ -224,13 +225,15 @@
 
     <p><strong>Coming Soon</strong></p>
 
-    <a class="btn" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">
-        Contact Us
-    </a>
+    <div class="button-group">
+        <a class="btn primary" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">
+            Contact Us
+        </a>
 
-    <!-- 🔽 CLICKABLE SCROLL ARROW -->
-    <a href="#services" class="scroll-down">⬇</a>
-
+        <a class="btn secondary" href="#services">
+            View Services
+        </a>
+    </div>
 </section>
 
 <section id="services" class="services">
