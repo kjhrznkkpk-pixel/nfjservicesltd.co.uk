@@ -25,11 +25,10 @@
             padding: 20px 30px;
         }
 
-        /* 🔥 FIXED LOGO */
         .logo {
-            height: 230px; /* slightly smaller so it looks clean */
+            height: 230px;
             width: auto;
-            object-fit: contain; /* FIXED */
+            object-fit: contain;
             display: block;
         }
 
@@ -52,7 +51,6 @@
             color: #3b82f6;
         }
 
-        /* separators */
         nav a:not(:last-child)::after {
             content: "";
             position: absolute;
@@ -101,6 +99,20 @@
 
         .btn:hover {
             background: #2563eb;
+        }
+
+        /* 🔽 SCROLL ARROW */
+        .scroll-down {
+            margin-top: 20px;
+            font-size: 28px;
+            color: white;
+            opacity: 0.7;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
         }
 
         /* SERVICES */
@@ -156,28 +168,32 @@
 
         /* MOBILE */
         @media (max-width: 600px) {
-    header {
-        flex-direction: column;
-        gap: 8px;
-    }
+            header {
+                flex-direction: column;
+                gap: 8px;
+            }
 
-    nav a {
-        font-size: 18px;
-    }
+            nav a {
+                font-size: 18px;
+            }
 
-    .hero {
-        padding: 40px 20px 50px; /* 🔥 reduced top spacing */
-    }
+            .hero {
+                padding: 40px 20px 50px;
+            }
 
-    .hero h1 {
-        font-size: 32px;
-        margin-top: 5px; /* 🔥 pulls text closer to top */
-    }
+            .hero h1 {
+                font-size: 32px;
+                margin-top: 5px;
+            }
 
-    .logo {
-        height: 280px;
-    }
-}
+            .logo {
+                height: 280px;
+            }
+
+            /* 🔽 smaller arrow on mobile */
+            .scroll-down {
+                font-size: 22px;
+            }
         }
     </style>
 </head>
@@ -205,6 +221,10 @@
     <a class="btn" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">
         Contact Us
     </a>
+
+    <!-- 🔽 SCROLL INDICATOR -->
+    <div class="scroll-down">↓</div>
+
 </section>
 
 <section class="services">
