@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Contact - NFJ Services LTD</title>
+    <title>NFJ Services LTD</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -13,90 +13,97 @@
             color: white;
         }
 
+        /* NAVBAR */
         header {
-            background: #1e293b;
-            padding: 15px 25px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            background: #1e293b;
+            padding: 12px 25px;
+            flex-wrap: wrap;
         }
 
-        a {
+        .logo {
+            height: 45px;
+            max-width: 180px;
+        }
+
+        nav {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
             color: white;
             text-decoration: none;
+            font-size: 15px;
+            transition: 0.2s;
         }
 
-        .container {
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        .card {
-            background: #1e293b;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 12px;
-        }
-
-        .item {
-            margin: 20px 0;
-            font-size: 18px;
-        }
-
-        .label {
-            color: #94a3b8;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .value a {
+        nav a:hover {
             color: #3b82f6;
         }
 
-        .value a:hover {
-            text-decoration: underline;
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 90px 20px;
         }
-    </style>
-</head>
 
-<body>
+        .hero h1 {
+            font-size: 44px;
+            margin-bottom: 10px;
+        }
 
-<header>
-    <h3>NFJ Services LTD</h3>
-    <a href="index.html">Home</a>
-</header>
+        .hero h2 {
+            font-size: 20px;
+            font-weight: normal;
+            color: #94a3b8;
+        }
 
-<div class="container">
-    <div class="card">
+        .hero p {
+            margin-top: 18px;
+            font-size: 16px;
+            color: #cbd5e1;
+        }
 
-        <h1>Contact Us</h1>
+        .btn {
+            display: inline-block;
+            margin-top: 25px;
+            background: #3b82f6;
+            padding: 12px 26px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.25s;
+        }
 
-        <div class="item">
-            <span class="label">Email</span>
-            <span class="value">
-                <a href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from Website">
-                    info@nfjservicesltd.co.uk
-                </a>
-            </span>
-        </div>
+        .btn:hover {
+            background: #2563eb;
+        }
 
-        <div class="item">
-            <span class="label">Keith Andrews</span>
-            <span class="value">
-                <a href="tel:07469871468">07469 871468</a>
-            </span>
-        </div>
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #020617;
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
 
-        <div class="item">
-            <span class="label">Chris Lawton</span>
-            <span class="value">
-                <a href="tel:07709099811">07709 099811</a>
-            </span>
-        </div>
+        /* MOBILE FIX */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 34px;
+            }
 
-    </div>
-</div>
+            nav {
+                justify-content: center;
+                width: 100%;
+                margin-top: 10px;
+            }
 
-</body>
-</html>
+            header {
+                justify
