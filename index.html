@@ -34,14 +34,13 @@
             display: block;
         }
 
-        /* NAV CONTAINER */
+        /* NAV */
         nav {
             display: flex;
             align-items: center;
-            gap: 0; /* important: we use separators instead */
+            gap: 0;
         }
 
-        /* NAV LINKS */
         nav a {
             color: white;
             text-decoration: none;
@@ -55,7 +54,7 @@
             color: #3b82f6;
         }
 
-        /* 🔥 SEPARATOR LINES BETWEEN LINKS */
+        /* 🔥 WHITE SEPARATOR LINES */
         nav a:not(:last-child)::after {
             content: "";
             position: absolute;
@@ -64,7 +63,8 @@
             transform: translateY(-50%);
             height: 26px;
             width: 1px;
-            background: #334155;
+            background: white;
+            opacity: 0.6;
         }
 
         /* HERO */
@@ -106,7 +106,7 @@
             background: #2563eb;
         }
 
-        /* SERVICES PREVIEW */
+        /* SERVICES */
         .services {
             padding: 60px 20px;
             text-align: center;
