@@ -25,7 +25,7 @@
             padding: 25px 35px;
         }
 
-        /* 🔥 LOGO FIXED + CENTRED + BIGGER */
+        /* 🔥 LOGO FIXED + BIG */
         .logo {
             height: 175px;
             width: auto;
@@ -34,20 +34,37 @@
             display: block;
         }
 
+        /* NAV CONTAINER */
         nav {
             display: flex;
-            gap: 22px;
+            align-items: center;
+            gap: 0; /* important: we use separators instead */
         }
 
+        /* NAV LINKS */
         nav a {
             color: white;
             text-decoration: none;
             font-size: 22px;
             transition: 0.2s;
+            padding: 0 18px;
+            position: relative;
         }
 
         nav a:hover {
             color: #3b82f6;
+        }
+
+        /* 🔥 SEPARATOR LINES BETWEEN LINKS */
+        nav a:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 26px;
+            width: 1px;
+            background: #334155;
         }
 
         /* HERO */
@@ -147,14 +164,18 @@
             }
 
             nav {
-                gap: 10px;
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 5px;
             }
 
             header {
                 flex-direction: column;
                 gap: 10px;
+            }
+
+            nav a {
+                font-size: 18px;
             }
         }
     </style>
