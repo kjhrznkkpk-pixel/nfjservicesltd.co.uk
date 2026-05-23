@@ -19,64 +19,55 @@
             align-items: center;
             justify-content: space-between;
             background: #1e293b;
-            padding: 12px 25px;
-            flex-wrap: wrap;
+            padding: 15px 30px;
         }
 
         .logo {
-            height: 45px;
-            max-width: 180px;
-        }
-
-        nav {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
+            height: 50px;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            font-size: 15px;
-            transition: 0.2s;
+            margin-left: 20px;
+            font-size: 16px;
         }
 
         nav a:hover {
             color: #3b82f6;
         }
 
-        /* HERO */
+        /* HERO SECTION */
         .hero {
             text-align: center;
-            padding: 90px 20px;
+            padding: 80px 20px;
         }
 
         .hero h1 {
-            font-size: 44px;
+            font-size: 40px;
             margin-bottom: 10px;
         }
 
         .hero h2 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: normal;
             color: #94a3b8;
         }
 
         .hero p {
-            margin-top: 18px;
+            margin-top: 20px;
             font-size: 16px;
-            color: #cbd5e1;
         }
 
         .btn {
             display: inline-block;
             margin-top: 25px;
             background: #3b82f6;
-            padding: 12px 26px;
+            padding: 12px 25px;
             color: white;
             text-decoration: none;
-            border-radius: 8px;
-            transition: 0.25s;
+            border-radius: 7px;
+            transition: 0.3s;
         }
 
         .btn:hover {
@@ -88,22 +79,39 @@
             text-align: center;
             padding: 20px;
             background: #020617;
-            font-size: 13px;
+            font-size: 14px;
             color: #94a3b8;
-            line-height: 1.6;
         }
+    </style>
+</head>
 
-        /* MOBILE FIX */
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 34px;
-            }
+<body>
 
-            nav {
-                justify-content: center;
-                width: 100%;
-                margin-top: 10px;
-            }
+<header>
+    <!-- LOGO (replace logo.png with your file name) -->
+    <img src="logo.png" alt="NFJ Logo" class="logo">
 
-            header {
-                justify
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>NFJ Services LTD</h1>
+    <h2>Tech • Cabling • Installations</h2>
+
+    <p>Reliable, clean, and professional services you can trust.</p>
+
+    <p><strong>Coming Soon</strong></p>
+
+    <a class="btn" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">Contact Me</a>
+</section>
+
+<footer>
+    © 2026 NFJ Services LTD — All rights reserved
+</footer>
+
+</body>
+</html>
