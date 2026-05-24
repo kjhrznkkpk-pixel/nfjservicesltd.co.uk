@@ -30,7 +30,7 @@
         }
 
         .logo {
-            height: 220px; /* slightly more balanced */
+            height: 220px;
             width: auto;
             object-fit: contain;
         }
@@ -48,7 +48,6 @@
             font-size: 20px;
             padding: 0 15px;
             position: relative;
-            transition: 0.2s;
         }
 
         nav a:hover {
@@ -99,12 +98,11 @@
         }
 
         .btn {
-            display: inline-block;
             padding: 12px 26px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            transition: 0.25s;
+            display: inline-block;
         }
 
         .btn.primary {
@@ -117,7 +115,6 @@
         }
 
         .btn.secondary {
-            background: transparent;
             border: 2px solid #3b82f6;
             color: #3b82f6;
         }
@@ -151,21 +148,34 @@
             background: #1e293b;
             padding: 15px;
             border-radius: 12px;
-            transition: 0.25s;
-        }
-
-        .card:hover {
-            transform: translateY(-6px) scale(1.01);
         }
 
         .card h3 {
             color: #3b82f6;
-            margin-bottom: 10px;
         }
 
         .card p {
             color: #cbd5e1;
-            font-size: 14px;
+        }
+
+        /* CONTACT FORM */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        .contact-form textarea {
+            height: 120px;
         }
 
         /* FOOTER */
@@ -175,7 +185,6 @@
             background: #020617;
             font-size: 13px;
             color: #94a3b8;
-            line-height: 1.6;
         }
 
         /* MOBILE */
@@ -183,29 +192,19 @@
             header {
                 flex-direction: column;
                 gap: 8px;
-                padding: 10px;
             }
 
             nav {
-                justify-content: center;
                 flex-wrap: wrap;
-            }
-
-            nav a {
-                font-size: 18px;
-            }
-
-            .hero {
-                padding: 40px 20px 50px;
+                justify-content: center;
             }
 
             .hero h1 {
                 font-size: 32px;
-                margin-top: 5px;
             }
 
             .logo {
-                height: 220px; /* better mobile balance */
+                height: 200px;
             }
         }
     </style>
@@ -214,7 +213,7 @@
 <body>
 
 <header>
-    <img src="logo.png" alt="NFJ Logo" class="logo">
+    <img src="logo.png" class="logo">
 
     <nav>
         <a href="index.html">Home</a>
@@ -230,15 +229,13 @@
 
     <p>Reliable, clean, and professional services you can trust.</p>
 
-    <p><strong>Coming Soon</strong></p>
-
     <div class="button-group">
-        <a class="btn primary" href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from NFJ Services Website&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">
+        <a class="btn primary" href="mailto:info@nfjservicesltd.co.uk">
             Contact Us
         </a>
 
-        <a class="btn secondary" href="#services">
-            View Services
+        <a class="btn secondary" href="#contact-form">
+            Message Us
         </a>
     </div>
 </section>
@@ -247,28 +244,41 @@
     <h2>What We Do</h2>
 
     <div class="grid">
-
         <div class="card">
             <h3>Electrical Work</h3>
-            <p>Need help with small electrical work? We cover lights, sockets, and minor repairs, delivering clean, safe, and reliable results every time.</p>
+            <p>Lights, sockets and minor electrical work done safely.</p>
         </div>
 
         <div class="card">
             <h3>Network Cabling</h3>
-            <p>Improve your internet with clean, reliable network cabling. We install Ethernet points for faster speeds and stable connections in any room.</p>
+            <p>Reliable Ethernet installs for faster internet.</p>
         </div>
 
         <div class="card">
             <h3>Tech Installations</h3>
-            <p>We install TVs, smart devices, and tech equipment quickly and neatly, making sure everything is set up and working properly from day one.</p>
+            <p>TVs, CCTV and smart tech setup professionally.</p>
         </div>
 
         <div class="card">
             <h3>Maintenance</h3>
-            <p>We handle small maintenance jobs to keep your home or workplace running smoothly, from minor fixes to general upkeep, done quickly and reliably.</p>
+            <p>General maintenance and repairs done properly.</p>
         </div>
-
     </div>
+</section>
+
+<section id="contact-form" class="services">
+    <h2>Send Us a Message</h2>
+
+    <form class="contact-form" action="https://formsubmit.co/info@nfjservicesltd.co.uk" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+
+        <input type="hidden" name="_subject" value="New message from NFJ Services website">
+        <input type="hidden" name="_captcha" value="false">
+
+        <button type="submit" class="btn primary">Send Message</button>
+    </form>
 </section>
 
 <footer>
