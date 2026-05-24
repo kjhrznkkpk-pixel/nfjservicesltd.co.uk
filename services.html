@@ -1,129 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Services - NFJ Services LTD</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Services - NFJ Services LTD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #0f172a;
-            color: white;
-        }
+<style>
+html {
+    scroll-behavior: smooth;
+}
 
-        header {
-            background: #1e293b;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #0f172a;
+    color: white;
+}
 
-        a {
-            color: white;
-            text-decoration: none;
-        }
+/* HEADER */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 30px;
+}
 
-        .container {
-            padding: 60px 20px;
-            text-align: center;
-        }
+/* LOGO */
+.logo {
+    height: 200px;
+    width: auto;
+    object-fit: contain;
+}
 
-        h1 {
-            margin-bottom: 40px;
-        }
+/* NAV */
+nav {
+    display: flex;
+    align-items: center;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0 15px;
+    position: relative;
+}
 
-        .card {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 12px;
-            transition: 0.2s;
-        }
+nav a:hover {
+    color: #3b82f6;
+}
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
+/* separator lines */
+nav a:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 22px;
+    width: 1px;
+    background: rgba(0,0,0,0.3);
+}
 
-        .card h2 {
-            color: #3b82f6;
-            font-size: 20px;
-        }
+/* CONTENT */
+.container {
+    padding: 60px 20px;
+    text-align: center;
+}
 
-        .card p {
-            color: #cbd5e1;
-            font-size: 14px;
-        }
-    </style>
+h1 {
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 12px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    color: #3b82f6;
+    font-size: 20px;
+}
+
+.card p {
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* BUTTON */
+.btn {
+    display: inline-block;
+    margin-top: 35px;
+    background: #3b82f6;
+    padding: 12px 26px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btn:hover {
+    background: #2563eb;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #020617;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 40px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .logo {
+        height: 240px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <h3>NFJ Services LTD</h3>
-    <a href="index.html">Home</a>
+    <img src="logo.png" class="logo" alt="NFJ Logo">
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
+    </nav>
 </header>
 
 <div class="container">
-    <h1>Our Services</h1>
 
-    <div class="grid">
+<h1>Our Services</h1>
 
-        <div class="card">
-            <h2>Electrical Work</h2>
-            <p>We offer reliable and professional electrical services for small jobs in homes and small businesses. With over 10 years of hands-on experience, we focus on everyday electrical work that can be completed safely, efficiently, and without unnecessary disruption.
+<div class="grid">
 
-Our services include the installation and replacement of light fittings, switches, sockets, and other general electrical components. Whether you’re upgrading old fittings, replacing damaged outlets, or need help with minor electrical issues, we provide a clean, tidy, and dependable service from start to finish.
-
-We understand the importance of safety and attention to detail, which is why all work is carried out with care and in line with current standards. Our approach is straightforward — no overcomplicating the job, no upselling, just honest and practical solutions that meet your needs.
-
-This service is ideal for smaller electrical tasks that don’t require extensive alterations or major installation work. We’re committed to delivering a hassle-free experience, ensuring everything is left safe, functional, and looking its best..</p>
-        </div>
-
-        <div class="card">
-            <h2>Network Cabling</h2>
-            <p>Struggling with slow or unreliable internet? Our professional network cabling services provide a fast and stable connection where you need it most.
-
-We specialise in installing Ethernet cabling for homes and small businesses, helping you get the best performance from your broadband. From single data points to full property setups, we ensure every installation is neat, discreet, and built to last.
-
-With over a decade of experience, we take pride in delivering simple, effective solutions that improve your connectivity without overcomplicating things..</p>
-        </div>
-
-        <div class="card">
-            <h2>Tech Installations</h2>
-            <p>We provide professional tech installation services for homes and small businesses, helping you get your devices set up სწორly, safely, and ready to use without the stress.
-
-With over 10 years of experience, we handle a wide range of everyday technology installations, ensuring everything is fitted securely, connected properly, and working as it should. Whether you’ve purchased new equipment or are upgrading your current setup, we make the process simple and hassle-free.
-
-Our services include TV wall mounting, device setup, and installation of smart home equipment. We take care to ensure all cabling is neatly managed and hidden where possible, leaving a clean and professional finish.
-
-We focus on straightforward installations without unnecessary complexity, making this service ideal for customers who want reliable results without the confusion of setting things up themselves.
-
-From single device installs to multiple setups around your home or workspace, we deliver practical solutions tailored to your needs.</p>
-        </div>
-
-        <div class="card">
-            <h2>Maintenance</h2>
-            <p>We provide reliable maintenance services for homes and small businesses, helping you keep your property in good working order without the hassle of tackling jobs yourself.
-
-With over 10 years of hands-on experience, we cover a wide range of small maintenance tasks, focusing on practical repairs and general upkeep. Whether it’s fixing something that’s worn or damaged, making small adjustments, or handling jobs that have been put off, we offer a straightforward and dependable service.
-
-Our approach is simple — turn up on time, get the job done properly, and leave everything clean and tidy. We understand that it’s often the smaller jobs that make the biggest difference, and we take pride in completing them to a high standard.
-
-This service is ideal for customers who need help with general repairs and ongoing upkeep, without the need for large-scale or specialist work. We aim to make maintenance easy, stress-free, and cost-effective.</p>
-        </div>
-
+    <div class="card">
+        <h2>Electrical Work</h2>
+        <p>We offer reliable and professional electrical services for small jobs in homes and small businesses. We handle lighting, sockets, switches, and minor repairs with a focus on safety and quality workmanship.</p>
     </div>
+
+    <div class="card">
+        <h2>Network Cabling</h2>
+        <p>We install Ethernet cabling for faster, more stable internet connections. Clean, tidy installs for homes and offices with long-lasting performance.</p>
+    </div>
+
+    <div class="card">
+        <h2>Tech Installations</h2>
+        <p>TV mounting, smart devices, CCTV, and home tech setups installed neatly and correctly so everything works first time.</p>
+    </div>
+
+    <div class="card">
+        <h2>Maintenance</h2>
+        <p>General property maintenance and small repairs to keep your home or business running smoothly without hassle.</p>
+    </div>
+
 </div>
+
+<a class="btn" href="contact.html">Message Us</a>
+
+</div>
+
+<footer>
+© 2026 NFJ Services LTD — All rights reserved<br>
+Directors: Keith Andrews & Chris Lawton
+</footer>
 
 </body>
 </html>
