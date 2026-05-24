@@ -109,7 +109,9 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             border: none;
             cursor: pointer;
             font-size: 15px;
@@ -142,6 +144,20 @@
 
         .btn.instagram:hover {
             background: #c13584;
+        }
+
+        .btn.facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .btn.facebook:hover {
+            background: #145dbf;
+        }
+
+        .social-symbol {
+            font-weight: bold;
+            font-size: 16px;
         }
 
         /* SERVICES */
@@ -302,7 +318,16 @@
            href="https://www.instagram.com/nfjservicesltd/"
            target="_blank"
            rel="noopener noreferrer">
+            <span class="social-symbol">IG</span>
             Instagram
+        </a>
+
+        <a class="btn facebook"
+           href="https://www.facebook.com/nfjservicesltd"
+           target="_blank"
+           rel="noopener noreferrer">
+            <span class="social-symbol">f</span>
+            Facebook
         </a>
     </div>
 </section>
