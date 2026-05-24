@@ -3,51 +3,17 @@
 <head>
     <meta charset="UTF-8">
 
-    <!-- 🔥 SEO TITLE -->
     <title>NFJ Services LTD | Electrical, Network Cabling & Tech Installations UK</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- 🔥 SEO DESCRIPTION -->
     <meta name="description" content="NFJ Services LTD provides professional electrical work, network cabling, and tech installations across the UK. Reliable local service for homes and businesses.">
 
-    <!-- 🔥 KEYWORDS -->
     <meta name="keywords" content="electrician UK, network cabling UK, ethernet installation, TV mounting, tech installer UK, smart home setup, electrical repairs UK">
 
     <meta name="author" content="NFJ Services LTD">
 
-    <!-- 🔥 OPEN GRAPH (SOCIAL PREVIEWS) -->
-    <meta property="og:title" content="NFJ Services LTD | Tech & Electrical Services UK">
-    <meta property="og:description" content="Electrical work, network cabling and tech installations across the UK.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="logo.png">
-    <meta property="og:url" content="https://nfjservicesltd.co.uk">
-
-    <!-- 🔥 TWITTER CARD -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NFJ Services LTD">
-    <meta name="twitter:description" content="Electrical, cabling & tech installation services across the UK.">
-    <meta name="twitter:image" content="logo.png">
-
     <link rel="icon" href="logo.png">
-
-    <!-- 🔥 LOCAL BUSINESS SCHEMA -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "NFJ Services LTD",
-      "image": "https://nfjservicesltd.co.uk/logo.png",
-      "url": "https://nfjservicesltd.co.uk",
-      "email": "info@nfjservicesltd.co.uk",
-      "description": "Electrical work, network cabling and tech installations across the UK.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "GB"
-      },
-      "areaServed": "United Kingdom"
-    }
-    </script>
 
     <style>
         html {
@@ -84,7 +50,6 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            flex-wrap: nowrap;
         }
 
         nav a {
@@ -148,8 +113,8 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            display: inline-block;
             transition: 0.2s;
+            display: inline-block;
         }
 
         .btn.primary {
@@ -191,10 +156,6 @@
             margin: 0 auto;
         }
 
-        .card-link {
-            text-decoration: none;
-        }
-
         .card {
             background: #1e293b;
             padding: 15px;
@@ -215,27 +176,6 @@
             font-size: 14px;
         }
 
-        /* CONTACT FORM */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            padding: 12px;
-            border-radius: 6px;
-            border: none;
-            font-size: 14px;
-        }
-
-        .contact-form textarea {
-            height: 130px;
-        }
-
         /* FOOTER */
         footer {
             text-align: center;
@@ -245,30 +185,37 @@
             color: #94a3b8;
         }
 
-        /* MOBILE FIX */
+        /* =========================
+           MOBILE FIX (IMPORTANT)
+        ========================== */
         @media (max-width: 600px) {
+
             header {
-                flex-direction: row;
-                justify-content: space-between;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
                 padding: 10px 15px;
             }
 
+            .logo {
+                height: 170px;
+            }
+
             nav {
+                width: 100%;
+                justify-content: center;
                 flex-wrap: nowrap;
                 overflow-x: auto;
+                padding-bottom: 5px;
             }
 
             nav a {
-                font-size: 16px;
+                font-size: 15px;
                 padding: 0 10px;
             }
 
             .hero h1 {
                 font-size: 32px;
-            }
-
-            .logo {
-                height: 170px;
             }
         }
     </style>
@@ -312,33 +259,25 @@
 
     <div class="grid">
 
-        <a href="services.html" class="card-link">
-            <div class="card">
-                <h3>Electrical Work</h3>
-                <p>Safe, reliable small electrical jobs done properly.</p>
-            </div>
-        </a>
+        <div class="card">
+            <h3>Electrical Work</h3>
+            <p>Safe, reliable small electrical jobs done properly.</p>
+        </div>
 
-        <a href="services.html" class="card-link">
-            <div class="card">
-                <h3>Network Cabling</h3>
-                <p>Ethernet installs for faster, stable internet.</p>
-            </div>
-        </a>
+        <div class="card">
+            <h3>Network Cabling</h3>
+            <p>Ethernet installs for faster, stable internet.</p>
+        </div>
 
-        <a href="services.html" class="card-link">
-            <div class="card">
-                <h3>Tech Installations</h3>
-                <p>TVs, CCTV and smart tech setup.</p>
-            </div>
-        </a>
+        <div class="card">
+            <h3>Tech Installations</h3>
+            <p>TVs, CCTV and smart tech setup.</p>
+        </div>
 
-        <a href="services.html" class="card-link">
-            <div class="card">
-                <h3>Maintenance</h3>
-                <p>General repairs and property upkeep.</p>
-            </div>
-        </a>
+        <div class="card">
+            <h3>Maintenance</h3>
+            <p>General repairs and property upkeep.</p>
+        </div>
 
     </div>
 </section>
@@ -349,9 +288,7 @@
     <form class="contact-form" action="https://formspree.io/f/xojblzeo" method="POST">
 
         <input type="text" name="name" placeholder="Your Name" required>
-
         <input type="email" name="email" placeholder="Your Email" required>
-
         <textarea name="message" placeholder="Your Message" required></textarea>
 
         <button type="submit" class="btn primary">Send Message</button>
