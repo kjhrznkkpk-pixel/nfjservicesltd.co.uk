@@ -40,6 +40,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            flex-wrap: nowrap; /* 🔥 keeps everything in one line */
         }
 
         nav a {
@@ -48,6 +49,7 @@
             font-size: 20px;
             padding: 0 15px;
             position: relative;
+            white-space: nowrap;
         }
 
         nav a:hover {
@@ -103,6 +105,7 @@
             text-decoration: none;
             font-weight: 500;
             display: inline-block;
+            transition: 0.2s;
         }
 
         .btn.primary {
@@ -144,10 +147,20 @@
             margin: 0 auto;
         }
 
+        /* 🔥 MAKE CARDS CLICKABLE */
+        .card-link {
+            text-decoration: none;
+        }
+
         .card {
             background: #1e293b;
             padding: 15px;
             border-radius: 12px;
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.02);
         }
 
         .card h3 {
@@ -189,16 +202,22 @@
             color: #94a3b8;
         }
 
-        /* MOBILE */
+        /* MOBILE FIX */
         @media (max-width: 600px) {
             header {
-                flex-direction: column;
-                gap: 8px;
+                flex-direction: row; /* 🔥 keeps nav horizontal */
+                justify-content: space-between;
+                padding: 10px 15px;
             }
 
             nav {
-                flex-wrap: wrap;
-                justify-content: center;
+                flex-wrap: nowrap; /* prevents FAQ dropping */
+                overflow-x: auto; /* allows scroll if needed */
+            }
+
+            nav a {
+                font-size: 16px;
+                padding: 0 10px;
             }
 
             .hero h1 {
@@ -206,7 +225,7 @@
             }
 
             .logo {
-                height: 200px;
+                height: 170px;
             }
         }
     </style>
@@ -232,8 +251,18 @@
     <p>Reliable, clean, and professional services you can trust.</p>
 
     <div class="button-group">
-        <a class="btn primary" href="#contact-form">Contact Us</a>
-        <a class="btn secondary" href="#contact-form">Message Us</a>
+
+        <!-- EMAIL CLIENT BUTTON -->
+        <a class="btn primary"
+           href="mailto:info@nfjservicesltd.co.uk?subject=NFJ Services Enquiry&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">
+            Email Us
+        </a>
+
+        <!-- SCROLL TO FORM -->
+        <a class="btn secondary" href="#contact-form">
+            Message Us
+        </a>
+
     </div>
 </section>
 
@@ -241,32 +270,41 @@
     <h2>What We Do</h2>
 
     <div class="grid">
-        <div class="card">
-            <h3>Electrical Work</h3>
-            <p>Safe, reliable small electrical jobs done properly.</p>
-        </div>
 
-        <div class="card">
-            <h3>Network Cabling</h3>
-            <p>Ethernet installs for faster, stable internet.</p>
-        </div>
+        <a href="services.html" class="card-link">
+            <div class="card">
+                <h3>Electrical Work</h3>
+                <p>Safe, reliable small electrical jobs done properly.</p>
+            </div>
+        </a>
 
-        <div class="card">
-            <h3>Tech Installations</h3>
-            <p>TVs, CCTV and smart tech setup.</p>
-        </div>
+        <a href="services.html" class="card-link">
+            <div class="card">
+                <h3>Network Cabling</h3>
+                <p>Ethernet installs for faster, stable internet.</p>
+            </div>
+        </a>
 
-        <div class="card">
-            <h3>Maintenance</h3>
-            <p>General repairs and property upkeep.</p>
-        </div>
+        <a href="services.html" class="card-link">
+            <div class="card">
+                <h3>Tech Installations</h3>
+                <p>TVs, CCTV and smart tech setup.</p>
+            </div>
+        </a>
+
+        <a href="services.html" class="card-link">
+            <div class="card">
+                <h3>Maintenance</h3>
+                <p>General repairs and property upkeep.</p>
+            </div>
+        </a>
+
     </div>
 </section>
 
 <section id="contact-form" class="services">
     <h2>Send Us a Message</h2>
 
-    <!-- ✅ FORMSPREE WORKING FORM -->
     <form class="contact-form" action="https://formspree.io/f/xojblzeo" method="POST">
 
         <input type="text" name="name" placeholder="Your Name" required>
@@ -275,9 +313,8 @@
 
         <textarea name="message" placeholder="Your Message" required></textarea>
 
-        <input type="hidden" name="_subject" value="New message from NFJ Services Website">
-
         <button type="submit" class="btn primary">Send Message</button>
+
     </form>
 </section>
 
