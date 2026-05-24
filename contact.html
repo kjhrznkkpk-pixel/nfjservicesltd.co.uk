@@ -1,103 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Contact - NFJ Services LTD</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Contact - NFJ Services LTD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #0f172a;
-            color: white;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+}
 
-        header {
-            background: #1e293b;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* HEADER */
+header {
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
 
-        a {
-            color: white;
-            text-decoration: none;
-        }
+.logo {
+    height: 200px;
+    width: auto;
+}
 
-        .container {
-            padding: 60px 20px;
-            text-align: center;
-        }
+nav a {
+    color: black;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 18px;
+}
 
-        .card {
-            background: #1e293b;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 12px;
-        }
+/* PAGE */
+.container {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 20px;
+    text-align: center;
+}
 
-        .item {
-            margin: 20px 0;
-            font-size: 18px;
-        }
+h1 {
+    margin-bottom: 20px;
+}
 
-        .label {
-            color: #94a3b8;
-            display: block;
-            margin-bottom: 5px;
-        }
+/* FORM */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
 
-        .value a {
-            color: #3b82f6;
-        }
+input, textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
 
-        .value a:hover {
-            text-decoration: underline;
-        }
-    </style>
+textarea {
+    height: 150px;
+    resize: none;
+}
+
+/* BUTTON */
+button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2563eb;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <h3>NFJ Services LTD</h3>
-    <a href="index.html">Home</a>
+    <img src="logo.png" class="logo">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="faq.html">FAQ</a>
+    </nav>
 </header>
 
 <div class="container">
-    <div class="card">
 
-        <h1>Contact Us</h1>
+    <h1>Contact Us</h1>
+    <p>Send us a message and we’ll get back to you.</p>
 
-        <div class="item">
-            <span class="label">Email</span>
-            <span class="value">
-                <a href="mailto:info@nfjservicesltd.co.uk?subject=Enquiry from Website">
-                    info@nfjservicesltd.co.uk
-                </a>
-            </span>
-        </div>
+    <form action="https://formspree.io/f/xojblzeo" method="POST">
 
-        <div class="item">
-            <span class="label">Keith Andrews</span>
-<span class="label">(Director)</span>
-            <span class="value">
-                <a href="tel:07469871468">07469 871468</a>
-            </span>
-        </div>
+        <input type="text" name="name" placeholder="Your Name" required>
 
-        <div class="item">
-            <span class="label">Chris Lawton</span>
-<span class="label">(Director)</span>
-            <span class="value">
-                <a href="tel:07709099811">07709 099811</a>
-            </span>
-        </div>
+        <input type="email" name="email" placeholder="Your Email" required>
 
-    </div>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+
+        <button type="submit">Send Message</button>
+
+    </form>
+
 </div>
 
 </body>
