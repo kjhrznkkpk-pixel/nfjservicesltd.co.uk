@@ -105,6 +105,27 @@
             align-items: center;
         }
 
+        .social-button-group {
+            margin-top: 25px;
+            display: flex;
+            gap: 35px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .social-item {
+            max-width: 160px;
+            text-align: center;
+        }
+
+        .social-item p {
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
         .btn {
             padding: 12px 26px;
             border-radius: 8px;
@@ -344,6 +365,10 @@
             .hero h2 {
                 font-size: 18px;
             }
+
+            .social-button-group {
+                gap: 25px;
+            }
         }
     </style>
 </head>
@@ -380,24 +405,32 @@
         <a class="btn secondary" href="#contact-form">
             Message Us
         </a>
+    </div>
 
-        <a class="btn instagram"
-           href="https://www.instagram.com/nfjservicesltd/"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Instagram">
-            <span class="instagram-icon">
-                <span class="instagram-dot"></span>
-            </span>
-        </a>
+    <div class="social-button-group">
+        <div class="social-item">
+            <a class="btn instagram"
+               href="https://www.instagram.com/nfjservicesltd/"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Instagram">
+                <span class="instagram-icon">
+                    <span class="instagram-dot"></span>
+                </span>
+            </a>
+            <p>Follow us on Instagram</p>
+        </div>
 
-        <a class="btn facebook"
-           href="https://www.facebook.com/profile.php?id=61590596960988"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Facebook">
-            <span class="facebook-icon"></span>
-        </a>
+        <div class="social-item">
+            <a class="btn facebook"
+               href="https://www.facebook.com/profile.php?id=61590596960988"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Facebook">
+                <span class="facebook-icon"></span>
+            </a>
+            <p>Find us on Facebook</p>
+        </div>
     </div>
 </section>
 
