@@ -138,65 +138,93 @@
             color: white;
         }
 
-        .btn.instagram {
+        .btn.instagram,
+        .btn.facebook {
             width: 46px;
             height: 46px;
             padding: 0;
             border-radius: 12px;
-            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-            color: white;
             justify-content: center;
-            position: relative;
+            background: transparent;
         }
 
-        .btn.instagram:hover {
+        .btn.instagram:hover,
+        .btn.facebook:hover {
             transform: scale(1.05);
         }
 
         .instagram-icon {
-            width: 24px;
-            height: 24px;
-            border: 3px solid white;
-            border-radius: 7px;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
             position: relative;
-            box-sizing: border-box;
         }
 
         .instagram-icon::before {
             content: "";
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 22px;
+            height: 22px;
             border: 3px solid white;
-            border-radius: 50%;
-            top: 5px;
-            left: 5px;
+            border-radius: 7px;
+            top: 9px;
+            left: 9px;
             box-sizing: border-box;
         }
 
         .instagram-icon::after {
             content: "";
             position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 3px solid white;
+            border-radius: 50%;
+            top: 18px;
+            left: 18px;
+            box-sizing: border-box;
+        }
+
+        .instagram-dot {
+            position: absolute;
             width: 4px;
             height: 4px;
             background: white;
             border-radius: 50%;
-            top: 4px;
-            right: 4px;
+            top: 14px;
+            right: 14px;
         }
 
-        .btn.facebook {
-            background: #1877f2;
-            color: white;
+        .facebook-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #1b74e4, #0f4eb8);
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn.facebook:hover {
-            background: #145dbf;
+        .facebook-icon::before {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #dbeafe;
+            border-radius: 50%;
+            top: 8px;
+            left: 8px;
         }
 
-        .social-symbol {
+        .facebook-icon::after {
+            content: "f";
+            position: absolute;
+            color: #163b7a;
+            font-family: Arial, sans-serif;
+            font-size: 34px;
             font-weight: bold;
-            font-size: 16px;
+            line-height: 1;
+            top: 10px;
+            left: 18px;
         }
 
         /* SERVICES */
@@ -358,15 +386,17 @@
            target="_blank"
            rel="noopener noreferrer"
            aria-label="Instagram">
-            <span class="instagram-icon"></span>
+            <span class="instagram-icon">
+                <span class="instagram-dot"></span>
+            </span>
         </a>
 
         <a class="btn facebook"
            href="https://www.facebook.com/profile.php?id=61590596960988"
            target="_blank"
-           rel="noopener noreferrer">
-            <span class="social-symbol">f</span>
-            Facebook
+           rel="noopener noreferrer"
+           aria-label="Facebook">
+            <span class="facebook-icon"></span>
         </a>
     </div>
 </section>
