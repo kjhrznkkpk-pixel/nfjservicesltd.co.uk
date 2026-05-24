@@ -29,13 +29,15 @@
             align-items: center;
             background: white;
             padding: 10px 15px;
+            overflow: hidden;
         }
 
         .logo {
             height: 210px;
-            width: 100%;
-            max-width: 720px;
+            width: 100vw;
+            max-width: 900px;
             object-fit: contain;
+            transform: scale(1.18);
         }
 
         /* NAV */
@@ -337,6 +339,7 @@
                 flex-direction: column;
                 align-items: center;
                 padding: 10px;
+                overflow: hidden;
             }
 
             nav {
@@ -353,10 +356,10 @@
 
             .logo {
                 height: 205px;
-                width: 100%;
-                max-width: 420px;
+                width: 100vw;
+                max-width: none;
                 object-fit: contain;
-            }
+                transform: scale(1.22);
             }
 
             .hero {
