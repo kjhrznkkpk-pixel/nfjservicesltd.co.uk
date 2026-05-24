@@ -2,18 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <title>NFJ Services LTD | Electrical, Network Cabling & Tech Installations UK</title>
-
+    <title>NFJ Services LTD</title>
+    <meta name="description" content="NFJ Services LTD - Electrical, Network Cabling, Tech Installations and Maintenance in the UK. Reliable local services.">
+    <meta name="keywords" content="electrician UK, network cabling, CCTV installation, TV mounting, tech installer, maintenance services, NFJ Services">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description" content="NFJ Services LTD provides professional electrical work, network cabling, and tech installations across the UK. Reliable local service for homes and businesses.">
-
-    <meta name="keywords" content="electrician UK, network cabling UK, ethernet installation, TV mounting, tech installer UK, smart home setup, electrical repairs UK">
-
-    <meta name="author" content="NFJ Services LTD">
-
-    <link rel="icon" href="logo.png">
 
     <style>
         html {
@@ -33,14 +25,14 @@
             top: 0;
             z-index: 1000;
             display: flex;
+            flex-direction: column; /* FIX: allows nav under logo */
             align-items: center;
-            justify-content: space-between;
             background: white;
-            padding: 15px 30px;
+            padding: 10px 15px;
         }
 
         .logo {
-            height: 220px;
+            height: 180px;
             width: auto;
             object-fit: contain;
         }
@@ -49,14 +41,17 @@
         nav {
             display: flex;
             align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
             gap: 5px;
+            margin-top: 5px;
         }
 
         nav a {
             color: black;
             text-decoration: none;
-            font-size: 20px;
-            padding: 0 15px;
+            font-size: 18px;
+            padding: 8px 10px;
             position: relative;
             white-space: nowrap;
         }
@@ -71,7 +66,7 @@
             right: 0;
             top: 50%;
             transform: translateY(-50%);
-            height: 22px;
+            height: 18px;
             width: 1px;
             background: rgba(0, 0, 0, 0.3);
         }
@@ -79,11 +74,11 @@
         /* HERO */
         .hero {
             text-align: center;
-            padding: 80px 20px 60px;
+            padding: 70px 20px 50px;
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: 40px;
             margin-bottom: 10px;
         }
 
@@ -113,7 +108,6 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            transition: 0.2s;
             display: inline-block;
         }
 
@@ -156,6 +150,10 @@
             margin: 0 auto;
         }
 
+        .card-link {
+            text-decoration: none;
+        }
+
         .card {
             background: #1e293b;
             padding: 15px;
@@ -176,6 +174,30 @@
             font-size: 14px;
         }
 
+        /* CONTACT FORM */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .contact-form textarea {
+            height: 130px;
+            resize: none;
+        }
+
         /* FOOTER */
         footer {
             text-align: center;
@@ -185,37 +207,33 @@
             color: #94a3b8;
         }
 
-        /* =========================
-           MOBILE FIX (IMPORTANT)
-        ========================== */
+        /* MOBILE FIX */
         @media (max-width: 600px) {
 
             header {
                 flex-direction: column;
                 align-items: center;
-                gap: 10px;
-                padding: 10px 15px;
-            }
-
-            .logo {
-                height: 170px;
+                padding: 10px;
             }
 
             nav {
-                width: 100%;
-                justify-content: center;
                 flex-wrap: nowrap;
+                justify-content: center;
                 overflow-x: auto;
-                padding-bottom: 5px;
+                width: 100%;
             }
 
             nav a {
-                font-size: 15px;
-                padding: 0 10px;
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .logo {
+                height: 150px;
             }
 
             .hero h1 {
-                font-size: 32px;
+                font-size: 30px;
             }
         }
     </style>
@@ -241,7 +259,6 @@
     <p>Reliable, clean, and professional services you can trust.</p>
 
     <div class="button-group">
-
         <a class="btn primary"
            href="mailto:info@nfjservicesltd.co.uk?subject=NFJ Services Enquiry&body=Hi NFJ Services,%0D%0A%0D%0AI would like to enquire about...">
             Email Us
@@ -250,7 +267,6 @@
         <a class="btn secondary" href="#contact-form">
             Message Us
         </a>
-
     </div>
 </section>
 
@@ -259,25 +275,33 @@
 
     <div class="grid">
 
-        <div class="card">
-            <h3>Electrical Work</h3>
-            <p>Safe, reliable small electrical jobs done properly.</p>
-        </div>
+        <a href="services.html" class="card-link">
+            <div class="card">
+                <h3>Electrical Work</h3>
+                <p>Safe, reliable small electrical jobs done properly.</p>
+            </div>
+        </a>
 
-        <div class="card">
-            <h3>Network Cabling</h3>
-            <p>Ethernet installs for faster, stable internet.</p>
-        </div>
+        <a href="services.html" class="card-link">
+            <div class="card">
+                <h3>Network Cabling</h3>
+                <p>Ethernet installs for faster, stable internet.</p>
+            </div>
+        </a>
 
-        <div class="card">
-            <h3>Tech Installations</h3>
-            <p>TVs, CCTV and smart tech setup.</p>
-        </div>
+        <a href="services.html" class="card-link">
+            <div class="card">
+                <h3>Tech Installations</h3>
+                <p>TVs, CCTV and smart tech setup.</p>
+            </div>
+        </a>
 
-        <div class="card">
-            <h3>Maintenance</h3>
-            <p>General repairs and property upkeep.</p>
-        </div>
+        <a href="services.html" class="card-link">
+            <div class="card">
+                <h3>Maintenance</h3>
+                <p>General repairs and property upkeep.</p>
+            </div>
+        </a>
 
     </div>
 </section>
