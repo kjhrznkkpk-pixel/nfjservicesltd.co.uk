@@ -102,6 +102,7 @@
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .btn {
@@ -138,12 +139,50 @@
         }
 
         .btn.instagram {
-            background: #e1306c;
+            width: 46px;
+            height: 46px;
+            padding: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
             color: white;
+            justify-content: center;
+            position: relative;
         }
 
         .btn.instagram:hover {
-            background: #c13584;
+            transform: scale(1.05);
+        }
+
+        .instagram-icon {
+            width: 24px;
+            height: 24px;
+            border: 3px solid white;
+            border-radius: 7px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .instagram-icon::before {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 3px solid white;
+            border-radius: 50%;
+            top: 5px;
+            left: 5px;
+            box-sizing: border-box;
+        }
+
+        .instagram-icon::after {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            top: 4px;
+            right: 4px;
         }
 
         .btn.facebook {
@@ -317,9 +356,9 @@
         <a class="btn instagram"
            href="https://www.instagram.com/nfjservicesltd/"
            target="_blank"
-           rel="noopener noreferrer">
-            <span class="social-symbol">IG</span>
-            Instagram
+           rel="noopener noreferrer"
+           aria-label="Instagram">
+            <span class="instagram-icon"></span>
         </a>
 
         <a class="btn facebook"
