@@ -173,10 +173,11 @@
             padding: 12px;
             border-radius: 6px;
             border: none;
+            font-size: 14px;
         }
 
         .contact-form textarea {
-            height: 120px;
+            height: 130px;
         }
 
         /* FOOTER */
@@ -231,13 +232,8 @@
     <p>Reliable, clean, and professional services you can trust.</p>
 
     <div class="button-group">
-        <a class="btn primary" href="https://formspree.io/f/xojblzeo">
-            Contact Us
-        </a>
-
-        <a class="btn secondary" href="#contact-form">
-            Message Us
-        </a>
+        <a class="btn primary" href="#contact-form">Contact Us</a>
+        <a class="btn secondary" href="#contact-form">Message Us</a>
     </div>
 </section>
 
@@ -247,22 +243,22 @@
     <div class="grid">
         <div class="card">
             <h3>Electrical Work</h3>
-            <p>Lights, sockets and minor electrical work done safely.</p>
+            <p>Safe, reliable small electrical jobs done properly.</p>
         </div>
 
         <div class="card">
             <h3>Network Cabling</h3>
-            <p>Reliable Ethernet installs for faster internet.</p>
+            <p>Ethernet installs for faster, stable internet.</p>
         </div>
 
         <div class="card">
             <h3>Tech Installations</h3>
-            <p>TVs, CCTV and smart tech setup professionally.</p>
+            <p>TVs, CCTV and smart tech setup.</p>
         </div>
 
         <div class="card">
             <h3>Maintenance</h3>
-            <p>General maintenance and repairs done properly.</p>
+            <p>General repairs and property upkeep.</p>
         </div>
     </div>
 </section>
@@ -270,10 +266,16 @@
 <section id="contact-form" class="services">
     <h2>Send Us a Message</h2>
 
+    <!-- ✅ FORMSPREE WORKING FORM -->
     <form class="contact-form" action="https://formspree.io/f/xojblzeo" method="POST">
+
         <input type="text" name="name" placeholder="Your Name" required>
+
         <input type="email" name="email" placeholder="Your Email" required>
+
         <textarea name="message" placeholder="Your Message" required></textarea>
+
+        <input type="hidden" name="_subject" value="New message from NFJ Services Website">
 
         <button type="submit" class="btn primary">Send Message</button>
     </form>
