@@ -26,20 +26,20 @@
             align-items: center;
             justify-content: space-between;
             background: white;
-            padding: 20px 30px;
+            padding: 15px 30px;
         }
 
         .logo {
-            height: 230px;
+            height: 200px; /* slightly more balanced */
             width: auto;
             object-fit: contain;
-            display: block;
         }
 
         /* NAV */
         nav {
             display: flex;
             align-items: center;
+            gap: 5px;
         }
 
         nav a {
@@ -69,7 +69,7 @@
         /* HERO */
         .hero {
             text-align: center;
-            padding: 90px 20px 60px;
+            padding: 80px 20px 60px;
         }
 
         .hero h1 {
@@ -149,13 +149,13 @@
 
         .card {
             background: #1e293b;
-            padding: 10px;
+            padding: 15px;
             border-radius: 12px;
-            transition: 0.2s;
+            transition: 0.25s;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px) scale(1.01);
         }
 
         .card h3 {
@@ -183,6 +183,12 @@
             header {
                 flex-direction: column;
                 gap: 8px;
+                padding: 10px;
+            }
+
+            nav {
+                justify-content: center;
+                flex-wrap: wrap;
             }
 
             nav a {
@@ -199,7 +205,7 @@
             }
 
             .logo {
-                height: 280px;
+                height: 180px; /* better mobile balance */
             }
         }
     </style>
@@ -211,7 +217,7 @@
     <img src="logo.png" alt="NFJ Logo" class="logo">
 
     <nav>
-        <a href="#">Home</a>
+        <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="contact.html">Contact</a>
         <a href="faq.html">FAQ</a>
@@ -264,6 +270,7 @@
 
     </div>
 </section>
+
 <footer>
     © 2026 NFJ Services LTD — All rights reserved<br>
     Directors: Keith Andrews & Chris Lawton
