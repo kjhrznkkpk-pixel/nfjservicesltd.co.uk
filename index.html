@@ -156,6 +156,7 @@
 
         .card p {
             color: #cbd5e1;
+            font-size: 14px;
         }
 
         /* CONTACT FORM */
@@ -213,7 +214,7 @@
 <body>
 
 <header>
-    <img src="logo.png" class="logo">
+    <img src="logo.png" class="logo" alt="NFJ Logo">
 
     <nav>
         <a href="index.html">Home</a>
@@ -230,7 +231,7 @@
     <p>Reliable, clean, and professional services you can trust.</p>
 
     <div class="button-group">
-        <a class="btn primary" href="mailto:info@nfjservicesltd.co.uk">
+        <a class="btn primary" href="https://formspree.io/f/xojblzeo">
             Contact Us
         </a>
 
@@ -269,13 +270,10 @@
 <section id="contact-form" class="services">
     <h2>Send Us a Message</h2>
 
-    <form class="contact-form" action="https://formsubmit.co/info@nfjservicesltd.co.uk" method="POST">
+    <form class="contact-form" action="https://formspree.io/f/xojblzeo" method="POST">
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
         <textarea name="message" placeholder="Your Message" required></textarea>
-
-        <input type="hidden" name="_subject" value="New message from NFJ Services website">
-        <input type="hidden" name="_captcha" value="false">
 
         <button type="submit" class="btn primary">Send Message</button>
     </form>
