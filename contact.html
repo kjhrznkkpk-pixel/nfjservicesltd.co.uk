@@ -3,35 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <title>Contact - NFJ Services LTD</title>
+<meta name="description" content="Contact NFJ Services LTD for electrical work, network cabling, tech installations, CCTV, TV mounting and maintenance services.">
+<meta name="keywords" content="contact NFJ Services, electrical work, network cabling, CCTV installation, TV mounting, maintenance services">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     background: #0f172a;
     color: white;
 }
 
 /* HEADER */
 header {
-    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 15px 30px;
+    background: white;
+    padding: 10px 15px;
+    overflow: hidden;
 }
 
 .logo {
-    height: 200px;
-    width: auto;
+    height: 210px;
+    width: 100vw;
+    max-width: 900px;
+    object-fit: contain;
+    transform: scale(1.18);
+}
+
+/* NAV */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-top: 5px;
 }
 
 nav a {
     color: black;
     text-decoration: none;
-    margin-left: 20px;
     font-size: 18px;
+    padding: 8px 10px;
+    position: relative;
+    white-space: nowrap;
+}
+
+nav a:hover,
+nav a.active {
+    color: #3b82f6;
+}
+
+nav a:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 18px;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* PAGE */
@@ -44,6 +85,12 @@ nav a {
 
 h1 {
     margin-bottom: 20px;
+    font-size: 40px;
+}
+
+p {
+    color: #cbd5e1;
+    line-height: 1.6;
 }
 
 /* FORM */
@@ -54,11 +101,14 @@ form {
     margin-top: 30px;
 }
 
-input, textarea {
+input,
+textarea {
     padding: 12px;
     border-radius: 8px;
     border: none;
     font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 textarea {
@@ -80,17 +130,70 @@ button {
 button:hover {
     background: #2563eb;
 }
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #020617;
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-top: 60px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        overflow: hidden;
+    }
+
+    .logo {
+        height: 205px;
+        width: 100vw;
+        max-width: none;
+        object-fit: contain;
+        transform: scale(1.22);
+    }
+
+    nav {
+        flex-wrap: nowrap;
+        justify-content: center;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .container {
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-    <img src="logo.png" class="logo">
+    <img src="logo.png" class="logo" alt="NFJ Services LTD Logo">
+
     <nav>
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
+        <a href="contact.html" class="active">Contact</a>
         <a href="faq.html">FAQ</a>
+        <a href="Reviews.html">Reviews</a>
     </nav>
 </header>
 
@@ -112,6 +215,11 @@ button:hover {
     </form>
 
 </div>
+
+<footer>
+    © 2026 NFJ Services LTD — All rights reserved<br>
+    Directors: Keith Andrews & Chris Lawton
+</footer>
 
 </body>
 </html>
