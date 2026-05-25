@@ -1,1 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews Coming Soon | NFJ Services LTD</title>
+    <meta name="description" content="NFJ Services LTD reviews page coming soon. Customer feedback for electrical work, network cabling, tech installations and maintenance services.">
+    <meta name="keywords" content="NFJ Services reviews, electrical reviews, network cabling reviews, tech installation reviews, maintenance reviews">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 10px 15px;
+            overflow: hidden;
+        }
+
+        .logo {
+            height: 210px;
+            width: 100vw;
+            max-width: 900px;
+            object-fit: contain;
+            transform: scale(1.18);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 10px;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #3b82f6;
+        }
+
+        nav a:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 18px;
+            width: 1px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .construction-section {
+            min-height: calc(100vh - 300px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 70px 20px;
+            background:
+                radial-gradient(circle at top left, rgba(59, 130, 246, 0.22), transparent 32%),
+                linear-gradient(135deg, #0f172a 0%, #0b1220 55%, #020617 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .construction-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(45deg, rgba(250, 204, 21, 0.10) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(250, 204, 21, 0.10) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(250, 204, 21, 0.10) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(250, 204, 21, 0.10) 75%);
+            background-size: 38px 38px;
+            opacity: 0.18;
+        }
+
+        .construction-card {
+            width: 100%;
+            max-width: 760px;
+            text-align: center;
+            background: rgba(30, 41, 59, 0.88);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 14px;
+            padding: 42px 26px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 20px 50px rgba(2, 6, 23, 0.45);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #facc15;
+            color: #111827;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin-bottom: 18px;
+        }
+
+        .construction-icon {
+            width: 96px;
+            height: 74px;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .barrier {
+            width: 96px;
+            height: 24px;
+            background: repeating-linear-gradient(
+                135deg,
+                #facc15 0,
+                #facc15 12px,
+                #111827 12px,
+                #111827 24px
+            );
+            border-radius: 6px;
+            border: 3px solid #f8fafc;
+            box-sizing: border-box;
+            position: absolute;
+            top: 12px;
+            left: 0;
+        }
+
+        .barrier-leg {
+            width: 8px;
+            height: 38px;
+            background: #f8fafc;
+            border-radius: 4px;
+            position: absolute;
+            top: 34px;
+        }
+
+        .barrier-leg.left {
+            left: 18px;
+        }
+
+        .barrier-leg.right {
+            right: 18px;
+        }
+
+        .construction-card h1 {
+            font-size: 42px;
+            margin: 0 0 14px;
+        }
+
+        .construction-card p {
+            color: #cbd5e1;
+            font-size: 17px;
+            line-height: 1.6;
+            max-width: 620px;
+            margin: 0 auto 26px;
+        }
+
+        .review-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 520px;
+            margin: 28px auto;
+        }
+
+        .preview-card {
+            background: #0f172a;
+            border-radius: 10px;
+            padding: 14px;
+            min-height: 76px;
+            box-sizing: border-box;
+            opacity: 0.75;
+        }
+
+        .stars {
+            color: #facc15;
+            font-size: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .line {
+            height: 8px;
+            border-radius: 999px;
+            background: #334155;
+            margin-bottom: 7px;
+        }
+
+        .line.short {
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .button-group {
+            margin-top: 28px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background: #2563eb;
+        }
+
+        .btn.secondary {
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+            background: transparent;
+        }
+
+        .btn.secondary:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #020617;
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+                overflow: hidden;
+            }
+
+            nav {
+                flex-wrap: nowrap;
+                justify-content: center;
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .logo {
+                height: 205px;
+                width: 100vw;
+                max-width: none;
+                object-fit: contain;
+                transform: scale(1.22);
+            }
+
+            .construction-section {
+                padding: 35px 16px;
+                min-height: auto;
+            }
+
+            .construction-card {
+                padding: 34px 18px;
+            }
+
+            .construction-card h1 {
+                font-size: 31px;
+            }
+
+            .construction-card p {
+                font-size: 15px;
+            }
+
+            .review-preview {
+                grid-template-columns: 1fr;
+                max-width: 260px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" class="logo" alt="NFJ Services LTD Logo">
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
+        <a href="Reviews.html" class="active">Reviews</a>
+    </nav>
+</header>
+
+<section class="construction-section">
+    <div class="construction-card">
+        <span class="badge">REVIEWS PAGE COMING SOON</span>
+
+        <div class="construction-icon" aria-hidden="true">
+            <div class="barrier"></div>
+            <div class="barrier-leg left"></div>
+            <div class="barrier-leg right"></div>
+        </div>
+
+        <h1>Building Our Reviews Page</h1>
+
+        <p>
+            We are currently putting together customer feedback for NFJ Services LTD.
+            Check back soon to see reviews for our electrical work, network cabling,
+            tech installations and maintenance services.
+        </p>
+
+        <div class="review-preview" aria-hidden="true">
+            <div class="preview-card">
+                <div class="stars">★★★★★</div>
+                <div class="line"></div>
+                <div class="line short"></div>
+            </div>
+
+            <div class="preview-card">
+                <div class="stars">★★★★★</div>
+                <div class="line"></div>
+                <div class="line short"></div>
+            </div>
+
+            <div class="preview-card">
+                <div class="stars">★★★★★</div>
+                <div class="line"></div>
+                <div class="line short"></div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <a class="btn primary"
+               href="mailto:info@nfjservicesltd.co.uk?subject=NFJ Services Review&body=Hi NFJ Services,%0D%0A%0D%0AI would like to leave a review...">
+                Leave a Review
+            </a>
+
+            <a class="btn secondary" href="contact.html">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © 2026 NFJ Services LTD — All rights reserved<br>
+    Directors: Keith Andrews & Chris Lawton
+</footer>
+
+</body>
+</html>
