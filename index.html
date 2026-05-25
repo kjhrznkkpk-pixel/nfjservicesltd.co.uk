@@ -498,6 +498,46 @@
     © 2026 NFJ Services LTD — All rights reserved<br>
     Directors: Keith Andrews & Chris Lawton
 </footer>
+<script>
+    const pages = [
+        "index.html",
+        "services.html",
+        "contact.html",
+        "faq.html",
+        "Reviews.html"
+    ];
 
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    const currentIndex = pages.indexOf(currentPage);
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener("touchstart", event => {
+        touchStartX = event.changedTouches[0].screenX;
+    });
+
+    document.addEventListener("touchend", event => {
+        touchEndX = event.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeDistance = touchEndX - touchStartX;
+        const minimumSwipe = 80;
+
+        if (Math.abs(swipeDistance) < minimumSwipe || currentIndex === -1) {
+            return;
+        }
+
+        if (swipeDistance < 0 && currentIndex < pages.length - 1) {
+            window.location.href = pages[currentIndex + 1];
+        }
+
+        if (swipeDistance > 0 && currentIndex > 0) {
+            window.location.href = pages[currentIndex - 1];
+        }
+    }
+</script>
 </body>
 </html>
