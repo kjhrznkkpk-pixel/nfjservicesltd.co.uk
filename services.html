@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Services - NFJ Services LTD</title>
+<meta name="description" content="NFJ Services LTD offers electrical work, network cabling, tech installations, CCTV, TV mounting and maintenance services for homes and small businesses.">
+<meta name="keywords" content="NFJ Services, electrical work, network cabling, CCTV installation, TV mounting, tech installations, maintenance services">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -23,31 +25,39 @@ header {
     top: 0;
     z-index: 1000;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     background: white;
-    padding: 15px 30px;
+    padding: 10px 15px;
+    overflow: hidden;
 }
 
 /* LOGO */
 .logo {
-    height: 200px;
-    width: auto;
+    height: 210px;
+    width: 100vw;
+    max-width: 900px;
     object-fit: contain;
+    transform: scale(1.18);
 }
 
 /* NAV */
 nav {
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-top: 5px;
 }
 
 nav a {
     color: black;
     text-decoration: none;
     font-size: 18px;
-    padding: 0 15px;
+    padding: 8px 10px;
     position: relative;
+    white-space: nowrap;
 }
 
 nav a:hover {
@@ -61,7 +71,7 @@ nav a:not(:last-child)::after {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    height: 22px;
+    height: 18px;
     width: 1px;
     background: rgba(0,0,0,0.3);
 }
@@ -129,22 +139,40 @@ footer {
     font-size: 13px;
     color: #94a3b8;
     margin-top: 40px;
+    line-height: 1.6;
 }
 
 /* MOBILE */
 @media (max-width: 600px) {
     header {
         flex-direction: column;
-        gap: 10px;
+        align-items: center;
+        padding: 10px;
+        overflow: hidden;
     }
 
     .logo {
-        height: 240px;
+        height: 205px;
+        width: 100vw;
+        max-width: none;
+        object-fit: contain;
+        transform: scale(1.22);
     }
 
     nav {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: center;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .container {
+        padding: 35px 20px 60px;
     }
 }
 </style>
@@ -153,13 +181,14 @@ footer {
 <body>
 
 <header>
-    <img src="logo.png" class="logo" alt="NFJ Logo">
+    <img src="logo.png" class="logo" alt="NFJ Services LTD Logo">
 
     <nav>
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="contact.html">Contact</a>
         <a href="faq.html">FAQ</a>
+        <a href="Reviews.html">Reviews</a>
     </nav>
 </header>
 
