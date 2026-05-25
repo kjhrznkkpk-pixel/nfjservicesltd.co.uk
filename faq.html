@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>FAQ - NFJ Services LTD</title>
+    <meta name="description" content="Frequently asked questions about NFJ Services LTD, including electrical work, network cabling, tech installations and maintenance services.">
+    <meta name="keywords" content="NFJ Services FAQ, electrical work questions, network cabling questions, tech installation FAQ, maintenance services">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -23,32 +25,41 @@
             top: 0;
             z-index: 1000;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
             background: white;
-            padding: 20px 30px;
+            padding: 10px 15px;
+            overflow: hidden;
         }
 
         .logo {
-            height: 230px;
-            width: auto;
+            height: 210px;
+            width: 100vw;
+            max-width: 900px;
             object-fit: contain;
+            transform: scale(1.18);
         }
 
         nav {
             display: flex;
             align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 5px;
+            margin-top: 5px;
         }
 
         nav a {
             color: black;
             text-decoration: none;
-            font-size: 20px;
-            padding: 0 15px;
+            font-size: 18px;
+            padding: 8px 10px;
             position: relative;
+            white-space: nowrap;
         }
 
-        nav a:hover {
+        nav a:hover,
+        nav a.active {
             color: #3b82f6;
         }
 
@@ -58,7 +69,7 @@
             right: 0;
             top: 50%;
             transform: translateY(-50%);
-            height: 22px;
+            height: 18px;
             width: 1px;
             background: rgba(0, 0, 0, 0.3);
         }
@@ -73,6 +84,7 @@
         h1 {
             text-align: center;
             margin-bottom: 40px;
+            font-size: 40px;
         }
 
         /* FAQ ITEMS */
@@ -90,6 +102,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
         }
 
         .faq-question:hover {
@@ -103,10 +116,10 @@
             line-height: 1.5;
         }
 
-        /* ICON */
         .icon {
             font-size: 22px;
             transition: 0.2s;
+            flex-shrink: 0;
         }
 
         .faq-item.active .icon {
@@ -120,25 +133,45 @@
             background: #020617;
             font-size: 13px;
             color: #94a3b8;
+            line-height: 1.6;
         }
 
         /* MOBILE */
         @media (max-width: 600px) {
             header {
                 flex-direction: column;
-                gap: 8px;
-            }
-
-            nav a {
-                font-size: 18px;
+                align-items: center;
+                padding: 10px;
+                overflow: hidden;
             }
 
             .logo {
-                height: 180px;
+                height: 205px;
+                width: 100vw;
+                max-width: none;
+                object-fit: contain;
+                transform: scale(1.22);
+            }
+
+            nav {
+                flex-wrap: nowrap;
+                justify-content: center;
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 8px;
             }
 
             .container {
-                padding: 40px 15px;
+                padding: 35px 15px 50px;
+            }
+
+            h1 {
+                font-size: 30px;
+                margin-bottom: 30px;
             }
         }
     </style>
@@ -147,13 +180,14 @@
 <body>
 
 <header>
-    <img src="logo.png" alt="NFJ Logo" class="logo">
+    <img src="logo.png" alt="NFJ Services LTD Logo" class="logo">
 
     <nav>
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="contact.html">Contact</a>
-        <a href="faq.html">FAQ</a>
+        <a href="faq.html" class="active">FAQ</a>
+        <a href="Reviews.html">Reviews</a>
     </nav>
 </header>
 
@@ -186,7 +220,7 @@
             <span class="icon">+</span>
         </div>
         <div class="faq-answer">
-            You can contact us via email or phone, and we’ll get back to you quickly with a quote.
+            You can contact us via email or our contact form, and we’ll get back to you as soon as possible.
         </div>
     </div>
 
@@ -203,7 +237,8 @@
 </div>
 
 <footer>
-    © 2026 NFJ Services LTD — All rights reserved
+    © 2026 NFJ Services LTD — All rights reserved<br>
+    Directors: Keith Andrews & Chris Lawton
 </footer>
 
 <script>
@@ -217,15 +252,13 @@
         question.addEventListener("click", () => {
             const isOpen = answer.style.display === "block";
 
-            // Close all
             document.querySelectorAll(".faq-answer").forEach(a => a.style.display = "none");
             document.querySelectorAll(".icon").forEach(i => i.textContent = "+");
             document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("active"));
 
-            // Open selected
             if (!isOpen) {
                 answer.style.display = "block";
-                icon.textContent = "−";
+                icon.textContent = "-";
                 item.classList.add("active");
             }
         });
