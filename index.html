@@ -332,6 +332,12 @@
             color: #94a3b8;
             line-height: 1.6;
         }
+        visit-counter {
+            display: block;
+            margin-top: 6px;
+            font-size: 11px;
+            color: #64748b;
+        }
 
         /* MOBILE FIX */
         @media (max-width: 600px) {
@@ -497,6 +503,7 @@
 <footer>
     © 2026 NFJ Services LTD — All rights reserved<br>
     Directors: Keith Andrews & Chris Lawton
+    <span id="visit-counter" class="visit-counter"></span>
 </footer>
 <script>
     const pages = [
@@ -537,6 +544,55 @@
         if (swipeDistance > 0 && currentIndex > 0) {
             window.location.href = pages[currentIndex - 1];
         }
+    }
+    <script>
+    const pages = [
+        "index.html",
+        "services.html",
+        "contact.html",
+        "faq.html",
+        "Reviews.html"
+    ];
+
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    const currentIndex = pages.indexOf(currentPage);
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener("touchstart", event => {
+        touchStartX = event.changedTouches[0].screenX;
+    });
+
+    document.addEventListener("touchend", event => {
+        touchEndX = event.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeDistance = touchEndX - touchStartX;
+        const minimumSwipe = 80;
+
+        if (Math.abs(swipeDistance) < minimumSwipe || currentIndex === -1) {
+            return;
+        }
+
+        if (swipeDistance < 0 && currentIndex < pages.length - 1) {
+            window.location.href = pages[currentIndex + 1];
+        }
+
+        if (swipeDistance > 0 && currentIndex > 0) {
+            window.location.href = pages[currentIndex - 1];
+        }
+    }
+
+    const visitCounter = document.getElementById("visit-counter");
+    const visits = Number(localStorage.getItem("nfjVisits") || 0) + 1;
+
+    localStorage.setItem("nfjVisits", visits);
+
+    if (visitCounter) {
+        visitCounter.textContent = `Your visits: ${visits}`;
     }
 </script>
 </body>
