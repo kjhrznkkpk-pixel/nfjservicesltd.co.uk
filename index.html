@@ -506,7 +506,7 @@
     <span id="visit-counter" class="visit-counter"></span>
 </footer>
     
-<script>
+    <script>
     const pages = [
         "index.html",
         "services.html",
@@ -519,69 +519,43 @@
     const currentIndex = pages.indexOf(currentPage);
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
 
     document.addEventListener("touchstart", event => {
         touchStartX = event.changedTouches[0].screenX;
-    });
+        touchStartY = event.changedTouches[0].screenY;
+    }, { passive: true });
 
     document.addEventListener("touchend", event => {
         touchEndX = event.changedTouches[0].screenX;
+        touchEndY = event.changedTouches[0].screenY;
         handleSwipe();
-    });
+    }, { passive: true });
 
     function handleSwipe() {
-        const swipeDistance = touchEndX - touchStartX;
-        const minimumSwipe = 80;
+        const swipeX = touchEndX - touchStartX;
+        const swipeY = touchEndY - touchStartY;
+        const minimumSwipe = 70;
 
-        if (Math.abs(swipeDistance) < minimumSwipe || currentIndex === -1) {
+        if (currentIndex === -1) {
             return;
         }
 
-        if (swipeDistance < 0 && currentIndex < pages.length - 1) {
-            window.location.href = pages[currentIndex + 1];
-        }
-
-        if (swipeDistance > 0 && currentIndex > 0) {
-            window.location.href = pages[currentIndex - 1];
-        }
-   <script>
-    const pages = [
-        "index.html",
-        "services.html",
-        "contact.html",
-        "faq.html",
-        "Reviews.html"
-    ];
-
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
-    const currentIndex = pages.indexOf(currentPage);
-
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    document.addEventListener("touchstart", event => {
-        touchStartX = event.changedTouches[0].screenX;
-    });
-
-    document.addEventListener("touchend", event => {
-        touchEndX = event.changedTouches[0].screenX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        const swipeDistance = touchEndX - touchStartX;
-        const minimumSwipe = 80;
-
-        if (Math.abs(swipeDistance) < minimumSwipe || currentIndex === -1) {
+        if (Math.abs(swipeX) < minimumSwipe) {
             return;
         }
 
-        if (swipeDistance < 0 && currentIndex < pages.length - 1) {
+        if (Math.abs(swipeY) > Math.abs(swipeX)) {
+            return;
+        }
+
+        if (swipeX < 0 && currentIndex < pages.length - 1) {
             window.location.href = pages[currentIndex + 1];
         }
 
-        if (swipeDistance > 0 && currentIndex > 0) {
+        if (swipeX > 0 && currentIndex > 0) {
             window.location.href = pages[currentIndex - 1];
         }
     }
