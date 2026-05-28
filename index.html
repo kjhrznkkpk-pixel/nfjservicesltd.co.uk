@@ -19,7 +19,6 @@
             color: white;
         }
 
-        /* HEADER */
         header {
             position: sticky;
             top: 0;
@@ -40,7 +39,6 @@
             transform: scale(1.18);
         }
 
-        /* NAV */
         nav {
             display: flex;
             align-items: center;
@@ -75,7 +73,6 @@
             background: rgba(0, 0, 0, 0.3);
         }
 
-        /* HERO */
         .hero {
             text-align: center;
             padding: 70px 20px 50px;
@@ -99,7 +96,6 @@
             line-height: 1.6;
         }
 
-        /* BUTTONS */
         .button-group {
             margin-top: 25px;
             display: flex;
@@ -252,7 +248,6 @@
             left: 18px;
         }
 
-        /* SERVICES */
         .services {
             padding: 60px 20px;
             text-align: center;
@@ -299,7 +294,6 @@
             line-height: 1.5;
         }
 
-        /* CONTACT FORM */
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
@@ -323,7 +317,6 @@
             resize: none;
         }
 
-        /* FOOTER */
         footer {
             text-align: center;
             padding: 20px;
@@ -332,6 +325,7 @@
             color: #94a3b8;
             line-height: 1.6;
         }
+
         .visit-counter {
             display: block;
             margin-top: 6px;
@@ -339,9 +333,36 @@
             color: #64748b;
         }
 
-        /* MOBILE FIX */
-        @media (max-width: 600px) {
+        .creator-credit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 12px;
+        }
 
+        .creator-credit:hover {
+            color: #3b82f6;
+        }
+
+        .creator-logo {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #1e293b;
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #334155;
+        }
+
+        @media (max-width: 600px) {
             header {
                 flex-direction: column;
                 align-items: center;
@@ -454,7 +475,6 @@
     <h2>What We Do</h2>
 
     <div class="grid">
-
         <a href="services.html" class="card-link">
             <div class="card">
                 <h3>Electrical Work</h3>
@@ -482,7 +502,6 @@
                 <p>General repairs, property upkeep and practical maintenance support.</p>
             </div>
         </a>
-
     </div>
 </section>
 
@@ -490,13 +509,11 @@
     <h2>Send Us a Message</h2>
 
     <form class="contact-form" action="https://formspree.io/f/xojblzeo" method="POST">
-
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
         <textarea name="message" placeholder="Your Message" required></textarea>
 
         <button type="submit" class="btn primary">Send Message</button>
-
     </form>
 </section>
 
@@ -504,9 +521,17 @@
     © 2026 NFJ Services LTD — All rights reserved<br>
     Directors: Keith Andrews & Chris Lawton
     <span id="visit-counter" class="visit-counter"></span>
+
+    <a class="creator-credit"
+       href="https://www.keith-andrews.co.uk"
+       target="_blank"
+       rel="noopener noreferrer">
+        <span class="creator-logo">KA</span>
+        <span>Designed and created by Keith-Andrews Web Development</span>
+    </a>
 </footer>
-    
-    <script>
+
+<script>
     const pages = [
         "index.html",
         "services.html",
