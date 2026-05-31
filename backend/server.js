@@ -517,13 +517,6 @@ Directors: Keith Andrews & Chris Lawton`
         </html>
     `);
 });
-app.get("/admin/invoices", requireLogin, (req, res) => {
-    res.send(`
-        <!DOCTYPE html>
-        ...
-        </html>
-    `);
-});
 
 app.post("/admin/invoices", requireLogin, (req, res) => {
     const invoiceNumber = `NFJ-${new Date().getFullYear()}-${String(invoices.length + 1).padStart(4, "0")}`;
@@ -543,4 +536,3 @@ app.post("/admin/invoices", requireLogin, (req, res) => {
 app.listen(PORT, () => {
     console.log(`NFJ admin backend running at http://localhost:${PORT}/admin`);
 });
-
