@@ -18,6 +18,7 @@ const adminUsers = [
 
 const invoices = [];
 const notes = [];
+const photos = [];
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -259,7 +260,220 @@ app.get("/admin/files", requireLogin, (req, res) => {
 });
 
 app.get("/admin/photos", requireLogin, (req, res) => {
-    res.send("<h1>Photos</h1><p>This page will hold job photos.</p><a href='/admin/dashboard'>Back</a>");
+    const photoList = photos.map(photo => `
+        <article class="photo-card">
+            <div class="photo-top">
+                <strong>${photo.customerName}</strong>
+                <span>${photo.date}</span>
+            </div>
+
+            <img src="${photo.photoUrl}" alt="Job photo for ${photo.customerName}" class="job-photo">
+
+            <p><strong>Job Address:</strong> ${photo.jobAddress}</p>
+            <p><strong>Description:</strong> ${photo.description || "No description recorded"}</p>
+            <a class="terminal-link" href="${photo.photoUrl}" target="_blank" rel="noopener noreferrer">OPEN PHOTO</a>
+        </article>
+    `).join("");
+
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>NFJ Job Photos</title>
+
+            <style>
+                body {
+                    margin: 0;
+                    min-height: 100vh;
+                    font-family: "Courier New", monospace;
+                    background: #000000;
+                    color: #00ff66;
+                    padding: 24px;
+                }
+
+                .screen {
+                    max-width: 1100px;
+                    margin: 0 auto;
+                    border: 2px solid #00ff66;
+                    padding: 24px;
+                    box-shadow: 0 0 18px rgba(0, 255, 102, 0.45);
+                    background: radial-gradient(circle at center, #001a0a 0%, #000000 70%);
+                }
+
+                .top-bar {
+                    border-bottom: 1px solid #00ff66;
+                    padding-bottom: 12px;
+                    margin-bottom: 24px;
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 12px;
+                    flex-wrap: wrap;
+                }
+
+                h1, h2 {
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    text-shadow: 0 0 8px #00ff66;
+                }
+
+                p {
+                    color: #9cffb8;
+                    line-height: 1.5;
+                }
+
+                form {
+                    border: 1px solid #00ff66;
+                    padding: 18px;
+                    margin-bottom: 28px;
+                    background: rgba(0, 255, 102, 0.05);
+                }
+
+                label {
+                    display: block;
+                    margin-bottom: 14px;
+                    color: #9cffb8;
+                }
+
+                input, textarea {
+                    width: 100%;
+                    margin-top: 6px;
+                    padding: 12px;
+                    box-sizing: border-box;
+                    background: #000000;
+                    color: #00ff66;
+                    border: 1px solid #00ff66;
+                    font-family: "Courier New", monospace;
+                    font-size: 15px;
+                }
+
+                textarea {
+                    min-height: 90px;
+                    resize: vertical;
+                }
+
+                button, .back-link, .terminal-link {
+                    display: inline-block;
+                    background: transparent;
+                    color: #00ff66;
+                    border: 1px solid #00ff66;
+                    padding: 11px 14px;
+                    font-family: "Courier New", monospace;
+                    text-decoration: none;
+                    cursor: pointer;
+                    margin-top: 8px;
+                }
+
+                button:hover, .back-link:hover, .terminal-link:hover {
+                    background: #00ff66;
+                    color: #000000;
+                }
+
+                .photo-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                    gap: 16px;
+                }
+
+                .photo-card {
+                    border: 1px solid #00ff66;
+                    padding: 16px;
+                    background: rgba(0, 255, 102, 0.05);
+                }
+
+                .photo-top {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 12px;
+                    flex-wrap: wrap;
+                    border-bottom: 1px solid #00ff66;
+                    padding-bottom: 8px;
+                    margin-bottom: 12px;
+                }
+
+                .job-photo {
+                    width: 100%;
+                    aspect-ratio: 4 / 3;
+                    object-fit: cover;
+                    border: 1px solid #00ff66;
+                    background: #020617;
+                    margin-bottom: 12px;
+                }
+
+                .blink {
+                    animation: blink 1s steps(2, start) infinite;
+                }
+
+                @keyframes blink {
+                    50% {
+                        opacity: 0;
+                    }
+                }
+
+                @media (max-width: 600px) {
+                    body {
+                        padding: 12px;
+                    }
+
+                    .screen {
+                        padding: 16px;
+                    }
+                }
+            </style>
+        </head>
+
+        <body>
+            <main class="screen">
+                <div class="top-bar">
+                    <strong>NFJ SERVICES LTD :: JOB PHOTOS</strong>
+                    <span>STATUS: READY</span>
+                </div>
+
+                <h1>Photos <span class="blink">_</span></h1>
+
+                <p>
+                    Store site photo links for job evidence, before/after records,
+                    and customer/job references.
+                </p>
+
+                <form method="POST" action="/admin/photos">
+                    <h2>Add Job Photo</h2>
+
+                    <label>
+                        Customer Name
+                        <input name="customerName" required>
+                    </label>
+
+                    <label>
+                        Job Address
+                        <input name="jobAddress" required>
+                    </label>
+
+                    <label>
+                        Photo URL
+                        <input type="url" name="photoUrl" placeholder="https://..." required>
+                    </label>
+
+                    <label>
+                        Description
+                        <textarea name="description"></textarea>
+                    </label>
+
+                    <button type="submit">SAVE PHOTO</button>
+                </form>
+
+                <h2>Saved Photos</h2>
+
+                <div class="photo-grid">
+                    ${photoList || "<p>No photos saved yet.</p>"}
+                </div>
+
+                <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+            </main>
+        </body>
+        </html>
+    `);
 });
 
 app.get("/admin/notes", requireLogin, (req, res) => {
@@ -1083,6 +1297,17 @@ NFJ Services LTD`
         </body>
         </html>
     `);
+});
+app.post("/admin/photos", requireLogin, (req, res) => {
+    photos.push({
+        date: new Date().toLocaleString("en-GB"),
+        customerName: req.body.customerName,
+        jobAddress: req.body.jobAddress,
+        photoUrl: req.body.photoUrl,
+        description: req.body.description
+    });
+
+    res.redirect("/admin/photos");
 });
 
 app.listen(PORT, () => {
