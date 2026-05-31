@@ -38,6 +38,157 @@ function requireLogin(req, res, next) {
     next();
 }
 
+function accessDeniedPage() {
+    return `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Access Denied</title>
+
+            <style>
+                body {
+                    margin: 0;
+                    min-height: 100vh;
+                    background: #000000;
+                    color: #ff1f1f;
+                    font-family: "Courier New", monospace;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 24px;
+                    overflow: hidden;
+                }
+
+                body::before {
+                    content: "";
+                    position: fixed;
+                    inset: 0;
+                    background:
+                        repeating-linear-gradient(
+                            to bottom,
+                            rgba(255, 0, 0, 0.08),
+                            rgba(255, 0, 0, 0.08) 1px,
+                            transparent 1px,
+                            transparent 6px
+                        );
+                    pointer-events: none;
+                    animation: scan 3s linear infinite;
+                }
+
+                .denied-box {
+                    width: min(760px, 100%);
+                    border: 3px solid #ff1f1f;
+                    padding: 32px;
+                    text-align: center;
+                    box-shadow:
+                        0 0 18px rgba(255, 0, 0, 0.7),
+                        inset 0 0 18px rgba(255, 0, 0, 0.25);
+                    background: radial-gradient(circle at center, #260000 0%, #000000 70%);
+                    animation: pulse 0.9s infinite;
+                }
+
+                .warning {
+                    font-size: clamp(48px, 10vw, 96px);
+                    font-weight: bold;
+                    letter-spacing: 4px;
+                    text-transform: uppercase;
+                    text-shadow:
+                        0 0 8px #ff0000,
+                        0 0 18px #ff0000,
+                        0 0 28px #ff0000;
+                    animation: flash 0.55s infinite;
+                }
+
+                .subtext {
+                    margin-top: 18px;
+                    color: #ff9b9b;
+                    font-size: 18px;
+                    line-height: 1.6;
+                    text-transform: uppercase;
+                }
+
+                .code {
+                    margin-top: 20px;
+                    display: inline-block;
+                    border: 1px solid #ff1f1f;
+                    padding: 10px 14px;
+                    color: #ffb3b3;
+                    background: rgba(255, 0, 0, 0.08);
+                }
+
+                .retry {
+                    display: inline-block;
+                    margin-top: 28px;
+                    color: #000000;
+                    background: #ff1f1f;
+                    padding: 12px 18px;
+                    text-decoration: none;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+                }
+
+                .retry:hover {
+                    background: white;
+                    color: #b00000;
+                }
+
+                @keyframes flash {
+                    0%, 100% {
+                        opacity: 1;
+                    }
+
+                    50% {
+                        opacity: 0.35;
+                    }
+                }
+
+                @keyframes pulse {
+                    0%, 100% {
+                        transform: scale(1);
+                    }
+
+                    50% {
+                        transform: scale(1.015);
+                    }
+                }
+
+                @keyframes scan {
+                    from {
+                        transform: translateY(-20px);
+                    }
+
+                    to {
+                        transform: translateY(20px);
+                    }
+                }
+            </style>
+        </head>
+
+        <body>
+            <main class="denied-box">
+                <div class="warning">ACCESS DENIED</div>
+
+                <div class="subtext">
+                    Invalid credentials detected<br>
+                    NFJ private system locked
+                </div>
+
+                <div class="code">
+                    ERROR CODE: NFJ-403-UNAUTHORISED
+                </div>
+
+                <br>
+
+                <a class="retry" href="/admin">Retry Login</a>
+            </main>
+        </body>
+        </html>
+    `;
+}
+
 function terminalPage(title, systemName, content) {
     return `
         <!DOCTYPE html>
@@ -225,155 +376,7 @@ app.post("/admin/login", (req, res) => {
     const user = adminUsers.find(admin => admin.username === username);
 
     if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
-    return res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Access Denied</title>
-
-            <style>
-                body {
-                    margin: 0;
-                    min-height: 100vh;
-                    background: #000000;
-                    color: #ff1f1f;
-                    font-family: "Courier New", monospace;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 24px;
-                    overflow: hidden;
-                }
-
-                body::before {
-                    content: "";
-                    position: fixed;
-                    inset: 0;
-                    background:
-                        repeating-linear-gradient(
-                            to bottom,
-                            rgba(255, 0, 0, 0.08),
-                            rgba(255, 0, 0, 0.08) 1px,
-                            transparent 1px,
-                            transparent 6px
-                        );
-                    pointer-events: none;
-                    animation: scan 3s linear infinite;
-                }
-
-                .denied-box {
-                    width: min(760px, 100%);
-                    border: 3px solid #ff1f1f;
-                    padding: 32px;
-                    text-align: center;
-                    box-shadow:
-                        0 0 18px rgba(255, 0, 0, 0.7),
-                        inset 0 0 18px rgba(255, 0, 0, 0.25);
-                    background: radial-gradient(circle at center, #260000 0%, #000000 70%);
-                    animation: pulse 0.9s infinite;
-                }
-
-                .warning {
-                    font-size: clamp(48px, 10vw, 96px);
-                    font-weight: bold;
-                    letter-spacing: 4px;
-                    text-transform: uppercase;
-                    text-shadow:
-                        0 0 8px #ff0000,
-                        0 0 18px #ff0000,
-                        0 0 28px #ff0000;
-                    animation: flash 0.55s infinite;
-                }
-
-                .subtext {
-                    margin-top: 18px;
-                    color: #ff9b9b;
-                    font-size: 18px;
-                    line-height: 1.6;
-                    text-transform: uppercase;
-                }
-
-                .code {
-                    margin-top: 20px;
-                    display: inline-block;
-                    border: 1px solid #ff1f1f;
-                    padding: 10px 14px;
-                    color: #ffb3b3;
-                    background: rgba(255, 0, 0, 0.08);
-                }
-
-                .retry {
-                    display: inline-block;
-                    margin-top: 28px;
-                    color: #000000;
-                    background: #ff1f1f;
-                    padding: 12px 18px;
-                    text-decoration: none;
-                    font-weight: bold;
-                    text-transform: uppercase;
-                    box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
-                }
-
-                .retry:hover {
-                    background: white;
-                    color: #b00000;
-                }
-
-                @keyframes flash {
-                    0%, 100% {
-                        opacity: 1;
-                    }
-
-                    50% {
-                        opacity: 0.35;
-                    }
-                }
-
-                @keyframes pulse {
-                    0%, 100% {
-                        transform: scale(1);
-                    }
-
-                    50% {
-                        transform: scale(1.015);
-                    }
-                }
-
-                @keyframes scan {
-                    from {
-                        transform: translateY(-20px);
-                    }
-
-                    to {
-                        transform: translateY(20px);
-                    }
-                }
-            </style>
-        </head>
-
-        <body>
-            <main class="denied-box">
-                <div class="warning">ACCESS DENIED</div>
-
-                <div class="subtext">
-                    Invalid credentials detected<br>
-                    NFJ private system locked
-                </div>
-
-                <div class="code">
-                    ERROR CODE: NFJ-403-UNAUTHORISED
-                </div>
-
-                <br>
-
-                <a class="retry" href="/admin">Retry Login</a>
-            </main>
-        </body>
-        </html>
-    `);
-}
+        return res.send(accessDeniedPage());
     }
 
     req.session.loggedIn = true;
