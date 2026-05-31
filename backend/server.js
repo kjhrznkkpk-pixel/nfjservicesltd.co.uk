@@ -5,15 +5,16 @@ const bcrypt = require("bcryptjs");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const adminUser = {
-    username: "keith",
-    passwordHash: bcrypt.hashSync("Unicorn1234", 10)
-};
-const adminUser = {
-    username: "chris",
-    passwordHash: bcrypt.hashSync("Password1", 10)
-};
-
+const adminUsers = [
+    {
+        username: "keith",
+        passwordHash: bcrypt.hashSync("Unicorn1234", 10)
+    },
+    {
+        username: "chris",
+        passwordHash: bcrypt.hashSync("Password1", 10)
+    }
+];
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
@@ -201,31 +202,49 @@ app.get("/admin/dashboard", requireLogin, (req, res) => {
         </html>
     `);
 });
-
-app.post("/admin/login", (req, res) => {
-    const { username, password } = req.body;
-
-    const usernameMatches = username === adminUser.username;
-    const passwordMatches = bcrypt.compareSync(password, adminUser.passwordHash);
-
-    if (!usernameMatches || !passwordMatches) {
-        return res.send("Login failed. <a href='/admin'>Try again</a>");
-    }
-
-    req.session.loggedIn = true;
-    res.redirect("/admin/dashboard");
-});
-
-app.get("/admin/dashboard", requireLogin, (req, res) => {
+app.get("/admin", (req, res) => {
     res.send(`
         <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>NFJ Admin Login</title>
+        </head>
+        <body style="font-family: Arial; background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+            <form method="POST" action="/admin/login" style="background: #1e293b; padding: 25px; border-radius: 10px; width: 320px;">
+                <h1>NFJ Admin</h1>
+                <p>Private access only</p>
+
+                <input type="text" name="username" placeholder="Username" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
+                <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
+
+                <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px;">Login</button>
+            </form>
+        </body>
+        </html>
+    `);
+});
+app.post("/admin/login", (req, res) => {
+    const { username, password } = req.body;
+
+    const user = adminUsers.find(admin => admin.username === username);
+
+    if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
+        return res.send("Login failed. <a href='/admin'>Try again</a>");
+    }
+
+    req.session.loggedIn = true;
+    req.session.username = user.username;
+    res.redirect("/admin/dashboard");
+});
+
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>NFJ Admin Dashboard</title>
         </head>
-        <body style="font-family: Arial; background: #0f172a; color: white; padding: 30px;">
             <h1>NFJ Admin Dashboard</h1>
             <p>Welcome. This is the private admin area.</p>
 
