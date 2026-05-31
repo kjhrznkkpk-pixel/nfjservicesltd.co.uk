@@ -17,6 +17,7 @@ const adminUsers = [
 ];
 
 const invoices = [];
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
@@ -302,10 +303,14 @@ Directors: Keith Andrews & Chris Lawton`
                    href="mailto:${invoice.customerEmail}?subject=Invoice ${invoice.invoiceNumber} from NFJ Services LTD&body=${emailBody}">
                     SEND BY EMAIL
                 </a>
+
+                <a class="terminal-link" href="/admin/invoices/${invoice.invoiceNumber}">
+                    VIEW A4 INVOICE
+                </a>
             </article>
         `;
     }).join("");
-    
+
     res.send(`
         <!DOCTYPE html>
         <html lang="en">
@@ -414,6 +419,7 @@ Directors: Keith Andrews & Chris Lawton`
                     text-decoration: none;
                     cursor: pointer;
                     margin-top: 8px;
+                    margin-right: 8px;
                 }
 
                 button:hover, .terminal-link:hover, .back-link:hover {
@@ -533,6 +539,340 @@ app.post("/admin/invoices", requireLogin, (req, res) => {
 
     res.redirect("/admin/invoices");
 });
+
+app.get("/admin/invoices/:invoiceNumber", requireLogin, (req, res) => {
+    const invoice = invoices.find(item => item.invoiceNumber === req.params.invoiceNumber);
+
+    if (!invoice) {
+        return res.send("<h1>Invoice not found</h1><a href='/admin/invoices'>Back to invoices</a>");
+    }
+
+    const emailBody = encodeURIComponent(
+`Hi ${invoice.customerName},
+
+Please find your invoice details below.
+
+Invoice Number: ${invoice.invoiceNumber}
+Date: ${invoice.date}
+
+Work / Job Details:
+${invoice.description}
+
+Amount Due: £${invoice.amount}
+
+Kind regards,
+NFJ Services LTD`
+    );
+
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${invoice.invoiceNumber} - NFJ Services LTD</title>
+
+            <style>
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    margin: 0;
+                    background: #e5e7eb;
+                    font-family: Arial, sans-serif;
+                    color: #111827;
+                    padding: 24px;
+                }
+
+                .toolbar {
+                    max-width: 210mm;
+                    margin: 0 auto 16px;
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                }
+
+                .toolbar a,
+                .toolbar button {
+                    border: none;
+                    background: #0f172a;
+                    color: white;
+                    padding: 10px 14px;
+                    border-radius: 6px;
+                    text-decoration: none;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+
+                .invoice-page {
+                    width: 210mm;
+                    min-height: 297mm;
+                    margin: 0 auto;
+                    background: white;
+                    padding: 18mm;
+                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+                }
+
+                .invoice-header {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 24px;
+                    border-bottom: 3px solid #0f172a;
+                    padding-bottom: 18px;
+                    margin-bottom: 28px;
+                }
+
+                .brand {
+                    display: flex;
+                    gap: 14px;
+                    align-items: center;
+                }
+
+                .logo-box {
+                    width: 68px;
+                    height: 68px;
+                    border-radius: 10px;
+                    background: #0f172a;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+
+                .brand h1 {
+                    margin: 0;
+                    color: #0f172a;
+                    font-size: 26px;
+                }
+
+                .brand p {
+                    margin: 4px 0 0;
+                    color: #475569;
+                    line-height: 1.4;
+                    font-size: 13px;
+                }
+
+                .invoice-title {
+                    text-align: right;
+                }
+
+                .invoice-title h2 {
+                    margin: 0;
+                    font-size: 34px;
+                    color: #0f172a;
+                    letter-spacing: 2px;
+                }
+
+                .invoice-title p {
+                    margin: 6px 0 0;
+                    color: #475569;
+                }
+
+                .details-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 24px;
+                    margin-bottom: 28px;
+                }
+
+                .box {
+                    border: 1px solid #cbd5e1;
+                    border-radius: 8px;
+                    padding: 14px;
+                }
+
+                .box h3 {
+                    margin: 0 0 10px;
+                    color: #0f172a;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+
+                .box p {
+                    margin: 0;
+                    color: #334155;
+                    line-height: 1.6;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 18px;
+                }
+
+                th {
+                    background: #0f172a;
+                    color: white;
+                    padding: 12px;
+                    text-align: left;
+                    font-size: 14px;
+                }
+
+                td {
+                    border: 1px solid #cbd5e1;
+                    padding: 14px 12px;
+                    vertical-align: top;
+                    line-height: 1.6;
+                }
+
+                .amount {
+                    width: 130px;
+                    text-align: right;
+                    white-space: nowrap;
+                }
+
+                .total-row td {
+                    font-weight: bold;
+                    font-size: 18px;
+                    background: #f8fafc;
+                }
+
+                .footer-note {
+                    margin-top: 36px;
+                    border-top: 1px solid #cbd5e1;
+                    padding-top: 14px;
+                    color: #64748b;
+                    font-size: 13px;
+                    line-height: 1.6;
+                }
+
+                @media print {
+                    body {
+                        background: white;
+                        padding: 0;
+                    }
+
+                    .toolbar {
+                        display: none;
+                    }
+
+                    .invoice-page {
+                        box-shadow: none;
+                        margin: 0;
+                        width: 210mm;
+                        min-height: 297mm;
+                    }
+                }
+
+                @media (max-width: 760px) {
+                    body {
+                        padding: 0;
+                        background: white;
+                    }
+
+                    .toolbar {
+                        padding: 12px;
+                        margin: 0;
+                        max-width: none;
+                        justify-content: center;
+                    }
+
+                    .invoice-page {
+                        width: 100%;
+                        min-height: auto;
+                        padding: 20px;
+                        box-shadow: none;
+                    }
+
+                    .invoice-header {
+                        display: block;
+                    }
+
+                    .details-grid {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .invoice-title {
+                        text-align: left;
+                        margin-top: 18px;
+                    }
+
+                    .box {
+                        margin-bottom: 16px;
+                    }
+                }
+            </style>
+        </head>
+
+        <body>
+            <div class="toolbar">
+                <a href="/admin/invoices">Back</a>
+                <a href="mailto:${invoice.customerEmail}?subject=Invoice ${invoice.invoiceNumber} from NFJ Services LTD&body=${emailBody}">Email</a>
+                <button onclick="window.print()">Print / Save PDF</button>
+            </div>
+
+            <main class="invoice-page">
+                <header class="invoice-header">
+                    <div class="brand">
+                        <div class="logo-box">NFJ</div>
+                        <div>
+                            <h1>NFJ Services LTD</h1>
+                            <p>
+                                Electrical • Network Cabling • Tech Installations • Maintenance<br>
+                                Directors: Keith Andrews & Chris Lawton
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="invoice-title">
+                        <h2>INVOICE</h2>
+                        <p><strong>No:</strong> ${invoice.invoiceNumber}</p>
+                        <p><strong>Date:</strong> ${invoice.date}</p>
+                    </div>
+                </header>
+
+                <section class="details-grid">
+                    <div class="box">
+                        <h3>Invoice To</h3>
+                        <p>
+                            <strong>${invoice.customerName}</strong><br>
+                            ${invoice.customerEmail}
+                        </p>
+                    </div>
+
+                    <div class="box">
+                        <h3>Job Address</h3>
+                        <p>${invoice.jobAddress}</p>
+                    </div>
+                </section>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th class="amount">Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>${invoice.description}</td>
+                            <td class="amount">£${invoice.amount}</td>
+                        </tr>
+
+                        <tr class="total-row">
+                            <td>Total Due</td>
+                            <td class="amount">£${invoice.amount}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="footer-note">
+                    <p>
+                        Thank you for choosing NFJ Services LTD. Please contact us if you have any questions about this invoice.
+                    </p>
+                </div>
+            </main>
+        </body>
+        </html>
+    `);
+});
+
 app.listen(PORT, () => {
     console.log(`NFJ admin backend running at http://localhost:${PORT}/admin`);
 });
