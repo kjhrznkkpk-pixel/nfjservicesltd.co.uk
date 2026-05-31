@@ -16,9 +16,11 @@ const adminUsers = [
     }
 ];
 
-const invoices = [];
-const notes = [];
+const jobs = [];
+const files = [];
 const photos = [];
+const notes = [];
+const invoices = [];
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -36,252 +38,14 @@ function requireLogin(req, res, next) {
     next();
 }
 
-app.get("/admin", (req, res) => {
-    res.send(`
+function terminalPage(title, systemName, content) {
+    return `
         <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>NFJ Admin Login</title>
-        </head>
-        <body style="font-family: Arial; background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
-            <form method="POST" action="/admin/login" style="background: #1e293b; padding: 25px; border-radius: 10px; width: 320px;">
-                <h1>NFJ Admin</h1>
-                <p>Private access only</p>
-
-                <input type="text" name="username" placeholder="Username" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
-                <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
-
-                <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px;">Login</button>
-            </form>
-        </body>
-        </html>
-    `);
-});
-
-app.post("/admin/login", (req, res) => {
-    const { username, password } = req.body;
-    const user = adminUsers.find(admin => admin.username === username);
-
-    if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
-        return res.send("Login failed. <a href='/admin'>Try again</a>");
-    }
-
-    req.session.loggedIn = true;
-    req.session.username = user.username;
-    res.redirect("/admin/dashboard");
-});
-
-app.get("/admin/dashboard", requireLogin, (req, res) => {
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>NFJ Admin Dashboard</title>
-
-            <style>
-                body {
-                    margin: 0;
-                    min-height: 100vh;
-                    font-family: "Courier New", monospace;
-                    background: #000000;
-                    color: #00ff66;
-                    padding: 24px;
-                }
-
-                .screen {
-                    max-width: 1000px;
-                    margin: 0 auto;
-                    border: 2px solid #00ff66;
-                    padding: 24px;
-                    box-shadow: 0 0 18px rgba(0, 255, 102, 0.45);
-                    background: radial-gradient(circle at center, #001a0a 0%, #000000 70%);
-                }
-
-                .top-bar {
-                    border-bottom: 1px solid #00ff66;
-                    padding-bottom: 12px;
-                    margin-bottom: 24px;
-                    display: flex;
-                    justify-content: space-between;
-                    gap: 12px;
-                    flex-wrap: wrap;
-                }
-
-                h1 {
-                    margin: 0 0 12px;
-                    font-size: 28px;
-                    text-transform: uppercase;
-                    letter-spacing: 2px;
-                    text-shadow: 0 0 8px #00ff66;
-                }
-
-                p {
-                    color: #9cffb8;
-                    line-height: 1.6;
-                }
-
-                .status {
-                    color: #00ff66;
-                }
-
-                .grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-                    gap: 14px;
-                    margin-top: 24px;
-                }
-
-                .terminal-button {
-                    display: block;
-                    border: 1px solid #00ff66;
-                    color: #00ff66;
-                    text-decoration: none;
-                    padding: 18px;
-                    min-height: 80px;
-                    background: rgba(0, 255, 102, 0.06);
-                    box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.12);
-                }
-
-                .terminal-button:hover {
-                    background: #00ff66;
-                    color: #000000;
-                }
-
-                .terminal-button span {
-                    display: block;
-                    font-size: 13px;
-                    margin-top: 8px;
-                    opacity: 0.8;
-                }
-
-                .logout {
-                    display: inline-block;
-                    margin-top: 28px;
-                    color: #00ff66;
-                    text-decoration: none;
-                    border: 1px solid #00ff66;
-                    padding: 10px 14px;
-                }
-
-                .logout:hover {
-                    background: #00ff66;
-                    color: #000000;
-                }
-
-                .blink {
-                    animation: blink 1s steps(2, start) infinite;
-                }
-
-                @keyframes blink {
-                    50% {
-                        opacity: 0;
-                    }
-                }
-
-                @media (max-width: 600px) {
-                    body {
-                        padding: 12px;
-                    }
-
-                    .screen {
-                        padding: 16px;
-                    }
-
-                    h1 {
-                        font-size: 22px;
-                    }
-                }
-            </style>
-        </head>
-
-        <body>
-            <main class="screen">
-                <div class="top-bar">
-                    <strong>NFJ SERVICES LTD :: ADMIN SYSTEM</strong>
-                    <span class="status">STATUS: ONLINE</span>
-                </div>
-
-                <h1>Admin Dashboard <span class="blink">_</span></h1>
-
-                <p>
-                    Private operations system loaded. Select a module below.
-                </p>
-
-                <div class="grid">
-                    <a class="terminal-button" href="/admin/jobs">
-                        CURRENT JOBS
-                        <span>Booked work and site details</span>
-                    </a>
-
-                    <a class="terminal-button" href="/admin/files">
-                        FILES
-                        <span>Documents, certificates and receipts</span>
-                    </a>
-
-                    <a class="terminal-button" href="/admin/photos">
-                        PHOTOS
-                        <span>Job photos and site evidence</span>
-                    </a>
-
-                    <a class="terminal-button" href="/admin/notes">
-                        NOTES
-                        <span>Work notes and customer sign-off</span>
-                    </a>
-
-                    <a class="terminal-button" href="/admin/invoices">
-                        INVOICES
-                        <span>Create and manage invoices</span>
-                    </a>
-                </div>
-
-                <a class="logout" href="/admin/logout">LOG OUT</a>
-            </main>
-        </body>
-        </html>
-    `);
-});
-
-app.get("/admin/logout", (req, res) => {
-    req.session.destroy(() => {
-        res.redirect("/admin");
-    });
-});
-
-app.get("/admin/jobs", requireLogin, (req, res) => {
-    res.send("<h1>Current Jobs</h1><p>This page will hold booked jobs.</p><a href='/admin/dashboard'>Back</a>");
-});
-
-app.get("/admin/files", requireLogin, (req, res) => {
-    res.send("<h1>Files</h1><p>This page will hold uploaded job files.</p><a href='/admin/dashboard'>Back</a>");
-});
-
-app.get("/admin/photos", requireLogin, (req, res) => {
-    const photoList = photos.map(photo => `
-        <article class="photo-card">
-            <div class="photo-top">
-                <strong>${photo.customerName}</strong>
-                <span>${photo.date}</span>
-            </div>
-
-            <img src="${photo.photoUrl}" alt="Job photo for ${photo.customerName}" class="job-photo">
-
-            <p><strong>Job Address:</strong> ${photo.jobAddress}</p>
-            <p><strong>Description:</strong> ${photo.description || "No description recorded"}</p>
-            <a class="terminal-link" href="${photo.photoUrl}" target="_blank" rel="noopener noreferrer">OPEN PHOTO</a>
-        </article>
-    `).join("");
-
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>NFJ Job Photos</title>
+            <title>${title}</title>
 
             <style>
                 body {
@@ -323,10 +87,10 @@ app.get("/admin/photos", requireLogin, (req, res) => {
                     line-height: 1.5;
                 }
 
-                form {
+                form, .card {
                     border: 1px solid #00ff66;
                     padding: 18px;
-                    margin-bottom: 28px;
+                    margin-bottom: 18px;
                     background: rgba(0, 255, 102, 0.05);
                 }
 
@@ -336,7 +100,7 @@ app.get("/admin/photos", requireLogin, (req, res) => {
                     color: #9cffb8;
                 }
 
-                input, textarea {
+                input, textarea, select {
                     width: 100%;
                     margin-top: 6px;
                     padding: 12px;
@@ -349,11 +113,11 @@ app.get("/admin/photos", requireLogin, (req, res) => {
                 }
 
                 textarea {
-                    min-height: 90px;
+                    min-height: 100px;
                     resize: vertical;
                 }
 
-                button, .back-link, .terminal-link {
+                button, .terminal-link, .back-link {
                     display: inline-block;
                     background: transparent;
                     color: #00ff66;
@@ -363,26 +127,21 @@ app.get("/admin/photos", requireLogin, (req, res) => {
                     text-decoration: none;
                     cursor: pointer;
                     margin-top: 8px;
+                    margin-right: 8px;
                 }
 
-                button:hover, .back-link:hover, .terminal-link:hover {
+                button:hover, .terminal-link:hover, .back-link:hover {
                     background: #00ff66;
                     color: #000000;
                 }
 
-                .photo-grid {
+                .grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
                     gap: 16px;
                 }
 
-                .photo-card {
-                    border: 1px solid #00ff66;
-                    padding: 16px;
-                    background: rgba(0, 255, 102, 0.05);
-                }
-
-                .photo-top {
+                .item-top {
                     display: flex;
                     justify-content: space-between;
                     gap: 12px;
@@ -426,60 +185,325 @@ app.get("/admin/photos", requireLogin, (req, res) => {
         <body>
             <main class="screen">
                 <div class="top-bar">
-                    <strong>NFJ SERVICES LTD :: JOB PHOTOS</strong>
+                    <strong>NFJ SERVICES LTD :: ${systemName}</strong>
                     <span>STATUS: READY</span>
                 </div>
 
-                <h1>Photos <span class="blink">_</span></h1>
-
-                <p>
-                    Store site photo links for job evidence, before/after records,
-                    and customer/job references.
-                </p>
-
-                <form method="POST" action="/admin/photos">
-                    <h2>Add Job Photo</h2>
-
-                    <label>
-                        Customer Name
-                        <input name="customerName" required>
-                    </label>
-
-                    <label>
-                        Job Address
-                        <input name="jobAddress" required>
-                    </label>
-
-                    <label>
-                        Photo URL
-                        <input type="url" name="photoUrl" placeholder="https://..." required>
-                    </label>
-
-                    <label>
-                        Description
-                        <textarea name="description"></textarea>
-                    </label>
-
-                    <button type="submit">SAVE PHOTO</button>
-                </form>
-
-                <h2>Saved Photos</h2>
-
-                <div class="photo-grid">
-                    ${photoList || "<p>No photos saved yet.</p>"}
-                </div>
-
-                <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+                ${content}
             </main>
+        </body>
+        </html>
+    `;
+}
+
+app.get("/admin", (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>NFJ Admin Login</title>
+        </head>
+        <body style="font-family: Arial; background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+            <form method="POST" action="/admin/login" style="background: #1e293b; padding: 25px; border-radius: 10px; width: 320px;">
+                <h1>NFJ Admin</h1>
+                <p>Private access only</p>
+
+                <input type="text" name="username" placeholder="Username" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
+                <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
+
+                <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px;">Login</button>
+            </form>
         </body>
         </html>
     `);
 });
 
+app.post("/admin/login", (req, res) => {
+    const { username, password } = req.body;
+    const user = adminUsers.find(admin => admin.username === username);
+
+    if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
+        return res.send("Login failed. <a href='/admin'>Try again</a>");
+    }
+
+    req.session.loggedIn = true;
+    req.session.username = user.username;
+    res.redirect("/admin/dashboard");
+});
+
+app.get("/admin/dashboard", requireLogin, (req, res) => {
+    res.send(terminalPage("NFJ Admin Dashboard", "ADMIN SYSTEM", `
+        <h1>Admin Dashboard <span class="blink">_</span></h1>
+
+        <p>Private operations system loaded. Select a module below.</p>
+
+        <div class="grid">
+            <a class="terminal-link card" href="/admin/jobs">
+                CURRENT JOBS
+                <p>Booked work and site details</p>
+            </a>
+
+            <a class="terminal-link card" href="/admin/files">
+                FILES
+                <p>Documents, certificates and receipts</p>
+            </a>
+
+            <a class="terminal-link card" href="/admin/photos">
+                PHOTOS
+                <p>Job photos and site evidence</p>
+            </a>
+
+            <a class="terminal-link card" href="/admin/notes">
+                NOTES
+                <p>Work notes and customer sign-off</p>
+            </a>
+
+            <a class="terminal-link card" href="/admin/invoices">
+                INVOICES
+                <p>Create and manage invoices</p>
+            </a>
+        </div>
+
+        <a class="back-link" href="/admin/logout">LOG OUT</a>
+    `));
+});
+
+app.get("/admin/logout", (req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/admin");
+    });
+});
+
+app.get("/admin/jobs", requireLogin, (req, res) => {
+    const jobList = jobs.map(job => `
+        <article class="card">
+            <div class="item-top">
+                <strong>${job.customerName}</strong>
+                <span>${job.date} ${job.time}</span>
+            </div>
+
+            <p><strong>Status:</strong> ${job.status}</p>
+            <p><strong>Contact:</strong> ${job.contactNumber || "Not recorded"}</p>
+            <p><strong>Address:</strong> ${job.jobAddress}</p>
+            <p><strong>Details:</strong> ${job.details}</p>
+        </article>
+    `).join("");
+
+    res.send(terminalPage("NFJ Current Jobs", "CURRENT JOBS", `
+        <h1>Current Jobs <span class="blink">_</span></h1>
+
+        <p>Book and record upcoming work.</p>
+
+        <form method="POST" action="/admin/jobs">
+            <h2>Add Job</h2>
+
+            <label>
+                Customer Name
+                <input name="customerName" required>
+            </label>
+
+            <label>
+                Contact Number
+                <input name="contactNumber">
+            </label>
+
+            <label>
+                Job Address
+                <input name="jobAddress" required>
+            </label>
+
+            <label>
+                Date
+                <input type="date" name="date" required>
+            </label>
+
+            <label>
+                Time
+                <input type="time" name="time">
+            </label>
+
+            <label>
+                Status
+                <select name="status">
+                    <option>Booked</option>
+                    <option>In Progress</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+                </select>
+            </label>
+
+            <label>
+                Job Details
+                <textarea name="details" required></textarea>
+            </label>
+
+            <button type="submit">SAVE JOB</button>
+        </form>
+
+        <h2>Saved Jobs</h2>
+        ${jobList || "<p>No jobs saved yet.</p>"}
+
+        <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+    `));
+});
+
+app.post("/admin/jobs", requireLogin, (req, res) => {
+    jobs.push({
+        date: req.body.date,
+        time: req.body.time,
+        customerName: req.body.customerName,
+        contactNumber: req.body.contactNumber,
+        jobAddress: req.body.jobAddress,
+        status: req.body.status,
+        details: req.body.details
+    });
+
+    res.redirect("/admin/jobs");
+});
+
+app.get("/admin/files", requireLogin, (req, res) => {
+    const fileList = files.map(file => `
+        <article class="card">
+            <div class="item-top">
+                <strong>${file.fileName}</strong>
+                <span>${file.date}</span>
+            </div>
+
+            <p><strong>Customer:</strong> ${file.customerName}</p>
+            <p><strong>Job Address:</strong> ${file.jobAddress}</p>
+            <p><strong>Description:</strong> ${file.description || "No description recorded"}</p>
+            <a class="terminal-link" href="${file.fileUrl}" target="_blank" rel="noopener noreferrer">OPEN FILE</a>
+        </article>
+    `).join("");
+
+    res.send(terminalPage("NFJ Files", "FILES", `
+        <h1>Files <span class="blink">_</span></h1>
+
+        <p>Store links to receipts, certificates, manuals, quotes, invoices and job documents.</p>
+
+        <form method="POST" action="/admin/files">
+            <h2>Add File</h2>
+
+            <label>
+                File Name
+                <input name="fileName" required>
+            </label>
+
+            <label>
+                Customer Name
+                <input name="customerName" required>
+            </label>
+
+            <label>
+                Job Address
+                <input name="jobAddress" required>
+            </label>
+
+            <label>
+                File URL
+                <input type="url" name="fileUrl" placeholder="https://..." required>
+            </label>
+
+            <label>
+                Description
+                <textarea name="description"></textarea>
+            </label>
+
+            <button type="submit">SAVE FILE</button>
+        </form>
+
+        <h2>Saved Files</h2>
+        ${fileList || "<p>No files saved yet.</p>"}
+
+        <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+    `));
+});
+
+app.post("/admin/files", requireLogin, (req, res) => {
+    files.push({
+        date: new Date().toLocaleString("en-GB"),
+        fileName: req.body.fileName,
+        customerName: req.body.customerName,
+        jobAddress: req.body.jobAddress,
+        fileUrl: req.body.fileUrl,
+        description: req.body.description
+    });
+
+    res.redirect("/admin/files");
+});
+
+app.get("/admin/photos", requireLogin, (req, res) => {
+    const photoList = photos.map(photo => `
+        <article class="card">
+            <div class="item-top">
+                <strong>${photo.customerName}</strong>
+                <span>${photo.date}</span>
+            </div>
+
+            <img src="${photo.photoUrl}" alt="Job photo for ${photo.customerName}" class="job-photo">
+
+            <p><strong>Job Address:</strong> ${photo.jobAddress}</p>
+            <p><strong>Description:</strong> ${photo.description || "No description recorded"}</p>
+            <a class="terminal-link" href="${photo.photoUrl}" target="_blank" rel="noopener noreferrer">OPEN PHOTO</a>
+        </article>
+    `).join("");
+
+    res.send(terminalPage("NFJ Photos", "JOB PHOTOS", `
+        <h1>Photos <span class="blink">_</span></h1>
+
+        <p>Store site photo links for job evidence, before/after records and customer references.</p>
+
+        <form method="POST" action="/admin/photos">
+            <h2>Add Job Photo</h2>
+
+            <label>
+                Customer Name
+                <input name="customerName" required>
+            </label>
+
+            <label>
+                Job Address
+                <input name="jobAddress" required>
+            </label>
+
+            <label>
+                Photo URL
+                <input type="url" name="photoUrl" placeholder="https://..." required>
+            </label>
+
+            <label>
+                Description
+                <textarea name="description"></textarea>
+            </label>
+
+            <button type="submit">SAVE PHOTO</button>
+        </form>
+
+        <h2>Saved Photos</h2>
+        <div class="grid">${photoList || "<p>No photos saved yet.</p>"}</div>
+
+        <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+    `));
+});
+
+app.post("/admin/photos", requireLogin, (req, res) => {
+    photos.push({
+        date: new Date().toLocaleString("en-GB"),
+        customerName: req.body.customerName,
+        jobAddress: req.body.jobAddress,
+        photoUrl: req.body.photoUrl,
+        description: req.body.description
+    });
+
+    res.redirect("/admin/photos");
+});
+
 app.get("/admin/notes", requireLogin, (req, res) => {
     const noteList = notes.map(note => `
-        <article class="note-card">
-            <div class="note-top">
+        <article class="card">
+            <div class="item-top">
                 <strong>${note.customerName}</strong>
                 <span>${note.date}</span>
             </div>
@@ -491,194 +515,49 @@ app.get("/admin/notes", requireLogin, (req, res) => {
         </article>
     `).join("");
 
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>NFJ Job Notes</title>
+    res.send(terminalPage("NFJ Job Notes", "JOB NOTES", `
+        <h1>Notes <span class="blink">_</span></h1>
 
-            <style>
-                body {
-                    margin: 0;
-                    min-height: 100vh;
-                    font-family: "Courier New", monospace;
-                    background: #000000;
-                    color: #00ff66;
-                    padding: 24px;
-                }
+        <p>Record what was completed on site, what materials were used, and who signed off the job.</p>
 
-                .screen {
-                    max-width: 1100px;
-                    margin: 0 auto;
-                    border: 2px solid #00ff66;
-                    padding: 24px;
-                    box-shadow: 0 0 18px rgba(0, 255, 102, 0.45);
-                    background: radial-gradient(circle at center, #001a0a 0%, #000000 70%);
-                }
+        <form method="POST" action="/admin/notes">
+            <h2>Create Job Note</h2>
 
-                .top-bar {
-                    border-bottom: 1px solid #00ff66;
-                    padding-bottom: 12px;
-                    margin-bottom: 24px;
-                    display: flex;
-                    justify-content: space-between;
-                    gap: 12px;
-                    flex-wrap: wrap;
-                }
+            <label>
+                Customer Name
+                <input name="customerName" required>
+            </label>
 
-                h1, h2 {
-                    text-transform: uppercase;
-                    letter-spacing: 2px;
-                    text-shadow: 0 0 8px #00ff66;
-                }
+            <label>
+                Job Address
+                <input name="jobAddress" required>
+            </label>
 
-                p {
-                    color: #9cffb8;
-                    line-height: 1.5;
-                }
+            <label>
+                Work Completed
+                <textarea name="workCompleted" required></textarea>
+            </label>
 
-                form {
-                    border: 1px solid #00ff66;
-                    padding: 18px;
-                    margin-bottom: 28px;
-                    background: rgba(0, 255, 102, 0.05);
-                }
+            <label>
+                Materials Used
+                <textarea name="materialsUsed"></textarea>
+            </label>
 
-                label {
-                    display: block;
-                    margin-bottom: 14px;
-                    color: #9cffb8;
-                }
+            <label>
+                Customer Sign-Off Name
+                <input name="signatureName" placeholder="Typed name for now">
+            </label>
 
-                input, textarea {
-                    width: 100%;
-                    margin-top: 6px;
-                    padding: 12px;
-                    box-sizing: border-box;
-                    background: #000000;
-                    color: #00ff66;
-                    border: 1px solid #00ff66;
-                    font-family: "Courier New", monospace;
-                    font-size: 15px;
-                }
+            <button type="submit">SAVE NOTE</button>
+        </form>
 
-                textarea {
-                    min-height: 110px;
-                    resize: vertical;
-                }
+        <h2>Saved Notes</h2>
+        ${noteList || "<p>No notes saved yet.</p>"}
 
-                button, .back-link {
-                    display: inline-block;
-                    background: transparent;
-                    color: #00ff66;
-                    border: 1px solid #00ff66;
-                    padding: 11px 14px;
-                    font-family: "Courier New", monospace;
-                    text-decoration: none;
-                    cursor: pointer;
-                    margin-top: 8px;
-                }
-
-                button:hover, .back-link:hover {
-                    background: #00ff66;
-                    color: #000000;
-                }
-
-                .note-card {
-                    border: 1px solid #00ff66;
-                    padding: 16px;
-                    margin-bottom: 14px;
-                    background: rgba(0, 255, 102, 0.05);
-                }
-
-                .note-top {
-                    display: flex;
-                    justify-content: space-between;
-                    gap: 12px;
-                    flex-wrap: wrap;
-                    border-bottom: 1px solid #00ff66;
-                    padding-bottom: 8px;
-                    margin-bottom: 12px;
-                }
-
-                .blink {
-                    animation: blink 1s steps(2, start) infinite;
-                }
-
-                @keyframes blink {
-                    50% {
-                        opacity: 0;
-                    }
-                }
-
-                @media (max-width: 600px) {
-                    body {
-                        padding: 12px;
-                    }
-
-                    .screen {
-                        padding: 16px;
-                    }
-                }
-            </style>
-        </head>
-
-        <body>
-            <main class="screen">
-                <div class="top-bar">
-                    <strong>NFJ SERVICES LTD :: JOB NOTES</strong>
-                    <span>STATUS: READY</span>
-                </div>
-
-                <h1>Notes <span class="blink">_</span></h1>
-
-                <p>
-                    Record what was completed on site, what materials were used,
-                    and who signed off the job.
-                </p>
-
-                <form method="POST" action="/admin/notes">
-                    <h2>Create Job Note</h2>
-
-                    <label>
-                        Customer Name
-                        <input name="customerName" required>
-                    </label>
-
-                    <label>
-                        Job Address
-                        <input name="jobAddress" required>
-                    </label>
-
-                    <label>
-                        Work Completed
-                        <textarea name="workCompleted" required></textarea>
-                    </label>
-
-                    <label>
-                        Materials Used
-                        <textarea name="materialsUsed"></textarea>
-                    </label>
-
-                    <label>
-                        Customer Sign-Off Name
-                        <input name="signatureName" placeholder="Typed name for now">
-                    </label>
-
-                    <button type="submit">SAVE NOTE</button>
-                </form>
-
-                <h2>Saved Notes</h2>
-                ${noteList || "<p>No notes saved yet.</p>"}
-
-                <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
-            </main>
-        </body>
-        </html>
-    `);
+        <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+    `));
 });
+
 app.post("/admin/notes", requireLogin, (req, res) => {
     notes.push({
         date: new Date().toLocaleString("en-GB"),
@@ -691,6 +570,7 @@ app.post("/admin/notes", requireLogin, (req, res) => {
 
     res.redirect("/admin/notes");
 });
+
 app.get("/admin/invoices", requireLogin, (req, res) => {
     const invoiceList = invoices.map(invoice => {
         const emailBody = encodeURIComponent(
@@ -713,8 +593,8 @@ Directors: Keith Andrews & Chris Lawton`
         );
 
         return `
-            <article class="invoice-card">
-                <div class="invoice-top">
+            <article class="card">
+                <div class="item-top">
                     <strong>${invoice.invoiceNumber}</strong>
                     <span>${invoice.date}</span>
                 </div>
@@ -737,217 +617,51 @@ Directors: Keith Andrews & Chris Lawton`
         `;
     }).join("");
 
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>NFJ Invoices</title>
+    res.send(terminalPage("NFJ Invoices", "INVOICE SYSTEM", `
+        <h1>Invoices <span class="blink">_</span></h1>
 
-            <style>
-                body {
-                    margin: 0;
-                    min-height: 100vh;
-                    font-family: "Courier New", monospace;
-                    background: #000000;
-                    color: #00ff66;
-                    padding: 24px;
-                }
+        <p>
+            NFJ Services LTD<br>
+            Electrical • Network Cabling • Tech Installations • Maintenance<br>
+            Directors: Keith Andrews & Chris Lawton
+        </p>
 
-                .screen {
-                    max-width: 1100px;
-                    margin: 0 auto;
-                    border: 2px solid #00ff66;
-                    padding: 24px;
-                    box-shadow: 0 0 18px rgba(0, 255, 102, 0.45);
-                    background: radial-gradient(circle at center, #001a0a 0%, #000000 70%);
-                }
+        <form method="POST" action="/admin/invoices">
+            <h2>Create Invoice</h2>
 
-                .top-bar {
-                    border-bottom: 1px solid #00ff66;
-                    padding-bottom: 12px;
-                    margin-bottom: 24px;
-                    display: flex;
-                    justify-content: space-between;
-                    gap: 12px;
-                    flex-wrap: wrap;
-                }
+            <label>
+                Customer Name
+                <input name="customerName" required>
+            </label>
 
-                h1, h2 {
-                    text-transform: uppercase;
-                    letter-spacing: 2px;
-                    text-shadow: 0 0 8px #00ff66;
-                }
+            <label>
+                Customer Email
+                <input type="email" name="customerEmail" required>
+            </label>
 
-                p {
-                    color: #9cffb8;
-                    line-height: 1.5;
-                }
+            <label>
+                Job Address
+                <input name="jobAddress" required>
+            </label>
 
-                .company-box {
-                    border: 1px solid #00ff66;
-                    padding: 16px;
-                    margin-bottom: 24px;
-                    background: rgba(0, 255, 102, 0.06);
-                }
+            <label>
+                Work / Job Details
+                <textarea name="description" required></textarea>
+            </label>
 
-                .company-logo {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 58px;
-                    height: 58px;
-                    border: 1px solid #00ff66;
-                    margin-bottom: 10px;
-                    font-weight: bold;
-                    font-size: 20px;
-                    box-shadow: 0 0 10px rgba(0, 255, 102, 0.35);
-                }
+            <label>
+                Amount (£)
+                <input type="number" name="amount" step="0.01" min="0" required>
+            </label>
 
-                form {
-                    border: 1px solid #00ff66;
-                    padding: 18px;
-                    margin-bottom: 28px;
-                    background: rgba(0, 255, 102, 0.05);
-                }
+            <button type="submit">CREATE INVOICE</button>
+        </form>
 
-                label {
-                    display: block;
-                    margin-bottom: 14px;
-                    color: #9cffb8;
-                }
+        <h2>Saved Invoices</h2>
+        ${invoiceList || "<p>No invoices created yet.</p>"}
 
-                input, textarea {
-                    width: 100%;
-                    margin-top: 6px;
-                    padding: 12px;
-                    box-sizing: border-box;
-                    background: #000000;
-                    color: #00ff66;
-                    border: 1px solid #00ff66;
-                    font-family: "Courier New", monospace;
-                    font-size: 15px;
-                }
-
-                textarea {
-                    min-height: 120px;
-                    resize: vertical;
-                }
-
-                button, .terminal-link, .back-link {
-                    display: inline-block;
-                    background: transparent;
-                    color: #00ff66;
-                    border: 1px solid #00ff66;
-                    padding: 11px 14px;
-                    font-family: "Courier New", monospace;
-                    text-decoration: none;
-                    cursor: pointer;
-                    margin-top: 8px;
-                    margin-right: 8px;
-                }
-
-                button:hover, .terminal-link:hover, .back-link:hover {
-                    background: #00ff66;
-                    color: #000000;
-                }
-
-                .invoice-card {
-                    border: 1px solid #00ff66;
-                    padding: 16px;
-                    margin-bottom: 14px;
-                    background: rgba(0, 255, 102, 0.05);
-                }
-
-                .invoice-top {
-                    display: flex;
-                    justify-content: space-between;
-                    gap: 12px;
-                    flex-wrap: wrap;
-                    border-bottom: 1px solid #00ff66;
-                    padding-bottom: 8px;
-                    margin-bottom: 12px;
-                }
-
-                .blink {
-                    animation: blink 1s steps(2, start) infinite;
-                }
-
-                @keyframes blink {
-                    50% {
-                        opacity: 0;
-                    }
-                }
-
-                @media (max-width: 600px) {
-                    body {
-                        padding: 12px;
-                    }
-
-                    .screen {
-                        padding: 16px;
-                    }
-                }
-            </style>
-        </head>
-
-        <body>
-            <main class="screen">
-                <div class="top-bar">
-                    <strong>NFJ SERVICES LTD :: INVOICE SYSTEM</strong>
-                    <span>STATUS: READY</span>
-                </div>
-
-                <div class="company-box">
-                    <div class="company-logo">NFJ</div>
-                    <h1>Invoices <span class="blink">_</span></h1>
-                    <p>
-                        NFJ Services LTD<br>
-                        Electrical • Network Cabling • Tech Installations • Maintenance<br>
-                        Directors: Keith Andrews & Chris Lawton
-                    </p>
-                </div>
-
-                <form method="POST" action="/admin/invoices">
-                    <h2>Create Invoice</h2>
-
-                    <label>
-                        Customer Name
-                        <input name="customerName" required>
-                    </label>
-
-                    <label>
-                        Customer Email
-                        <input type="email" name="customerEmail" required>
-                    </label>
-
-                    <label>
-                        Job Address
-                        <input name="jobAddress" required>
-                    </label>
-
-                    <label>
-                        Work / Job Details
-                        <textarea name="description" required></textarea>
-                    </label>
-
-                    <label>
-                        Amount (£)
-                        <input type="number" name="amount" step="0.01" min="0" required>
-                    </label>
-
-                    <button type="submit">CREATE INVOICE</button>
-                </form>
-
-                <h2>Saved Invoices</h2>
-                ${invoiceList || "<p>No invoices created yet.</p>"}
-
-                <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
-            </main>
-        </body>
-        </html>
-    `);
+        <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+    `));
 });
 
 app.post("/admin/invoices", requireLogin, (req, res) => {
@@ -1297,17 +1011,6 @@ NFJ Services LTD`
         </body>
         </html>
     `);
-});
-app.post("/admin/photos", requireLogin, (req, res) => {
-    photos.push({
-        date: new Date().toLocaleString("en-GB"),
-        customerName: req.body.customerName,
-        jobAddress: req.body.jobAddress,
-        photoUrl: req.body.photoUrl,
-        description: req.body.description
-    });
-
-    res.redirect("/admin/photos");
 });
 
 app.listen(PORT, () => {
