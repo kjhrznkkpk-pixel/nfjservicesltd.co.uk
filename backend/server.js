@@ -17,6 +17,7 @@ const adminUsers = [
 ];
 
 const invoices = [];
+const notes = [];
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -262,9 +263,220 @@ app.get("/admin/photos", requireLogin, (req, res) => {
 });
 
 app.get("/admin/notes", requireLogin, (req, res) => {
-    res.send("<h1>Notes</h1><p>This page will hold job notes and sign-off records.</p><a href='/admin/dashboard'>Back</a>");
-});
+    const noteList = notes.map(note => `
+        <article class="note-card">
+            <div class="note-top">
+                <strong>${note.customerName}</strong>
+                <span>${note.date}</span>
+            </div>
 
+            <p><strong>Job Address:</strong> ${note.jobAddress}</p>
+            <p><strong>Work Completed:</strong> ${note.workCompleted}</p>
+            <p><strong>Materials Used:</strong> ${note.materialsUsed || "None recorded"}</p>
+            <p><strong>Customer Sign-Off:</strong> ${note.signatureName || "Not signed"}</p>
+        </article>
+    `).join("");
+
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>NFJ Job Notes</title>
+
+            <style>
+                body {
+                    margin: 0;
+                    min-height: 100vh;
+                    font-family: "Courier New", monospace;
+                    background: #000000;
+                    color: #00ff66;
+                    padding: 24px;
+                }
+
+                .screen {
+                    max-width: 1100px;
+                    margin: 0 auto;
+                    border: 2px solid #00ff66;
+                    padding: 24px;
+                    box-shadow: 0 0 18px rgba(0, 255, 102, 0.45);
+                    background: radial-gradient(circle at center, #001a0a 0%, #000000 70%);
+                }
+
+                .top-bar {
+                    border-bottom: 1px solid #00ff66;
+                    padding-bottom: 12px;
+                    margin-bottom: 24px;
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 12px;
+                    flex-wrap: wrap;
+                }
+
+                h1, h2 {
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    text-shadow: 0 0 8px #00ff66;
+                }
+
+                p {
+                    color: #9cffb8;
+                    line-height: 1.5;
+                }
+
+                form {
+                    border: 1px solid #00ff66;
+                    padding: 18px;
+                    margin-bottom: 28px;
+                    background: rgba(0, 255, 102, 0.05);
+                }
+
+                label {
+                    display: block;
+                    margin-bottom: 14px;
+                    color: #9cffb8;
+                }
+
+                input, textarea {
+                    width: 100%;
+                    margin-top: 6px;
+                    padding: 12px;
+                    box-sizing: border-box;
+                    background: #000000;
+                    color: #00ff66;
+                    border: 1px solid #00ff66;
+                    font-family: "Courier New", monospace;
+                    font-size: 15px;
+                }
+
+                textarea {
+                    min-height: 110px;
+                    resize: vertical;
+                }
+
+                button, .back-link {
+                    display: inline-block;
+                    background: transparent;
+                    color: #00ff66;
+                    border: 1px solid #00ff66;
+                    padding: 11px 14px;
+                    font-family: "Courier New", monospace;
+                    text-decoration: none;
+                    cursor: pointer;
+                    margin-top: 8px;
+                }
+
+                button:hover, .back-link:hover {
+                    background: #00ff66;
+                    color: #000000;
+                }
+
+                .note-card {
+                    border: 1px solid #00ff66;
+                    padding: 16px;
+                    margin-bottom: 14px;
+                    background: rgba(0, 255, 102, 0.05);
+                }
+
+                .note-top {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 12px;
+                    flex-wrap: wrap;
+                    border-bottom: 1px solid #00ff66;
+                    padding-bottom: 8px;
+                    margin-bottom: 12px;
+                }
+
+                .blink {
+                    animation: blink 1s steps(2, start) infinite;
+                }
+
+                @keyframes blink {
+                    50% {
+                        opacity: 0;
+                    }
+                }
+
+                @media (max-width: 600px) {
+                    body {
+                        padding: 12px;
+                    }
+
+                    .screen {
+                        padding: 16px;
+                    }
+                }
+            </style>
+        </head>
+
+        <body>
+            <main class="screen">
+                <div class="top-bar">
+                    <strong>NFJ SERVICES LTD :: JOB NOTES</strong>
+                    <span>STATUS: READY</span>
+                </div>
+
+                <h1>Notes <span class="blink">_</span></h1>
+
+                <p>
+                    Record what was completed on site, what materials were used,
+                    and who signed off the job.
+                </p>
+
+                <form method="POST" action="/admin/notes">
+                    <h2>Create Job Note</h2>
+
+                    <label>
+                        Customer Name
+                        <input name="customerName" required>
+                    </label>
+
+                    <label>
+                        Job Address
+                        <input name="jobAddress" required>
+                    </label>
+
+                    <label>
+                        Work Completed
+                        <textarea name="workCompleted" required></textarea>
+                    </label>
+
+                    <label>
+                        Materials Used
+                        <textarea name="materialsUsed"></textarea>
+                    </label>
+
+                    <label>
+                        Customer Sign-Off Name
+                        <input name="signatureName" placeholder="Typed name for now">
+                    </label>
+
+                    <button type="submit">SAVE NOTE</button>
+                </form>
+
+                <h2>Saved Notes</h2>
+                ${noteList || "<p>No notes saved yet.</p>"}
+
+                <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+            </main>
+        </body>
+        </html>
+    `);
+});
+app.post("/admin/notes", requireLogin, (req, res) => {
+    notes.push({
+        date: new Date().toLocaleString("en-GB"),
+        customerName: req.body.customerName,
+        jobAddress: req.body.jobAddress,
+        workCompleted: req.body.workCompleted,
+        materialsUsed: req.body.materialsUsed,
+        signatureName: req.body.signatureName
+    });
+
+    res.redirect("/admin/notes");
+});
 app.get("/admin/invoices", requireLogin, (req, res) => {
     const invoiceList = invoices.map(invoice => {
         const emailBody = encodeURIComponent(
