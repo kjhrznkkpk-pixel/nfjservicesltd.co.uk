@@ -6,8 +6,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const adminUser = {
-    username: "admin",
-    passwordHash: bcrypt.hashSync("Password?1", 10)
+    username: "keith",
+    passwordHash: bcrypt.hashSync("Unicorn1234", 10)
+};
+const adminUser = {
+    username: "chris",
+    passwordHash: bcrypt.hashSync("Password1", 10)
 };
 
 app.use(express.urlencoded({ extended: true }));
