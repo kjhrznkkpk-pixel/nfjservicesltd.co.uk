@@ -1,1 +1,15 @@
-
+{
+  "name": "nfj-admin-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Private admin backend for NFJ Services LTD",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.3",
+    "express-session": "^1.18.0"
+  }
+}
