@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Terms and Conditions - NFJ Services LTD</title>
-    <meta name="description" content="Terms and Conditions of Service for NFJ Services LTD.">
+    <meta name="description" content="Terms and Conditions of Service for NFJ Services LTD, covering service scope, payment terms, late payments, cancellation, liability, confidentiality and intellectual property.">
+    <meta name="keywords" content="NFJ Services LTD terms and conditions, payment terms, service terms, Cheshire, Lancashire, Merseyside">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -16,49 +21,198 @@
         }
 
         header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             background: white;
-            padding: 20px;
-            text-align: center;
+            padding: 10px 15px;
+            overflow: hidden;
         }
 
-        header a {
+        .logo {
+            height: 190px;
+            width: 120vw;
+            max-width: 850px;
+            object-fit: contain;
+            transform: scale(1.14);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        nav a {
             color: black;
             text-decoration: none;
-            font-weight: bold;
+            font-size: 18px;
+            padding: 8px 10px;
+            position: relative;
+            white-space: nowrap;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        h1 {
-            color: white;
-            font-size: 36px;
-            margin-bottom: 30px;
-        }
-
-        h2 {
+        nav a:hover,
+        nav a.active {
             color: #3b82f6;
-            margin-top: 28px;
         }
 
-        p,
-        li {
+        nav a:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 18px;
+            width: 1px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .page-hero {
+            text-align: center;
+            padding: 55px 20px 35px;
+        }
+
+        .page-hero h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+
+        .page-hero p {
+            max-width: 760px;
+            margin: 16px auto 0;
             color: #cbd5e1;
         }
 
+        .terms-wrap {
+            max-width: 980px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .summary-box {
+            background: #1e293b;
+            border-left: 4px solid #3b82f6;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 22px;
+        }
+
+        .summary-box h2 {
+            margin: 0 0 8px;
+            color: #93c5fd;
+            font-size: 20px;
+        }
+
+        .summary-box p {
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        .terms-panel {
+            background: #0b1220;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .terms-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .term-section {
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.8);
+        }
+
+        .term-section:last-child {
+            border-bottom: none;
+        }
+
+        .term-section h2 {
+            margin: 0 0 10px;
+            color: #3b82f6;
+            font-size: 22px;
+        }
+
+        .term-section p,
+        .term-section li {
+            color: #cbd5e1;
+        }
+
+        .term-section p {
+            margin: 0 0 10px;
+        }
+
         ul {
+            margin-top: 8px;
             padding-left: 22px;
         }
 
         .acceptance {
-            margin-top: 40px;
+            margin-top: 24px;
             padding: 20px;
             background: #1e293b;
-            border-left: 4px solid #3b82f6;
+            border: 1px solid #3b82f6;
             border-radius: 8px;
+        }
+
+        .acceptance h2 {
+            margin-top: 0;
+            color: #93c5fd;
+        }
+
+        .button-row {
+            margin-top: 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background: #2563eb;
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: #93c5fd;
+            border: 1px solid #3b82f6;
+        }
+
+        .btn.secondary:hover {
+            background: rgba(59, 130, 246, 0.15);
         }
 
         footer {
@@ -67,6 +221,92 @@
             background: #020617;
             font-size: 13px;
             color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            color: #3b82f6;
+        }
+
+        @media print {
+            header,
+            nav,
+            .page-hero,
+            .summary-box,
+            .button-row,
+            footer {
+                display: none;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .terms-wrap {
+                max-width: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .terms-panel {
+                border: none;
+                padding: 0;
+                background: white;
+            }
+
+            .term-section h2,
+            .acceptance h2 {
+                color: black;
+            }
+
+            .term-section p,
+            .term-section li,
+            .terms-meta {
+                color: black;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 10px;
+            }
+
+            .logo {
+                height: 175px;
+                width: 100vw;
+                max-width: none;
+                transform: scale(1.18);
+            }
+
+            nav {
+                flex-wrap: nowrap;
+                justify-content: center;
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .page-hero {
+                padding: 35px 18px 24px;
+            }
+
+            .page-hero h1 {
+                font-size: 30px;
+            }
+
+            .terms-panel {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -74,77 +314,134 @@
 <body>
 
 <header>
-    <a href="index.html">← Back to NFJ Services LTD</a>
+    <img src="logo.png" class="logo" alt="NFJ Services LTD Logo">
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
+        <a href="Reviews.html">Reviews</a>
+        <a href="terms.html" class="active">Terms</a>
+    </nav>
 </header>
 
-<main class="container">
-    <h1>Terms and Conditions of Service</h1>
-
-    <h2>1. Scope of Services</h2>
+<section class="page-hero">
+    <h1>Terms and Conditions</h1>
     <p>
-        We agree to provide services as outlined in the agreed quotation, proposal, or written communication.
-        Any additional work outside of the agreed scope may incur additional charges.
+        These terms explain how NFJ Services LTD provides services, handles payments,
+        manages cancellations and protects both parties during agreed work.
     </p>
+</section>
 
-    <h2>2. Payment Terms</h2>
-    <p>
-        Payment is due immediately upon completion of the agreed work, unless otherwise stated in writing.
-        We reserve the right to request a deposit before commencing work.
-    </p>
-
-    <p>If payment is not received:</p>
-    <ul>
-        <li>We reserve the right to suspend or withdraw services, and/or</li>
-        <li>Remove or disable any work delivered, including websites or digital services, until payment is made in full.</li>
-    </ul>
-
-    <h2>3. Late Payments</h2>
-    <p>
-        Failure to make payment may result in additional charges, including interest and recovery costs,
-        in line with UK legislation, including Late Payment of Commercial Debts regulations.
-    </p>
-
-    <h2>4. Cancellation and Termination</h2>
-    <p>
-        Either party may terminate the agreement with written notice.
-        Any work completed up to the point of termination will be charged and payable immediately.
-    </p>
-
-    <h2>5. Liability</h2>
-    <p>
-        Our liability is limited to the total amount paid for the services provided.
-        We are not liable for any indirect, incidental, or consequential losses, including loss of income,
-        business, or data.
-    </p>
-
-    <h2>6. Confidentiality</h2>
-    <p>
-        Both parties agree to keep confidential any sensitive or proprietary information obtained during
-        the course of the project and not disclose it to third parties without consent.
-    </p>
-
-    <h2>7. Intellectual Property</h2>
-    <p>
-        All work remains our property until full payment has been received.
-        Upon full payment, ownership of the final deliverables transfers to the client unless otherwise agreed.
-    </p>
-
-    <h2>8. Governing Law</h2>
-    <p>
-        These terms are governed by the laws of England and Wales, and any disputes will be subject
-        to the jurisdiction of those courts.
-    </p>
-
-    <div class="acceptance">
-        <h2>Acceptance of Terms</h2>
+<main class="terms-wrap">
+    <section class="summary-box">
+        <h2>Quick Summary</h2>
         <p>
-            By engaging our services, you agree to these Terms and Conditions.
+            Payment is due immediately on completion unless agreed otherwise in writing.
+            Work outside the agreed scope may be charged separately, and all delivered work
+            remains our property until payment is received in full.
         </p>
-    </div>
+    </section>
+
+    <section class="terms-panel">
+        <div class="terms-meta">
+            <span>NFJ Services LTD</span>
+            <span>Last updated: June 2026</span>
+        </div>
+
+        <div class="term-section">
+            <h2>1. Scope of Services</h2>
+            <p>
+                We agree to provide services as outlined in the agreed quotation, proposal,
+                or written communication. Any additional work outside of the agreed scope may
+                incur additional charges.
+            </p>
+        </div>
+
+        <div class="term-section">
+            <h2>2. Payment Terms</h2>
+            <p>
+                Payment is due immediately upon completion of the agreed work, unless otherwise
+                stated in writing. We reserve the right to request a deposit before commencing work.
+            </p>
+            <p>If payment is not received:</p>
+            <ul>
+                <li>We reserve the right to suspend or withdraw services, and/or</li>
+                <li>Remove or disable any work delivered, including websites or digital services, until payment is made in full.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>3. Late Payments</h2>
+            <p>
+                Failure to make payment may result in additional charges, including interest
+                and recovery costs, in line with UK legislation, including Late Payment of
+                Commercial Debts regulations.
+            </p>
+        </div>
+
+        <div class="term-section">
+            <h2>4. Cancellation and Termination</h2>
+            <p>
+                Either party may terminate the agreement with written notice. Any work completed
+                up to the point of termination will be charged and payable immediately.
+            </p>
+        </div>
+
+        <div class="term-section">
+            <h2>5. Liability</h2>
+            <p>
+                Our liability is limited to the total amount paid for the services provided.
+                We are not liable for any indirect, incidental, or consequential losses,
+                including loss of income, business, or data.
+            </p>
+        </div>
+
+        <div class="term-section">
+            <h2>6. Confidentiality</h2>
+            <p>
+                Both parties agree to keep confidential any sensitive or proprietary information
+                obtained during the course of the project and not disclose it to third parties
+                without consent.
+            </p>
+        </div>
+
+        <div class="term-section">
+            <h2>7. Intellectual Property</h2>
+            <p>
+                All work remains our property until full payment has been received. Upon full
+                payment, ownership of the final deliverables transfers to the client unless
+                otherwise agreed.
+            </p>
+        </div>
+
+        <div class="term-section">
+            <h2>8. Governing Law</h2>
+            <p>
+                These terms are governed by the laws of England and Wales, and any disputes will
+                be subject to the jurisdiction of those courts.
+            </p>
+        </div>
+
+        <div class="acceptance">
+            <h2>Acceptance of Terms</h2>
+            <p>
+                By engaging our services, you agree to these Terms and Conditions.
+            </p>
+        </div>
+
+        <div class="button-row">
+            <a class="btn primary" href="contact.html">Contact Us</a>
+            <button class="btn secondary" onclick="window.print()">Print Terms</button>
+        </div>
+    </section>
 </main>
 
 <footer>
-    © 2026 NFJ Services LTD — All rights reserved
+    © 2026 NFJ Services LTD — All rights reserved<br>
+    Directors: Keith Andrews & Chris Lawton<br>
+    <a class="footer-link" href="index.html">Back to Home</a>
 </footer>
 
 </body>
