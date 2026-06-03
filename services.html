@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Services - NFJ Services LTD</title>
-<meta name="description" content="NFJ Services LTD offers electrical work, network cabling, tech installations, CCTV, TV mounting and maintenance services for homes and small businesses.">
-<meta name="keywords" content="NFJ Services, electrical work, network cabling, CCTV installation, TV mounting, tech installations, maintenance services">
+<title>Services - NFJ Services LTD | Network Cabling, CCTV, WiFi, Fibre & Starlink</title>
+<meta name="description" content="NFJ Services LTD provides commercial and domestic network cabling, WiFi installation, CCTV, fibre optic cabling, Starlink setup, home automation and maintenance across Cheshire, Lancashire and Merseyside.">
+<meta name="keywords" content="NFJ Services, network cabling Cheshire, network cabling Lancashire, network cabling Merseyside, CCTV installation, WiFi installation, fibre optic cabling, Starlink installation, home automation, AV systems, network cabinet fault finding">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -62,7 +62,8 @@ nav a {
     white-space: nowrap;
 }
 
-nav a:hover {
+nav a:hover,
+nav a.active {
     color: #3b82f6;
 }
 
@@ -85,14 +86,27 @@ nav a:not(:last-child)::after {
 }
 
 h1 {
-    margin-bottom: 30px;
+    margin-bottom: 12px;
+    font-size: 40px;
+}
+
+.intro {
+    max-width: 850px;
+    margin: 0 auto 34px;
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+.service-area {
+    color: #93c5fd;
+    font-weight: 500;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
 }
 
@@ -101,21 +115,45 @@ h1 {
     padding: 25px;
     border-radius: 12px;
     transition: 0.2s;
+    text-align: left;
+    border: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .card:hover {
     transform: translateY(-5px);
+    border-color: rgba(59, 130, 246, 0.55);
 }
 
 .card h2 {
     color: #3b82f6;
     font-size: 20px;
+    margin-top: 0;
 }
 
 .card p {
     color: #cbd5e1;
     font-size: 14px;
     line-height: 1.6;
+}
+
+/* SERVICE AREAS */
+.areas {
+    margin: 45px auto 0;
+    max-width: 950px;
+    background: #0b1220;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.areas h2 {
+    color: #3b82f6;
+    margin-top: 0;
+}
+
+.areas p {
+    color: #cbd5e1;
+    line-height: 1.7;
 }
 
 /* BUTTON */
@@ -142,6 +180,15 @@ footer {
     color: #94a3b8;
     margin-top: 40px;
     line-height: 1.6;
+}
+
+.footer-link {
+    color: #94a3b8;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: #3b82f6;
 }
 
 /* MOBILE */
@@ -176,6 +223,14 @@ footer {
     .container {
         padding: 35px 20px 60px;
     }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .card {
+        text-align: center;
+    }
 }
 </style>
 </head>
@@ -187,7 +242,7 @@ footer {
 
     <nav>
         <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
+        <a href="services.html" class="active">Services</a>
         <a href="contact.html">Contact</a>
         <a href="faq.html">FAQ</a>
         <a href="Reviews.html">Reviews</a>
@@ -198,37 +253,84 @@ footer {
 
 <h1>Our Services</h1>
 
+<p class="intro">
+    NFJ Services LTD provides practical, professional technology, cabling and installation services
+    for homes, small businesses and commercial premises across
+    <span class="service-area">Cheshire, Lancashire and Merseyside</span>.
+</p>
+
 <div class="grid">
 
     <div class="card">
-        <h2>Electrical Work</h2>
-        <p>We offer reliable and professional electrical services for small jobs in homes and small businesses. We handle lighting, sockets, switches, and minor repairs with a focus on safety and quality workmanship.</p>
+        <h2>Commercial & Domestic Network Cabling</h2>
+        <p>Structured Ethernet and data cabling for homes, offices, outbuildings and business premises, installed neatly for fast and reliable connectivity.</p>
     </div>
 
     <div class="card">
-        <h2>Network Cabling</h2>
-        <p>We install Ethernet cabling for faster, more stable internet connections. Clean, tidy installs for homes and offices with long-lasting performance.</p>
+        <h2>WiFi Network Installation</h2>
+        <p>WiFi installation and configuration, including mesh WiFi, access points and improved wireless coverage for homes and workplaces.</p>
     </div>
 
     <div class="card">
-        <h2>Tech Installations</h2>
-        <p>TV mounting, smart devices, CCTV, and home tech setups installed neatly and correctly so everything works first time.</p>
+        <h2>Network Cabinet Rationalisation</h2>
+        <p>Network cabinet tidy-ups, patching, labelling, rationalisation and fault finding to make existing systems cleaner and easier to manage.</p>
     </div>
 
     <div class="card">
-        <h2>Maintenance</h2>
-        <p>General property maintenance and small repairs to keep your home or business running smoothly without hassle.</p>
+        <h2>CCTV Installation</h2>
+        <p>CCTV camera installation and setup for domestic and commercial properties, helping improve visibility, security and peace of mind.</p>
+    </div>
+
+    <div class="card">
+        <h2>Multi-Room Audio Visual Systems</h2>
+        <p>Audio visual installation including multi-room entertainment systems, TV mounting, media equipment and connected AV setups.</p>
+    </div>
+
+    <div class="card">
+        <h2>Home Automation Services</h2>
+        <p>Smart home setup and automation services, including connected devices, smart controls, lighting, networking and integrations.</p>
+    </div>
+
+    <div class="card">
+        <h2>Fibre Optic Cabling</h2>
+        <p>Fibre optic cabling support for high-speed links, reliable data connections and network infrastructure projects.</p>
+    </div>
+
+    <div class="card">
+        <h2>Garden Room Projects</h2>
+        <p>Garden room project management and installation support, including network, WiFi, power-related coordination and technology setup.</p>
+    </div>
+
+    <div class="card">
+        <h2>Starlink Installation & Integration</h2>
+        <p>Starlink installation, setup and network integration for homes, rural properties, businesses, outbuildings and hard-to-reach locations.</p>
+    </div>
+
+    <div class="card">
+        <h2>Electrical & Maintenance Support</h2>
+        <p>Small electrical jobs, practical property maintenance and general installation support completed cleanly and professionally.</p>
     </div>
 
 </div>
+
+<section class="areas">
+    <h2>Areas We Cover</h2>
+    <p>
+        We cover Cheshire, Lancashire and Merseyside, including Warrington, Runcorn, Widnes,
+        Chester, Ellesmere Port, Liverpool, St Helens, Southport, Preston, Chorley, Leyland,
+        Wigan, Skelmersdale and surrounding areas.
+    </p>
+</section>
 
 <a class="btn" href="contact.html">Message Us</a>
 
 </div>
 
 <footer>
-© 2026 NFJ Services LTD — All rights reserved<br>
+    © 2026 NFJ Services LTD — All rights reserved<br>
+    <a href="terms.html" class="footer-link">Terms & Conditions</a>
 </footer>
+
 <script>
     const pages = [
         "index.html",
@@ -242,30 +344,43 @@ footer {
     const currentIndex = pages.indexOf(currentPage);
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
 
     document.addEventListener("touchstart", event => {
         touchStartX = event.changedTouches[0].screenX;
-    });
+        touchStartY = event.changedTouches[0].screenY;
+    }, { passive: true });
 
     document.addEventListener("touchend", event => {
         touchEndX = event.changedTouches[0].screenX;
+        touchEndY = event.changedTouches[0].screenY;
         handleSwipe();
-    });
+    }, { passive: true });
 
     function handleSwipe() {
-        const swipeDistance = touchEndX - touchStartX;
-        const minimumSwipe = 80;
+        const swipeX = touchEndX - touchStartX;
+        const swipeY = touchEndY - touchStartY;
+        const minimumSwipe = 70;
 
-        if (Math.abs(swipeDistance) < minimumSwipe || currentIndex === -1) {
+        if (currentIndex === -1) {
             return;
         }
 
-        if (swipeDistance < 0 && currentIndex < pages.length - 1) {
+        if (Math.abs(swipeX) < minimumSwipe) {
+            return;
+        }
+
+        if (Math.abs(swipeY) > Math.abs(swipeX)) {
+            return;
+        }
+
+        if (swipeX < 0 && currentIndex < pages.length - 1) {
             window.location.href = pages[currentIndex + 1];
         }
 
-        if (swipeDistance > 0 && currentIndex > 0) {
+        if (swipeX > 0 && currentIndex > 0) {
             window.location.href = pages[currentIndex - 1];
         }
     }
