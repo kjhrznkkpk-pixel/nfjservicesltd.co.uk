@@ -22,6 +22,7 @@
         "Merseyside"
       ],
       "email": "info@nfjservicesltd.co.uk",
+      "paymentAccepted": "Cash, Visa, Mastercard, Apple Pay, Google Pay, Credit Card, Debit Card",
       "sameAs": [
         "https://www.instagram.com/nfjservicesltd/",
         "https://www.facebook.com/profile.php?id=61590596960988"
@@ -124,11 +125,6 @@
             font-size: 16px;
             color: #cbd5e1;
             line-height: 1.6;
-        }
-
-        .service-area {
-            color: #93c5fd;
-            font-weight: 500;
         }
 
         .button-group {
@@ -369,6 +365,99 @@
             display: block;
         }
 
+        .payment-section {
+            padding: 45px 20px;
+            text-align: center;
+            background: #0b1220;
+        }
+
+        .payment-section h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .payment-section p {
+            color: #cbd5e1;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+
+        .payment-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .payment-logo {
+            min-width: 92px;
+            height: 42px;
+            border-radius: 8px;
+            background: white;
+            color: #111827;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            padding: 0 12px;
+        }
+
+        .payment-logo.visa {
+            color: #1a1f71;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .payment-logo.mastercard {
+            gap: 6px;
+        }
+
+        .mastercard-circles {
+            display: inline-flex;
+            position: relative;
+            width: 34px;
+            height: 22px;
+        }
+
+        .mastercard-circles::before,
+        .mastercard-circles::after {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            top: 0;
+        }
+
+        .mastercard-circles::before {
+            left: 0;
+            background: #eb001b;
+        }
+
+        .mastercard-circles::after {
+            right: 0;
+            background: #f79e1b;
+            opacity: 0.9;
+        }
+
+        .payment-logo.apple-pay {
+            background: #000;
+            color: white;
+        }
+
+        .payment-logo.google-pay {
+            background: white;
+            color: #202124;
+        }
+
+        .google-g {
+            color: #4285f4;
+            margin-right: 3px;
+        }
+
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
@@ -508,6 +597,10 @@
             .map-wrap iframe {
                 height: 300px;
             }
+
+            .payment-logo {
+                min-width: 120px;
+            }
         }
     </style>
 </head>
@@ -532,10 +625,9 @@
 
     <p>
         Reliable, clean and professional services across Cheshire, Lancashire and Merseyside.
-
-    Ethernet cabling to CCTV, TV mounting and smart home setup. 
-    We also provide mesh WiFi and whole-home coverage solutions, 
-    along with media wall cabling and first fix installations for a clean, future-ready setup.
+        Ethernet cabling to CCTV, TV mounting and smart home setup.
+        We also provide mesh WiFi and whole-home coverage solutions,
+        along with media wall cabling and first fix installations for a clean, future-ready setup.
     </p>
 
     <div class="button-group">
@@ -633,6 +725,26 @@
             referrerpolicy="no-referrer-when-downgrade"
             title="NFJ Services LTD service area map">
         </iframe>
+    </div>
+</section>
+
+<section class="payment-section">
+    <h2>Payment Methods Accepted</h2>
+    <p>All major credit and debit cards accepted, including contactless mobile payments.</p>
+
+    <div class="payment-logos" aria-label="Accepted payment methods">
+        <span class="payment-logo visa">VISA</span>
+
+        <span class="payment-logo mastercard">
+            <span class="mastercard-circles"></span>
+            Mastercard
+        </span>
+
+        <span class="payment-logo apple-pay">Apple Pay</span>
+
+        <span class="payment-logo google-pay">
+            <span class="google-g">G</span> Pay
+        </span>
     </div>
 </section>
 
