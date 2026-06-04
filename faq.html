@@ -2,12 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FAQ - NFJ Services LTD</title>
-    <meta name="description" content="Frequently asked questions about NFJ Services LTD, including electrical work, network cabling, tech installations and maintenance services.">
-    <meta name="keywords" content="NFJ Services FAQ, electrical work questions, network cabling questions, tech installation FAQ, maintenance services">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/png" href="favicon.png">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+    <title>FAQ | NFJ Services LTD | WiFi, Network Cabling, CCTV & Electrical Questions</title>
+    <meta name="description" content="NFJ Services LTD FAQ covering network cabling, mesh WiFi, Cat5e, Cat6, Cat6A, Cat7, CCTV, Starlink, smart home installations and electrical services across Cheshire, Lancashire and Merseyside.">
+    <meta name="keywords" content="NFJ Services FAQ, mesh WiFi, Cat5e vs Cat6, Cat6A, Cat7, network cabling FAQ, CCTV installation FAQ, Starlink installation, WiFi installation Cheshire, network cabling Lancashire, CCTV Merseyside">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is mesh WiFi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mesh WiFi uses multiple connected WiFi points around your property to provide better coverage than a single router. It helps reduce dead spots and gives a smoother connection across larger homes, offices and outbuildings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between Cat5, Cat5e, Cat6, Cat6A, Cat7 and Cat8 cable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cat5 is older and generally not recommended now. Cat5e supports gigabit speeds for many normal installs. Cat6 gives better performance and reduced interference. Cat6A is better for longer 10Gbps runs. Cat7 is shielded but less commonly used in standard domestic and small business installs. Cat8 is mainly for specialist short-distance data centre use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are ISP supplied routers often worse than purchased routers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Internet provider routers are usually built to be cheap, simple and suitable for average use. Better purchased routers or access points often provide stronger WiFi, better range, more control, improved stability and better handling of multiple devices."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you install network cabling for homes and businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. NFJ Services LTD installs commercial and domestic network cabling, Ethernet points, WiFi access points, cabinet tidy-ups, fault finding and structured cabling across Cheshire, Lancashire and Merseyside."
+          }
+        }
+      ]
+    }
+    </script>
 
     <style>
         html {
@@ -21,7 +62,6 @@
             color: white;
         }
 
-        /* HEADER */
         header {
             position: sticky;
             top: 0;
@@ -76,59 +116,190 @@
             background: rgba(0, 0, 0, 0.3);
         }
 
-        /* PAGE */
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 60px 20px;
-        }
-
-        h1 {
+        .hero {
+            padding: 60px 20px 35px;
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 40px;
+            background: #0f172a;
         }
 
-        /* FAQ ITEMS */
+        .hero h1 {
+            margin: 0 0 14px;
+            font-size: 42px;
+        }
+
+        .hero p {
+            max-width: 850px;
+            margin: 0 auto;
+            color: #cbd5e1;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .faq-shell {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 35px 20px 70px;
+        }
+
+        .faq-tools {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 24px;
+        }
+
+        .faq-search {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background: #020617;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .faq-search::placeholder {
+            color: #94a3b8;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .filter-btn {
+            border: 1px solid #3b82f6;
+            background: transparent;
+            color: #93c5fd;
+            padding: 9px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .faq-count {
+            margin: 14px 0 0;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .section-title {
+            margin: 35px 0 16px;
+            color: #93c5fd;
+            font-size: 22px;
+        }
+
         .faq-item {
             background: #1e293b;
-            margin-bottom: 15px;
-            border-radius: 10px;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            margin-bottom: 12px;
             overflow: hidden;
         }
 
-        .faq-question {
+        .faq-item[open] {
+            border-color: #3b82f6;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        summary {
             padding: 18px;
             cursor: pointer;
             font-weight: bold;
+            line-height: 1.4;
+            list-style: none;
             display: flex;
             justify-content: space-between;
+            gap: 16px;
             align-items: center;
-            gap: 15px;
         }
 
-        .faq-question:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .faq-answer {
-            padding: 0 18px 18px;
+        summary::-webkit-details-marker {
             display: none;
-            color: #cbd5e1;
-            line-height: 1.5;
         }
 
-        .icon {
-            font-size: 22px;
-            transition: 0.2s;
+        summary::after {
+            content: "+";
+            color: #3b82f6;
+            font-size: 24px;
             flex-shrink: 0;
         }
 
-        .faq-item.active .icon {
-            transform: rotate(180deg);
+        details[open] summary::after {
+            content: "-";
         }
 
-        /* FOOTER */
+        .answer {
+            padding: 0 18px 18px;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .answer p {
+            margin: 0 0 12px;
+        }
+
+        .answer ul {
+            margin: 8px 0 0;
+            padding-left: 20px;
+        }
+
+        .answer li {
+            margin-bottom: 7px;
+        }
+
+        .note-box {
+            margin-top: 14px;
+            padding: 12px;
+            border-left: 4px solid #3b82f6;
+            background: #0f172a;
+            color: #dbeafe;
+            border-radius: 8px;
+        }
+
+        .cta {
+            margin-top: 35px;
+            background: #0b1220;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            margin: 0 0 10px;
+        }
+
+        .cta p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin: 0 auto 18px;
+            max-width: 760px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -138,7 +309,58 @@
             line-height: 1.6;
         }
 
-        /* MOBILE */
+        .footer-link,
+        .admin-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #94a3b8;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .admin-link {
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        .footer-link:hover,
+        .admin-link:hover {
+            color: #3b82f6;
+        }
+
+        .creator-credit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .creator-credit:hover {
+            color: #3b82f6;
+        }
+
+        .creator-logo {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #1e293b;
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #334155;
+        }
+
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 600px) {
             header {
                 flex-direction: column;
@@ -167,13 +389,25 @@
                 padding: 8px;
             }
 
-            .container {
-                padding: 35px 15px 50px;
+            .hero {
+                padding: 35px 18px 25px;
             }
 
-            h1 {
-                font-size: 30px;
-                margin-bottom: 30px;
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .faq-shell {
+                padding: 25px 14px 55px;
+            }
+
+            summary {
+                padding: 16px;
+                font-size: 15px;
+            }
+
+            .answer {
+                padding: 0 16px 16px;
             }
         }
     </style>
@@ -193,79 +427,322 @@
     </nav>
 </header>
 
-<div class="container">
+<section class="hero">
     <h1>Frequently Asked Questions</h1>
+    <p>
+        Straight answers about WiFi, mesh systems, network cabling, CCTV, smart home installs,
+        Starlink, electrical work and general maintenance across Cheshire, Lancashire and Merseyside.
+    </p>
+</section>
 
-    <div class="faq-item">
-        <div class="faq-question">
-            <span>What services do you offer?</span>
-            <span class="icon">+</span>
-        </div>
-        <div class="faq-answer">
-            We offer electrical work, network cabling, tech installations, and general maintenance services.
-        </div>
-    </div>
+<main class="faq-shell">
 
-    <div class="faq-item">
-        <div class="faq-question">
-            <span>Do you cover residential and commercial work?</span>
-            <span class="icon">+</span>
-        </div>
-        <div class="faq-answer">
-            Yes, we provide services for both homes and businesses.
-        </div>
-    </div>
+    <section class="faq-tools">
+        <input
+            id="faqSearch"
+            class="faq-search"
+            type="search"
+            placeholder="Search questions, for example mesh, Cat6, CCTV, router or Starlink">
 
-    <div class="faq-item">
-        <div class="faq-question">
-            <span>How can I get a quote?</span>
-            <span class="icon">+</span>
+        <div class="filter-row">
+            <button class="filter-btn active" type="button" data-filter="all">All</button>
+            <button class="filter-btn" type="button" data-filter="general">General</button>
+            <button class="filter-btn" type="button" data-filter="wifi">WiFi & Routers</button>
+            <button class="filter-btn" type="button" data-filter="cabling">Network Cabling</button>
+            <button class="filter-btn" type="button" data-filter="cctv">CCTV & Smart Tech</button>
+            <button class="filter-btn" type="button" data-filter="payments">Payments & Booking</button>
         </div>
-        <div class="faq-answer">
-            You can contact us via email or our contact form, and we’ll get back to you as soon as possible.
-        </div>
-    </div>
 
-    <div class="faq-item">
-        <div class="faq-question">
-            <span>What areas do you cover?</span>
-            <span class="icon">+</span>
-        </div>
-        <div class="faq-answer">
-            We cover local and surrounding areas. Contact us to confirm your location.
-        </div>
-    </div>
+        <p id="faqCount" class="faq-count"></p>
+    </section>
 
-</div>
+    <h2 class="section-title">General Questions</h2>
+
+    <details class="faq-item" data-category="general">
+        <summary>What services do NFJ Services LTD offer?</summary>
+        <div class="answer">
+            <p>We provide electrical work, commercial and domestic network cabling, WiFi installation, CCTV installation, TV mounting, smart home setup, Starlink installation, fibre optic cabling, garden room project support and general maintenance.</p>
+            <p>We work across Cheshire, Lancashire and Merseyside.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="general">
+        <summary>Do you work on homes and businesses?</summary>
+        <div class="answer">
+            <p>Yes. We cover both domestic and commercial work, including homes, offices, shops, small business premises, garden rooms and outbuildings.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="general">
+        <summary>What areas do you cover?</summary>
+        <div class="answer">
+            <p>We mainly cover Cheshire, Lancashire and Merseyside, including areas such as Warrington, Runcorn, Widnes, Chester, Ellesmere Port, Liverpool, St Helens, Southport, Preston, Chorley, Leyland, Wigan, Skelmersdale and surrounding areas.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="general">
+        <summary>Can you visit first before quoting?</summary>
+        <div class="answer">
+            <p>Yes. Some jobs can be quoted from photos and a clear description, but cabling, CCTV, WiFi issues and more involved installs are often best checked properly first.</p>
+        </div>
+    </details>
+
+    <h2 class="section-title">WiFi, Mesh & Routers</h2>
+
+    <details class="faq-item" data-category="wifi">
+        <summary>What is mesh WiFi?</summary>
+        <div class="answer">
+            <p>Mesh WiFi uses more than one WiFi point around your property. Instead of relying on one router in one corner of the house, mesh units work together to spread coverage more evenly.</p>
+            <p>It is useful for larger homes, thick walls, loft rooms, extensions, garden rooms and properties where the WiFi drops out in certain rooms.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="wifi">
+        <summary>Is mesh WiFi better than a WiFi booster?</summary>
+        <div class="answer">
+            <p>Usually, yes. Basic plug-in boosters can repeat a weak signal and often reduce speed. A proper mesh system is normally more stable and easier to move around the property with because the units are designed to work together.</p>
+            <div class="note-box">Best results often come from wiring mesh access points with Ethernet where possible.</div>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="wifi">
+        <summary>Will mesh WiFi make my internet faster?</summary>
+        <div class="answer">
+            <p>Mesh WiFi cannot make your broadband line faster than the speed coming into the property, but it can help you actually receive that speed in more rooms.</p>
+            <p>If your broadband is 500 Mbps but your upstairs room only gets 20 Mbps over poor WiFi, a better WiFi setup can make a huge difference.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="wifi">
+        <summary>Why are internet provider routers often poor compared with purchased routers?</summary>
+        <div class="answer">
+            <p>ISP supplied routers are usually made to be cheap, simple and good enough for average use. They often struggle when a property has lots of devices, thick walls, smart TVs, CCTV, gaming consoles, home working equipment and smart home devices.</p>
+            <p>A good purchased router or access point system can offer:</p>
+            <ul>
+                <li>Better WiFi range</li>
+                <li>More stable connections</li>
+                <li>Improved handling of multiple devices</li>
+                <li>Better parental controls and guest networks</li>
+                <li>More advanced settings and security options</li>
+            </ul>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="wifi">
+        <summary>What is the difference between a router and an access point?</summary>
+        <div class="answer">
+            <p>A router manages your network and connects your devices to the internet. An access point mainly provides WiFi coverage and is usually connected back to the router by Ethernet cable.</p>
+            <p>For the best coverage, many properties benefit from one main router and one or more properly positioned access points.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="wifi">
+        <summary>Can you improve WiFi in a garden room or outbuilding?</summary>
+        <div class="answer">
+            <p>Yes. The best option is usually to run a proper data cable to the garden room and install an access point inside. This is normally much more reliable than trying to stretch WiFi from the house.</p>
+        </div>
+    </details>
+
+    <h2 class="section-title">Network Cabling</h2>
+
+    <details class="faq-item" data-category="cabling">
+        <summary>What is the difference between Cat5, Cat5e, Cat6, Cat6A, Cat7 and Cat8?</summary>
+        <div class="answer">
+            <p>These are different categories of network cable. The higher categories can support better performance, but the right choice depends on the job.</p>
+            <ul>
+                <li><strong>Cat5:</strong> Older cable. Generally not recommended for new installs.</li>
+                <li><strong>Cat5e:</strong> Common for gigabit networking and still fine for many basic jobs.</li>
+                <li><strong>Cat6:</strong> A strong choice for modern homes and small businesses. Better performance and less interference than Cat5e.</li>
+                <li><strong>Cat6A:</strong> Better for 10Gbps networks and longer high-speed runs.</li>
+                <li><strong>Cat6e:</strong> Often used as a marketing term. Cat6A is the proper recognised upgrade from Cat6.</li>
+                <li><strong>Cat7:</strong> Shielded cable, but not usually necessary for normal domestic or small business installs.</li>
+                <li><strong>Cat8:</strong> Mainly for short specialist data centre connections, not typical home cabling.</li>
+            </ul>
+            <div class="note-box">For most new home and small business installs, Cat6 or Cat6A is normally the sensible choice.</div>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cabling">
+        <summary>Is Ethernet better than WiFi?</summary>
+        <div class="answer">
+            <p>For fixed devices, yes. Ethernet is usually faster, more stable and lower latency than WiFi. It is ideal for TVs, gaming consoles, office desks, CCTV systems, access points and media equipment.</p>
+            <p>WiFi is still useful for phones, tablets and portable devices, but important equipment is often better wired where possible.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cabling">
+        <summary>Can you install data points around my home or office?</summary>
+        <div class="answer">
+            <p>Yes. We can install Ethernet points in useful locations such as offices, TV areas, bedrooms, loft spaces, CCTV locations, comms cupboards and garden rooms.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cabling">
+        <summary>What is network cabinet rationalisation?</summary>
+        <div class="answer">
+            <p>It means tidying, organising and correcting a messy network cabinet or comms area. This can include labelling cables, removing unused equipment, improving patching, checking faults and making the setup easier to maintain.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cabling">
+        <summary>Can you find faults in network cables?</summary>
+        <div class="answer">
+            <p>Yes. We can help trace and test network cabling faults, poor terminations, damaged cables, unreliable ports and messy patch panels.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cabling">
+        <summary>Do I need fibre optic cabling?</summary>
+        <div class="answer">
+            <p>Most homes and small businesses do not need fibre inside the property, but it can be useful for longer runs, links between buildings, high-speed networks or areas where electrical interference is a concern.</p>
+        </div>
+    </details>
+
+    <h2 class="section-title">CCTV, Smart Tech & Starlink</h2>
+
+    <details class="faq-item" data-category="cctv">
+        <summary>Do you install CCTV systems?</summary>
+        <div class="answer">
+            <p>Yes. We can install CCTV cameras for homes and businesses, including camera positioning, cabling, setup and basic configuration.</p>
+            <p>We can also help with neat cable routes and making sure cameras are positioned sensibly for useful coverage.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cctv">
+        <summary>Is wired CCTV better than wireless CCTV?</summary>
+        <div class="answer">
+            <p>Wired CCTV is usually more stable because it does not rely on WiFi signal strength. Wireless cameras can be useful in some situations, but wired systems are often better for reliability and long-term use.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cctv">
+        <summary>Can you install TVs and hide cables?</summary>
+        <div class="answer">
+            <p>Yes. We can help with TV mounting, cable management, media wall cabling and first fix cabling for a cleaner finish.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cctv">
+        <summary>What are multi-room audio visual systems?</summary>
+        <div class="answer">
+            <p>Multi-room audio visual systems let you distribute sound, video or media equipment around different rooms. This can include speakers, TVs, media cabling, network points and control equipment.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cctv">
+        <summary>Do you install smart home and home automation equipment?</summary>
+        <div class="answer">
+            <p>Yes. We can help with smart devices, home automation equipment, WiFi-connected devices, smart lighting support, cameras, doorbells and connected home setups.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="cctv">
+        <summary>Can you install Starlink?</summary>
+        <div class="answer">
+            <p>Yes. We can help with Starlink installation and integration, including positioning, cable routing and connecting it into your home or business network where suitable.</p>
+        </div>
+    </details>
+
+    <h2 class="section-title">Payments, Quotes & Booking</h2>
+
+    <details class="faq-item" data-category="payments">
+        <summary>How do I get a quote?</summary>
+        <div class="answer">
+            <p>You can use the contact form or email us with your name, location, photos if useful, and a short description of the work needed. We will then advise the best next step.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="payments">
+        <summary>What payment methods do you accept?</summary>
+        <div class="answer">
+            <p>We accept major credit and debit cards, including Visa and Mastercard, plus Apple Pay and Google Pay where available. Payment terms will be confirmed with your booking or invoice.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="payments">
+        <summary>When is payment due?</summary>
+        <div class="answer">
+            <p>Unless agreed otherwise in writing, payment is due on completion of the agreed work. Some larger jobs may require a deposit before work begins.</p>
+        </div>
+    </details>
+
+    <details class="faq-item" data-category="payments">
+        <summary>Do you offer advice before booking?</summary>
+        <div class="answer">
+            <p>Yes. We are happy to discuss the problem first and point you in the right direction. For more complex issues, a visit may be needed to check the site properly.</p>
+        </div>
+    </details>
+
+    <section class="cta">
+        <h2>Still Have a Question?</h2>
+        <p>
+            Send us a message with what you need, where you are based and any photos that may help.
+            We will get back to you as soon as possible.
+        </p>
+        <a class="btn" href="contact.html">Contact NFJ Services LTD</a>
+    </section>
+
+</main>
 
 <footer>
-    © 2026 NFJ Services LTD — All rights reserved<br>
+    &copy; 2026 NFJ Services LTD — All rights reserved<br>
+
+    <a class="creator-credit"
+       href="https://www.keith-andrews.co.uk"
+       target="_blank"
+       rel="noopener noreferrer">
+        <span class="creator-logo">KA</span>
+        <span>Designed and created by Keith-Andrews Web Development</span>
+    </a>
+
+    <br>
+    <a href="terms.html" class="footer-link">Terms & Conditions</a>
+    <br>
+    <a href="https://nfj-admin.onrender.com/admin" class="admin-link">Admin Login</a>
 </footer>
 
 <script>
-    const items = document.querySelectorAll(".faq-item");
+    const faqSearch = document.getElementById("faqSearch");
+    const faqItems = Array.from(document.querySelectorAll(".faq-item"));
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const faqCount = document.getElementById("faqCount");
 
-    items.forEach(item => {
-        const question = item.querySelector(".faq-question");
-        const answer = item.querySelector(".faq-answer");
-        const icon = item.querySelector(".icon");
+    let activeFilter = "all";
 
-        question.addEventListener("click", () => {
-            const isOpen = answer.style.display === "block";
+    function updateFaqs() {
+        const searchText = faqSearch.value.toLowerCase().trim();
+        let visibleCount = 0;
 
-            document.querySelectorAll(".faq-answer").forEach(a => a.style.display = "none");
-            document.querySelectorAll(".icon").forEach(i => i.textContent = "+");
-            document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("active"));
+        faqItems.forEach(item => {
+            const category = item.dataset.category;
+            const text = item.textContent.toLowerCase();
+            const matchesSearch = text.includes(searchText);
+            const matchesFilter = activeFilter === "all" || category === activeFilter;
+            const shouldShow = matchesSearch && matchesFilter;
 
-            if (!isOpen) {
-                answer.style.display = "block";
-                icon.textContent = "-";
-                item.classList.add("active");
+            item.classList.toggle("hidden", !shouldShow);
+
+            if (shouldShow) {
+                visibleCount++;
             }
         });
+
+        faqCount.textContent = `${visibleCount} question${visibleCount === 1 ? "" : "s"} shown`;
+    }
+
+    faqSearch.addEventListener("input", updateFaqs);
+
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            filterButtons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+            activeFilter = button.dataset.filter;
+            updateFaqs();
+        });
     });
-</script>
-<script>
+
+    updateFaqs();
+
     const pages = [
         "index.html",
         "services.html",
@@ -278,33 +755,47 @@
     const currentIndex = pages.indexOf(currentPage);
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
 
     document.addEventListener("touchstart", event => {
         touchStartX = event.changedTouches[0].screenX;
-    });
+        touchStartY = event.changedTouches[0].screenY;
+    }, { passive: true });
 
     document.addEventListener("touchend", event => {
         touchEndX = event.changedTouches[0].screenX;
+        touchEndY = event.changedTouches[0].screenY;
         handleSwipe();
-    });
+    }, { passive: true });
 
     function handleSwipe() {
-        const swipeDistance = touchEndX - touchStartX;
-        const minimumSwipe = 80;
+        const swipeX = touchEndX - touchStartX;
+        const swipeY = touchEndY - touchStartY;
+        const minimumSwipe = 70;
 
-        if (Math.abs(swipeDistance) < minimumSwipe || currentIndex === -1) {
+        if (currentIndex === -1) {
             return;
         }
 
-        if (swipeDistance < 0 && currentIndex < pages.length - 1) {
+        if (Math.abs(swipeX) < minimumSwipe) {
+            return;
+        }
+
+        if (Math.abs(swipeY) > Math.abs(swipeX)) {
+            return;
+        }
+
+        if (swipeX < 0 && currentIndex < pages.length - 1) {
             window.location.href = pages[currentIndex + 1];
         }
 
-        if (swipeDistance > 0 && currentIndex > 0) {
+        if (swipeX > 0 && currentIndex > 0) {
             window.location.href = pages[currentIndex - 1];
         }
     }
 </script>
+
 </body>
 </html>
