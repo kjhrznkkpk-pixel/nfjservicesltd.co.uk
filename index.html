@@ -16,11 +16,7 @@
       "name": "NFJ Services LTD",
       "url": "https://www.nfjservicesltd.co.uk/",
       "description": "Electrical work, CCTV installation, network cabling, TV mounting, smart tech setup and property maintenance across Cheshire, Lancashire and Merseyside.",
-      "areaServed": [
-        "Cheshire",
-        "Lancashire",
-        "Merseyside"
-      ],
+      "areaServed": ["Cheshire", "Lancashire", "Merseyside"],
       "email": "info@nfjservicesltd.co.uk",
       "paymentAccepted": "Cash, Visa, Mastercard, Apple Pay, Google Pay, Credit Card, Debit Card",
       "sameAs": [
@@ -39,9 +35,7 @@
     </script>
 
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: Arial, sans-serif;
@@ -89,9 +83,7 @@
         }
 
         nav a:hover,
-        nav a.active {
-            color: #3b82f6;
-        }
+        nav a.active { color: #3b82f6; }
 
         nav a:not(:last-child)::after {
             content: "";
@@ -175,9 +167,7 @@
             color: white;
         }
 
-        .btn.primary:hover {
-            background: #2563eb;
-        }
+        .btn.primary:hover { background: #2563eb; }
 
         .btn.secondary {
             border: 2px solid #3b82f6;
@@ -305,9 +295,7 @@
             margin: 0 auto;
         }
 
-        .card-link {
-            text-decoration: none;
-        }
+        .card-link { text-decoration: none; }
 
         .card {
             background: #1e293b;
@@ -322,9 +310,7 @@
             transform: translateY(-6px) scale(1.02);
         }
 
-        .card h3 {
-            color: #3b82f6;
-        }
+        .card h3 { color: #3b82f6; }
 
         .card p {
             color: #cbd5e1;
@@ -344,7 +330,7 @@
         }
 
         .map-section p {
-            max-width: 700px;
+            max-width: 760px;
             margin: 0 auto 24px;
             color: #cbd5e1;
             line-height: 1.6;
@@ -363,6 +349,71 @@
             height: 380px;
             border: 0;
             display: block;
+        }
+
+        .area-checker {
+            max-width: 1000px;
+            margin: 24px auto 0;
+            text-align: left;
+        }
+
+        .area-search {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #020617;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .area-result {
+            margin: 14px 0 18px;
+            color: #93c5fd;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .town-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .town-group {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .town-group h3 {
+            margin: 0 0 12px;
+            color: #3b82f6;
+        }
+
+        .town-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .town-button {
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #cbd5e1;
+            border-radius: 999px;
+            padding: 7px 10px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .town-button:hover,
+        .town-button.match {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
         }
 
         .payment-section {
@@ -433,9 +484,7 @@
             text-decoration: none;
         }
 
-        .admin-link:hover {
-            color: #3b82f6;
-        }
+        .admin-link:hover { color: #3b82f6; }
 
         .visit-counter {
             display: block;
@@ -455,9 +504,7 @@
             font-size: 12px;
         }
 
-        .creator-credit:hover {
-            color: #3b82f6;
-        }
+        .creator-credit:hover { color: #3b82f6; }
 
         .creator-logo {
             width: 26px;
@@ -481,9 +528,7 @@
             text-decoration: none;
         }
 
-        .footer-link:hover {
-            color: #3b82f6;
-        }
+        .footer-link:hover { color: #3b82f6; }
 
         @media (max-width: 600px) {
             header {
@@ -517,25 +562,15 @@
                 padding: 20px 20px 40px;
             }
 
-            .hero h1 {
-                font-size: 30px;
-            }
+            .hero h1 { font-size: 30px; }
 
-            .hero h2 {
-                font-size: 18px;
-            }
+            .hero h2 { font-size: 18px; }
 
-            .social-button-group {
-                gap: 25px;
-            }
+            .social-button-group { gap: 25px; }
 
-            .map-wrap iframe {
-                height: 300px;
-            }
+            .map-wrap iframe { height: 300px; }
 
-            .payment-image {
-                max-width: 340px;
-            }
+            .payment-image { max-width: 340px; }
         }
     </style>
 </head>
@@ -649,17 +684,33 @@
 <section class="map-section">
     <h2>Areas We Cover</h2>
     <p>
-        NFJ Services LTD covers Cheshire, Lancashire and Merseyside,
-        including surrounding towns and local areas.
+        Search your town or city to check if NFJ Services LTD covers your area.
+        We currently cover Cheshire, Lancashire and Merseyside.
     </p>
 
     <div class="map-wrap">
         <iframe
+            id="service-map"
             src="https://www.google.com/maps?q=Cheshire%20Lancashire%20Merseyside&output=embed"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             title="NFJ Services LTD service area map">
         </iframe>
+    </div>
+
+    <div class="area-checker">
+        <input
+            id="area-search"
+            class="area-search"
+            type="text"
+            placeholder="Start typing your town or city..."
+            autocomplete="off">
+
+        <div id="area-result" class="area-result">
+            Enter your town or city to check coverage.
+        </div>
+
+        <div id="town-groups" class="town-groups"></div>
     </div>
 </section>
 
@@ -756,6 +807,112 @@
             window.location.href = pages[currentIndex - 1];
         }
     }
+
+    const serviceAreas = {
+        "Cheshire": [
+            "Chester", "Warrington", "Runcorn", "Widnes", "Ellesmere Port",
+            "Northwich", "Winsford", "Crewe", "Nantwich", "Macclesfield",
+            "Knutsford", "Wilmslow", "Congleton", "Sandbach", "Frodsham",
+            "Helsby", "Middlewich", "Alsager", "Poynton", "Neston"
+        ],
+        "Lancashire": [
+            "Preston", "Blackburn", "Burnley", "Blackpool", "Lancaster",
+            "Morecambe", "Chorley", "Leyland", "Accrington", "Nelson",
+            "Colne", "Fleetwood", "Lytham St Annes", "Ormskirk",
+            "Skelmersdale", "Darwen", "Clitheroe", "Rawtenstall",
+            "Bacup", "Carnforth", "Garstang"
+        ],
+        "Merseyside": [
+            "Liverpool", "St Helens", "Birkenhead", "Bootle", "Crosby",
+            "Formby", "Southport", "Wallasey", "Wirral", "Prescot",
+            "Huyton", "Kirkby", "Maghull", "Newton-le-Willows",
+            "Haydock", "Rainford", "Bebington", "Heswall", "West Kirby"
+        ]
+    };
+
+    const areaSearch = document.getElementById("area-search");
+    const areaResult = document.getElementById("area-result");
+    const townGroups = document.getElementById("town-groups");
+    const serviceMap = document.getElementById("service-map");
+
+    function renderTownGroups(searchTerm = "") {
+        townGroups.innerHTML = "";
+
+        Object.entries(serviceAreas).forEach(([county, towns]) => {
+            const matchingTowns = towns.filter(town =>
+                town.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            if (searchTerm && matchingTowns.length === 0) {
+                return;
+            }
+
+            const group = document.createElement("div");
+            group.className = "town-group";
+
+            const heading = document.createElement("h3");
+            heading.textContent = county;
+
+            const list = document.createElement("div");
+            list.className = "town-list";
+
+            matchingTowns.forEach(town => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "town-button";
+                button.textContent = town;
+
+                if (searchTerm && town.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    button.classList.add("match");
+                }
+
+                button.addEventListener("click", () => {
+                    selectTown(town, county);
+                });
+
+                list.appendChild(button);
+            });
+
+            group.appendChild(heading);
+            group.appendChild(list);
+            townGroups.appendChild(group);
+        });
+    }
+
+    function selectTown(town, county) {
+        areaSearch.value = town;
+        areaResult.textContent = `Yes, we cover ${town} in ${county}.`;
+        serviceMap.src = `https://www.google.com/maps?q=${encodeURIComponent(town + " " + county)}&output=embed`;
+        renderTownGroups(town);
+    }
+
+    areaSearch.addEventListener("input", () => {
+        const searchTerm = areaSearch.value.trim();
+        let foundTown = null;
+        let foundCounty = null;
+
+        Object.entries(serviceAreas).forEach(([county, towns]) => {
+            towns.forEach(town => {
+                if (town.toLowerCase() === searchTerm.toLowerCase()) {
+                    foundTown = town;
+                    foundCounty = county;
+                }
+            });
+        });
+
+        if (!searchTerm) {
+            areaResult.textContent = "Enter your town or city to check coverage.";
+        } else if (foundTown) {
+            areaResult.textContent = `Yes, we cover ${foundTown} in ${foundCounty}.`;
+            serviceMap.src = `https://www.google.com/maps?q=${encodeURIComponent(foundTown + " " + foundCounty)}&output=embed`;
+        } else {
+            areaResult.textContent = "If your town is not listed, please contact us and we may still be able to help.";
+        }
+
+        renderTownGroups(searchTerm);
+    });
+
+    renderTownGroups();
 
     const visitCounter = document.getElementById("visit-counter");
     const visits = Number(localStorage.getItem("nfjVisits") || 0) + 1;
