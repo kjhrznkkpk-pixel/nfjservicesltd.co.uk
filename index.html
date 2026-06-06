@@ -156,10 +156,12 @@
             font-weight: 500;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             border: none;
             cursor: pointer;
             font-size: 15px;
+            font-family: Arial, sans-serif;
         }
 
         .btn.primary {
@@ -178,6 +180,15 @@
         .btn.secondary:hover {
             background: #3b82f6;
             color: white;
+        }
+
+        .btn.phone {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn.phone:hover {
+            background: #059669;
         }
 
         .btn.instagram,
@@ -497,17 +508,26 @@
             box-shadow: 0 6px 18px rgba(0,0,0,0.25);
         }
 
+        .contact-section {
+            padding: 34px 20px;
+        }
+
+        .contact-section h2 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
         .contact-form {
-            max-width: 600px;
+            max-width: 520px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         .contact-form input,
         .contact-form textarea {
-            padding: 12px;
+            padding: 10px 12px;
             border-radius: 6px;
             border: none;
             font-size: 14px;
@@ -516,8 +536,13 @@
         }
 
         .contact-form textarea {
-            height: 130px;
+            height: 95px;
             resize: none;
+        }
+
+        .phone-actions {
+            margin-top: 14px;
+            text-align: center;
         }
 
         footer {
@@ -615,7 +640,7 @@
                 padding: 20px 20px 40px;
             }
 
-            .hero h1 { font-size: 50px; }
+            .hero h1 { font-size: 42px; }
 
             .hero h2 { font-size: 18px; }
 
@@ -627,6 +652,14 @@
 
             .area-dropdown {
                 max-height: 230px;
+            }
+
+            .contact-section {
+                padding: 28px 20px;
+            }
+
+            .contact-section h2 {
+                font-size: 22px;
             }
         }
     </style>
@@ -665,6 +698,10 @@
 
         <a class="btn secondary" href="#contact-form">
             Message Us
+        </a>
+
+        <a class="btn phone random-phone-button" href="#">
+            Call Us
         </a>
     </div>
 
@@ -784,7 +821,7 @@
         class="payment-image">
 </section>
 
-<section id="contact-form" class="services">
+<section id="contact-form" class="services contact-section">
     <h2>Send Us a Message</h2>
 
     <form class="contact-form" action="https://formspree.io/f/xojblzeo" method="POST">
@@ -794,6 +831,12 @@
 
         <button type="submit" class="btn primary">Send Message</button>
     </form>
+
+    <div class="phone-actions">
+        <button type="button" class="btn phone random-phone-button">
+            Call Us Instead
+        </button>
+    </div>
 </section>
 
 <footer>
@@ -1081,6 +1124,20 @@
         if (!event.target.closest(".area-checker")) {
             closeDropdown();
         }
+    });
+
+    const contactNumbers = [
+        "tel:+447469871468",
+        "tel:+447709099811"
+    ];
+
+    document.querySelectorAll(".random-phone-button").forEach(button => {
+        button.addEventListener("click", event => {
+            event.preventDefault();
+
+            const randomNumber = contactNumbers[Math.floor(Math.random() * contactNumbers.length)];
+            window.location.href = randomNumber;
+        });
     });
 
     const visitCounter = document.getElementById("visit-counter");
