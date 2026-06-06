@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reviews Coming Soon | NFJ Services LTD</title>
-    <meta name="description" content="NFJ Services LTD reviews page coming soon. Customer feedback for electrical work, network cabling, tech installations and maintenance services.">
-    <meta name="keywords" content="NFJ Services reviews, electrical reviews, network cabling reviews, tech installation reviews, maintenance reviews">
+    <title>Reviews | NFJ Services LTD | Customer Feedback</title>
+    <meta name="description" content="Read and leave reviews for NFJ Services LTD. Customer feedback for network cabling, WiFi, CCTV, TV mounting, smart tech, electrical work and maintenance across Cheshire, Lancashire and Merseyside.">
+    <meta name="keywords" content="NFJ Services reviews, NFJ Services LTD reviews, network cabling reviews, CCTV reviews, WiFi installation reviews, electrical work reviews, Cheshire, Lancashire, Merseyside">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png">
-    
+
     <style>
         html {
             scroll-behavior: smooth;
@@ -76,169 +76,110 @@
             background: rgba(0, 0, 0, 0.3);
         }
 
-        .construction-section {
-            min-height: calc(100vh - 300px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 70px 20px;
-            background:
-                radial-gradient(circle at top left, rgba(59, 130, 246, 0.22), transparent 32%),
-                linear-gradient(135deg, #0f172a 0%, #0b1220 55%, #020617 100%);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .construction-section::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(45deg, rgba(250, 204, 21, 0.10) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(250, 204, 21, 0.10) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, rgba(250, 204, 21, 0.10) 75%),
-                linear-gradient(-45deg, transparent 75%, rgba(250, 204, 21, 0.10) 75%);
-            background-size: 38px 38px;
-            opacity: 0.18;
-        }
-
-        .construction-card {
-            width: 100%;
-            max-width: 760px;
+        .hero {
+            padding: 55px 20px 35px;
             text-align: center;
-            background: rgba(30, 41, 59, 0.88);
-            border: 1px solid rgba(148, 163, 184, 0.25);
-            border-radius: 14px;
-            padding: 42px 26px;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 20px 50px rgba(2, 6, 23, 0.45);
         }
 
-        .badge {
-            display: inline-block;
-            background: #facc15;
-            color: #111827;
-            padding: 8px 14px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            margin-bottom: 18px;
-        }
-
-        .construction-icon {
-            width: 96px;
-            height: 74px;
-            margin: 0 auto 24px;
-            position: relative;
-        }
-
-        .barrier {
-            width: 96px;
-            height: 24px;
-            background: repeating-linear-gradient(
-                135deg,
-                #facc15 0,
-                #facc15 12px,
-                #111827 12px,
-                #111827 24px
-            );
-            border-radius: 6px;
-            border: 3px solid #f8fafc;
-            box-sizing: border-box;
-            position: absolute;
-            top: 12px;
-            left: 0;
-        }
-
-        .barrier-leg {
-            width: 8px;
-            height: 38px;
-            background: #f8fafc;
-            border-radius: 4px;
-            position: absolute;
-            top: 34px;
-        }
-
-        .barrier-leg.left {
-            left: 18px;
-        }
-
-        .barrier-leg.right {
-            right: 18px;
-        }
-
-        .construction-card h1 {
+        .hero h1 {
+            margin: 0 0 12px;
             font-size: 42px;
-            margin: 0 0 14px;
         }
 
-        .construction-card p {
+        .hero p {
+            max-width: 820px;
+            margin: 0 auto;
             color: #cbd5e1;
-            font-size: 17px;
-            line-height: 1.6;
-            max-width: 620px;
-            margin: 0 auto 26px;
+            line-height: 1.7;
         }
 
-        .review-preview {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            max-width: 520px;
-            margin: 28px auto;
-        }
-
-        .preview-card {
-            background: #0f172a;
-            border-radius: 10px;
-            padding: 14px;
-            min-height: 76px;
-            box-sizing: border-box;
-            opacity: 0.75;
-        }
-
-        .stars {
+        .stars-large {
+            margin: 20px 0 0;
             color: #facc15;
-            font-size: 15px;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+            font-size: 30px;
+            letter-spacing: 4px;
         }
 
-        .line {
-            height: 8px;
-            border-radius: 999px;
-            background: #334155;
-            margin-bottom: 7px;
+        .page-wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 25px 20px 70px;
         }
 
-        .line.short {
-            width: 70%;
-            margin-left: auto;
-            margin-right: auto;
+        .review-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+            gap: 22px;
+            align-items: start;
         }
 
-        .button-group {
-            margin-top: 28px;
+        .panel {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+        }
+
+        .panel h2 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+
+        .panel p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin: 0 0 18px;
+        }
+
+        form {
             display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background: #020617;
+            color: white;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        textarea {
+            height: 130px;
+            resize: vertical;
         }
 
         .btn {
-            padding: 12px 26px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            min-height: 44px;
+            padding: 0 22px;
+            border-radius: 8px;
             border: none;
-            cursor: pointer;
             font-size: 15px;
+            font-weight: 600;
+            font-family: Arial, sans-serif;
+            text-decoration: none;
+            cursor: pointer;
         }
 
         .btn.primary {
@@ -252,13 +193,99 @@
 
         .btn.secondary {
             border: 2px solid #3b82f6;
-            color: #3b82f6;
+            color: #93c5fd;
             background: transparent;
         }
 
         .btn.secondary:hover {
             background: #3b82f6;
             color: white;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .button-row .btn {
+            flex: 1;
+            min-width: 170px;
+        }
+
+        .review-empty {
+            border: 1px dashed #475569;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .review-empty .stars {
+            color: #facc15;
+            font-size: 22px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .review-empty strong {
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .tip-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .tip-card {
+            border: 1px solid #334155;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .tip-card strong {
+            display: block;
+            color: #93c5fd;
+            margin-bottom: 6px;
+        }
+
+        .tip-card p {
+            margin: 0;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        .services-strip {
+            margin-top: 22px;
+            background: #0b1220;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .services-strip h2 {
+            margin: 0 0 14px;
+        }
+
+        .service-tags {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .service-tags span {
+            border: 1px solid #334155;
+            background: #020617;
+            color: #cbd5e1;
+            border-radius: 999px;
+            padding: 8px 11px;
+            font-size: 13px;
         }
 
         footer {
@@ -270,8 +297,61 @@
             line-height: 1.6;
         }
 
-        @media (max-width: 600px) {
+        .footer-link,
+        .admin-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #94a3b8;
+            font-size: 12px;
+            text-decoration: none;
+        }
 
+        .admin-link {
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        .footer-link:hover,
+        .admin-link:hover {
+            color: #3b82f6;
+        }
+
+        .creator-credit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .creator-credit:hover {
+            color: #3b82f6;
+        }
+
+        .creator-logo {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #1e293b;
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #334155;
+        }
+
+        @media (max-width: 800px) {
+            .review-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
             header {
                 flex-direction: column;
                 align-items: center;
@@ -299,26 +379,32 @@
                 transform: scale(1.05);
             }
 
-            .construction-section {
-                padding: 35px 16px;
-                min-height: auto;
+            .hero {
+                padding: 35px 18px 24px;
             }
 
-            .construction-card {
-                padding: 34px 18px;
+            .hero h1 {
+                font-size: 32px;
             }
 
-            .construction-card h1 {
-                font-size: 31px;
+            .stars-large {
+                font-size: 24px;
             }
 
-            .construction-card p {
-                font-size: 15px;
+            .page-wrap {
+                padding: 18px 14px 50px;
             }
 
-            .review-preview {
+            .panel {
+                padding: 18px;
+            }
+
+            .input-row {
                 grid-template-columns: 1fr;
-                max-width: 260px;
+            }
+
+            .button-row .btn {
+                width: 100%;
             }
         }
     </style>
@@ -338,60 +424,132 @@
     </nav>
 </header>
 
-<section class="construction-section">
-    <div class="construction-card">
-        <span class="badge">REVIEWS PAGE COMING SOON</span>
+<section class="hero">
+    <h1>Customer Reviews</h1>
+    <p>
+        Customer feedback helps people know what to expect from NFJ Services LTD.
+        If we have completed work for you, we would really appreciate a short review.
+    </p>
 
-        <div class="construction-icon" aria-hidden="true">
-            <div class="barrier"></div>
-            <div class="barrier-leg left"></div>
-            <div class="barrier-leg right"></div>
-        </div>
-
-        <h1>Building Our Reviews Page</h1>
-
-        <p>
-            We are currently putting together customer feedback for NFJ Services LTD.
-            Check back soon to see reviews for our electrical work, network cabling,
-            tech installations and maintenance services.
-        </p>
-
-        <div class="review-preview" aria-hidden="true">
-            <div class="preview-card">
-                <div class="stars">★★★★★</div>
-                <div class="line"></div>
-                <div class="line short"></div>
-            </div>
-
-            <div class="preview-card">
-                <div class="stars">★★★★★</div>
-                <div class="line"></div>
-                <div class="line short"></div>
-            </div>
-
-            <div class="preview-card">
-                <div class="stars">★★★★★</div>
-                <div class="line"></div>
-                <div class="line short"></div>
-            </div>
-        </div>
-
-        <div class="button-group">
-            <a class="btn primary"
-               href="mailto:info@nfjservicesltd.co.uk?subject=NFJ Services Review&body=Hi NFJ Services,%0D%0A%0D%0AI would like to leave a review...">
-                Leave a Review
-            </a>
-
-            <a class="btn secondary" href="contact.html">
-                Contact Us
-            </a>
-        </div>
+    <div class="stars-large" aria-label="Five star review symbol">
+        &#9733;&#9733;&#9733;&#9733;&#9733;
     </div>
 </section>
 
+<main class="page-wrap">
+    <div class="review-grid">
+        <section class="panel">
+            <h2>Leave a Review</h2>
+            <p>
+                Tell us what work we completed and how you found the service.
+                A short, honest review is perfect.
+            </p>
+
+            <form action="https://formspree.io/f/xojblzeo" method="POST">
+                <div class="input-row">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="text" name="location" placeholder="Town / Area">
+                </div>
+
+                <div class="input-row">
+                    <select name="rating" required>
+                        <option value="">Choose a rating</option>
+                        <option>5 Stars - Excellent</option>
+                        <option>4 Stars - Very Good</option>
+                        <option>3 Stars - Good</option>
+                        <option>2 Stars - Could Be Better</option>
+                        <option>1 Star - Poor</option>
+                    </select>
+
+                    <select name="service">
+                        <option value="">What work did we do?</option>
+                        <option>Network Cabling</option>
+                        <option>WiFi / Mesh WiFi</option>
+                        <option>CCTV Installation</option>
+                        <option>TV Mounting / AV</option>
+                        <option>Smart Tech</option>
+                        <option>Electrical Work</option>
+                        <option>Maintenance</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <textarea name="review" placeholder="Write your review here..." required></textarea>
+
+                <div class="button-row">
+                    <button type="submit" class="btn primary">Send Review</button>
+
+                    <a class="btn secondary"
+                       href="mailto:info@nfjservicesltd.co.uk?subject=NFJ Services Review&body=Hi NFJ Services,%0D%0A%0D%0AI would like to leave a review...">
+                        Email Review
+                    </a>
+                </div>
+            </form>
+        </section>
+
+        <aside class="panel">
+            <h2>Reviews Coming Soon</h2>
+
+            <div class="review-empty">
+                <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <strong>Real customer reviews will appear here soon.</strong>
+                <p>
+                    We are collecting feedback for completed work and will add genuine customer reviews once received.
+                </p>
+            </div>
+
+            <div class="tip-list">
+                <div class="tip-card">
+                    <strong>What was done?</strong>
+                    <p>Mention the job, such as WiFi, CCTV, cabling, TV mounting or maintenance.</p>
+                </div>
+
+                <div class="tip-card">
+                    <strong>Was it tidy?</strong>
+                    <p>Customers often want to know if the work was neat, clean and respectful of the property.</p>
+                </div>
+
+                <div class="tip-card">
+                    <strong>Would you recommend us?</strong>
+                    <p>A simple recommendation helps future customers feel more confident getting in touch.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <section class="services-strip">
+        <h2>Services Customers Can Review</h2>
+
+        <div class="service-tags">
+            <span>Network Cabling</span>
+            <span>WiFi</span>
+            <span>CCTV</span>
+            <span>TV Mounting</span>
+            <span>Smart Tech</span>
+            <span>Electrical</span>
+            <span>Maintenance</span>
+            <span>Starlink</span>
+        </div>
+    </section>
+</main>
+
 <footer>
-    © 2026 NFJ Services LTD — All rights reserved<br>
+    &copy; 2026 NFJ Services LTD - All rights reserved<br>
+
+    <a class="creator-credit"
+       href="https://www.keith-andrews.co.uk"
+       target="_blank"
+       rel="noopener noreferrer">
+        <span class="creator-logo">KA</span>
+        <span>Designed and created by Keith-Andrews Web Development</span>
+    </a>
+
+    <br>
+    <a href="terms.html" class="footer-link">Terms & Conditions</a>
+    <br>
+    <a href="https://nfj-admin.onrender.com/admin" class="admin-link">Admin Login</a>
 </footer>
+
 <script>
     const pages = [
         "index.html",
@@ -405,30 +563,43 @@
     const currentIndex = pages.indexOf(currentPage);
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
 
     document.addEventListener("touchstart", event => {
         touchStartX = event.changedTouches[0].screenX;
-    });
+        touchStartY = event.changedTouches[0].screenY;
+    }, { passive: true });
 
     document.addEventListener("touchend", event => {
         touchEndX = event.changedTouches[0].screenX;
+        touchEndY = event.changedTouches[0].screenY;
         handleSwipe();
-    });
+    }, { passive: true });
 
     function handleSwipe() {
-        const swipeDistance = touchEndX - touchStartX;
-        const minimumSwipe = 80;
+        const swipeX = touchEndX - touchStartX;
+        const swipeY = touchEndY - touchStartY;
+        const minimumSwipe = 70;
 
-        if (Math.abs(swipeDistance) < minimumSwipe || currentIndex === -1) {
+        if (currentIndex === -1) {
             return;
         }
 
-        if (swipeDistance < 0 && currentIndex < pages.length - 1) {
+        if (Math.abs(swipeX) < minimumSwipe) {
+            return;
+        }
+
+        if (Math.abs(swipeY) > Math.abs(swipeX)) {
+            return;
+        }
+
+        if (swipeX < 0 && currentIndex < pages.length - 1) {
             window.location.href = pages[currentIndex + 1];
         }
 
-        if (swipeDistance > 0 && currentIndex > 0) {
+        if (swipeX > 0 && currentIndex > 0) {
             window.location.href = pages[currentIndex - 1];
         }
     }
