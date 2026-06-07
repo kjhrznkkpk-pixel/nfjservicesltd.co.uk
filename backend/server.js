@@ -4,41 +4,23 @@ const bcrypt = require("bcryptjs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const isProduction = process.env.NODE_ENV === "production" || process.env.RENDER === "true";
+
+const MAIN_SITE_URL = process.env.MAIN_SITE_URL || "https://nfjservicesltd.co.uk/";
+
+const DROPBOX_LINKS = {
+    invoices: process.env.DROPBOX_INVOICES_URL || "https://www.dropbox.com/request/fehl8e9km5s49m7bnt9a",
+    photos: process.env.DROPBOX_PHOTOS_URL || "https://www.dropbox.com/request/ak0rudbljxcsmt6p0sdt",
+    notes: process.env.DROPBOX_NOTES_URL || "https://www.dropbox.com/request/2i93wsdjfvnrap07sw0b",
+    files: process.env.DROPBOX_FILES_URL || "https://www.dropbox.com/request/5u2eyel5qgirvhhsuv8c",
+    expenses: process.env.DROPBOX_EXPENSES_URL || "https://www.dropbox.com/request/whh3zm8iwq4qx8flxw4m"
+};
 
 const jobs = [];
 const files = [];
 const photos = [];
 const notes = [];
 const invoices = [];
-
-const LOGIN_WINDOW_MS = 15 * 60 * 1000;
-const MAX_LOGIN_ATTEMPTS = 8;
-const failedLogins = new Map();
-
-app.disable("x-powered-by");
-app.set("trust proxy", 1);
-
-app.use(express.urlencoded({ extended: true, limit: "100kb" }));
-
-app.use((req, res, next) => {
-    res.setHeader("X-Content-Type-Options", "nosniff");
-    res.setHeader("X-Frame-Options", "DENY");
-    res.setHeader("Referrer-Policy", "no-referrer");
-    next();
-});
-
-app.use(session({
-    secret: process.env.SESSION_SECRET || "local-dev-secret-change-this",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: isProduction,
-        maxAge: 1000 * 60 * 60 * 4
-    }
-}));
+const expenses = [];
 
 function getAdminUsers() {
     const users = [
@@ -58,7 +40,7 @@ function getAdminUsers() {
         }));
 
     if (users.length === 0) {
-        console.warn("No admin passwords set. Add KEITH_ADMIN_PASSWORD and CHRIS_ADMIN_PASSWORD in Render environment variables.");
+        console.warn("No admin passwords set. Add KEITH_ADMIN_PASSWORD and CHRIS_ADMIN_PASSWORD in Render.");
     }
 
     return users;
@@ -66,68 +48,53 @@ function getAdminUsers() {
 
 const adminUsers = getAdminUsers();
 
+const isProduction = process.env.NODE_ENV === "production" || process.env.RENDER === "true";
+
+app.disable("x-powered-by");
+app.set("trust proxy", 1);
+
+app.use(express.urlencoded({ extended: true, limit: "100kb" }));
+
+app.use((req, res, next) => {
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("X-Frame-Options", "DENY");
+    res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+    next();
+});
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || "local-dev-secret-change-this",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: isProduction,
+        maxAge: 1000 * 60 * 60 * 4
+    }
+}));
+
 function escapeHtml(value) {
-    return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 function safeUrl(value) {
     try {
         const url = new URL(String(value || ""));
 
-        if (url.protocol !== "http:" && url.protocol !== "https:") {
-            return "#";
+        if (url.protocol === "http:" || url.protocol === "https:") {
+            return url.href;
         }
-
-        return escapeHtml(url.toString());
-    } catch {
+    } catch (error) {
         return "#";
     }
-}
 
-function getLoginKey(req) {
-    return req.ip || req.socket.remoteAddress || "unknown";
-}
-
-function isLoginBlocked(req) {
-    const key = getLoginKey(req);
-    const entry = failedLogins.get(key);
-
-    if (!entry) {
-        return false;
-    }
-
-    if (Date.now() > entry.resetAt) {
-        failedLogins.delete(key);
-        return false;
-    }
-
-    return entry.count >= MAX_LOGIN_ATTEMPTS;
-}
-
-function recordFailedLogin(req) {
-    const key = getLoginKey(req);
-    const now = Date.now();
-    const entry = failedLogins.get(key);
-
-    if (!entry || now > entry.resetAt) {
-        failedLogins.set(key, {
-            count: 1,
-            resetAt: now + LOGIN_WINDOW_MS
-        });
-        return;
-    }
-
-    entry.count += 1;
-    failedLogins.set(key, entry);
-}
-
-function clearFailedLogin(req) {
-    failedLogins.delete(getLoginKey(req));
+    return "#";
 }
 
 function requireLogin(req, res, next) {
@@ -136,6 +103,62 @@ function requireLogin(req, res, next) {
     }
 
     next();
+}
+
+function dropboxButton(type, label) {
+    const url = DROPBOX_LINKS[type];
+
+    return `
+        <a class="terminal-link"
+           href="${escapeHtml(url)}"
+           target="_blank"
+           rel="noopener noreferrer">
+            ${escapeHtml(label)}
+        </a>
+    `;
+}
+
+const failedLogins = new Map();
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const MAX_LOGIN_ATTEMPTS = 8;
+
+function getLoginKey(req) {
+    return req.ip || req.headers["x-forwarded-for"] || "unknown";
+}
+
+function isLoginBlocked(req) {
+    const key = getLoginKey(req);
+    const record = failedLogins.get(key);
+
+    if (!record) {
+        return false;
+    }
+
+    if (Date.now() - record.firstAttempt > LOGIN_WINDOW_MS) {
+        failedLogins.delete(key);
+        return false;
+    }
+
+    return record.count >= MAX_LOGIN_ATTEMPTS;
+}
+
+function recordFailedLogin(req) {
+    const key = getLoginKey(req);
+    const record = failedLogins.get(key);
+
+    if (!record || Date.now() - record.firstAttempt > LOGIN_WINDOW_MS) {
+        failedLogins.set(key, {
+            count: 1,
+            firstAttempt: Date.now()
+        });
+        return;
+    }
+
+    record.count += 1;
+}
+
+function clearFailedLogin(req) {
+    failedLogins.delete(getLoginKey(req));
 }
 
 function accessDeniedPage(message = "Invalid credentials detected") {
@@ -411,6 +434,18 @@ function terminalPage(title, systemName, content) {
                     margin-bottom: 12px;
                 }
 
+                .action-row {
+                    margin: 16px 0 24px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+
+                .amount {
+                    color: #ffffff;
+                    font-weight: bold;
+                }
+
                 .blink {
                     animation: blink 1s steps(2, start) infinite;
                 }
@@ -460,20 +495,18 @@ app.get("/admin", (req, res) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>NFJ Admin Login</title>
         </head>
-        <body style="font-family: Arial; background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
-            <form method="POST" action="/admin/login" style="background: #1e293b; padding: 25px; border-radius: 10px; width: 320px; box-shadow: 0 18px 40px rgba(0,0,0,0.35);">
+
+        <body style="font-family: Arial; background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px;">
+            <form method="POST" action="/admin/login" style="background: #1e293b; padding: 25px; border-radius: 10px; width: 320px; box-shadow: 0 14px 35px rgba(0,0,0,0.35);">
                 <h1 style="margin-top: 0;">NFJ Admin</h1>
                 <p style="color: #cbd5e1;">Private access only</p>
 
-                <input type="text" name="username" placeholder="Username" required autocomplete="username" style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
-                <input type="password" name="password" placeholder="Password" required autocomplete="current-password" style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
+                <input type="text" name="username" placeholder="Username" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
+                <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
 
-                <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer;">
-                    Login
-                </button>
+                <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer;">Login</button>
 
-                <a href="https://nfjservicesltd.co.uk/"
-                   style="display: block; width: 100%; margin-top: 12px; padding: 12px; box-sizing: border-box; text-align: center; background: transparent; color: #93c5fd; border: 1px solid #3b82f6; border-radius: 6px; text-decoration: none;">
+                <a href="${escapeHtml(MAIN_SITE_URL)}" style="display: block; text-align: center; margin-top: 14px; padding: 11px; border: 1px solid #3b82f6; color: #93c5fd; border-radius: 6px; text-decoration: none;">
                     Back to Main Site
                 </a>
             </form>
@@ -484,21 +517,22 @@ app.get("/admin", (req, res) => {
 
 app.post("/admin/login", (req, res) => {
     if (isLoginBlocked(req)) {
-        return res.status(429).send(accessDeniedPage("Too many failed attempts. Please wait and try again."));
+        return res.send(accessDeniedPage("Too many failed login attempts"));
     }
 
     const { username, password } = req.body;
     const user = adminUsers.find(admin => admin.username === username);
 
-    if (!user || !bcrypt.compareSync(password || "", user.passwordHash)) {
+    if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
         recordFailedLogin(req);
-        return res.status(401).send(accessDeniedPage());
+        return res.send(accessDeniedPage());
     }
 
     clearFailedLogin(req);
+
     req.session.regenerate(error => {
         if (error) {
-            return res.status(500).send("Login error. Please try again.");
+            return res.status(500).send("Session error");
         }
 
         req.session.loggedIn = true;
@@ -536,7 +570,12 @@ app.get("/admin/dashboard", requireLogin, (req, res) => {
 
             <a class="terminal-link card" href="/admin/invoices">
                 INVOICES
-                <p>Create and manage invoices</p>
+                <p>Create, print, email and upload invoices</p>
+            </a>
+
+            <a class="terminal-link card" href="/admin/expenses">
+                EXPENSES
+                <p>Record expenses and upload receipts</p>
             </a>
         </div>
 
@@ -559,7 +598,7 @@ app.get("/admin/jobs", requireLogin, (req, res) => {
             </div>
 
             <p><strong>Status:</strong> ${escapeHtml(job.status)}</p>
-            <p><strong>Contact:</strong> ${escapeHtml(job.contactNumber) || "Not recorded"}</p>
+            <p><strong>Contact:</strong> ${escapeHtml(job.contactNumber || "Not recorded")}</p>
             <p><strong>Address:</strong> ${escapeHtml(job.jobAddress)}</p>
             <p><strong>Details:</strong> ${escapeHtml(job.details)}</p>
         </article>
@@ -638,24 +677,32 @@ app.post("/admin/jobs", requireLogin, (req, res) => {
 });
 
 app.get("/admin/files", requireLogin, (req, res) => {
-    const fileList = files.map(file => `
-        <article class="card">
-            <div class="item-top">
-                <strong>${escapeHtml(file.fileName)}</strong>
-                <span>${escapeHtml(file.date)}</span>
-            </div>
+    const fileList = files.map(file => {
+        const fileUrl = safeUrl(file.fileUrl);
 
-            <p><strong>Customer:</strong> ${escapeHtml(file.customerName)}</p>
-            <p><strong>Job Address:</strong> ${escapeHtml(file.jobAddress)}</p>
-            <p><strong>Description:</strong> ${escapeHtml(file.description) || "No description recorded"}</p>
-            <a class="terminal-link" href="${safeUrl(file.fileUrl)}" target="_blank" rel="noopener noreferrer">OPEN FILE</a>
-        </article>
-    `).join("");
+        return `
+            <article class="card">
+                <div class="item-top">
+                    <strong>${escapeHtml(file.fileName)}</strong>
+                    <span>${escapeHtml(file.date)}</span>
+                </div>
+
+                <p><strong>Customer:</strong> ${escapeHtml(file.customerName)}</p>
+                <p><strong>Job Address:</strong> ${escapeHtml(file.jobAddress)}</p>
+                <p><strong>Description:</strong> ${escapeHtml(file.description || "No description recorded")}</p>
+                <a class="terminal-link" href="${escapeHtml(fileUrl)}" target="_blank" rel="noopener noreferrer">OPEN FILE</a>
+            </article>
+        `;
+    }).join("");
 
     res.send(terminalPage("NFJ Files", "FILES", `
         <h1>Files <span class="blink">_</span></h1>
 
         <p>Store links to receipts, certificates, manuals, quotes, invoices and job documents.</p>
+
+        <div class="action-row">
+            ${dropboxButton("files", "UPLOAD FILE TO DROPBOX")}
+        </div>
 
         <form method="POST" action="/admin/files">
             <h2>Add File</h2>
@@ -691,6 +738,10 @@ app.get("/admin/files", requireLogin, (req, res) => {
         <h2>Saved Files</h2>
         ${fileList || "<p>No files saved yet.</p>"}
 
+        <div class="action-row">
+            ${dropboxButton("files", "UPLOAD FILE TO DROPBOX")}
+        </div>
+
         <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
     `));
 });
@@ -709,25 +760,33 @@ app.post("/admin/files", requireLogin, (req, res) => {
 });
 
 app.get("/admin/photos", requireLogin, (req, res) => {
-    const photoList = photos.map(photo => `
-        <article class="card">
-            <div class="item-top">
-                <strong>${escapeHtml(photo.customerName)}</strong>
-                <span>${escapeHtml(photo.date)}</span>
-            </div>
+    const photoList = photos.map(photo => {
+        const photoUrl = safeUrl(photo.photoUrl);
 
-            <img src="${safeUrl(photo.photoUrl)}" alt="Job photo for ${escapeHtml(photo.customerName)}" class="job-photo">
+        return `
+            <article class="card">
+                <div class="item-top">
+                    <strong>${escapeHtml(photo.customerName)}</strong>
+                    <span>${escapeHtml(photo.date)}</span>
+                </div>
 
-            <p><strong>Job Address:</strong> ${escapeHtml(photo.jobAddress)}</p>
-            <p><strong>Description:</strong> ${escapeHtml(photo.description) || "No description recorded"}</p>
-            <a class="terminal-link" href="${safeUrl(photo.photoUrl)}" target="_blank" rel="noopener noreferrer">OPEN PHOTO</a>
-        </article>
-    `).join("");
+                <img src="${escapeHtml(photoUrl)}" alt="Job photo for ${escapeHtml(photo.customerName)}" class="job-photo">
+
+                <p><strong>Job Address:</strong> ${escapeHtml(photo.jobAddress)}</p>
+                <p><strong>Description:</strong> ${escapeHtml(photo.description || "No description recorded")}</p>
+                <a class="terminal-link" href="${escapeHtml(photoUrl)}" target="_blank" rel="noopener noreferrer">OPEN PHOTO</a>
+            </article>
+        `;
+    }).join("");
 
     res.send(terminalPage("NFJ Photos", "JOB PHOTOS", `
         <h1>Photos <span class="blink">_</span></h1>
 
         <p>Store site photo links for job evidence, before/after records and customer references.</p>
+
+        <div class="action-row">
+            ${dropboxButton("photos", "UPLOAD PHOTO TO DROPBOX")}
+        </div>
 
         <form method="POST" action="/admin/photos">
             <h2>Add Job Photo</h2>
@@ -758,6 +817,10 @@ app.get("/admin/photos", requireLogin, (req, res) => {
         <h2>Saved Photos</h2>
         <div class="grid">${photoList || "<p>No photos saved yet.</p>"}</div>
 
+        <div class="action-row">
+            ${dropboxButton("photos", "UPLOAD PHOTO TO DROPBOX")}
+        </div>
+
         <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
     `));
 });
@@ -784,8 +847,8 @@ app.get("/admin/notes", requireLogin, (req, res) => {
 
             <p><strong>Job Address:</strong> ${escapeHtml(note.jobAddress)}</p>
             <p><strong>Work Completed:</strong> ${escapeHtml(note.workCompleted)}</p>
-            <p><strong>Materials Used:</strong> ${escapeHtml(note.materialsUsed) || "None recorded"}</p>
-            <p><strong>Customer Sign-Off:</strong> ${escapeHtml(note.signatureName) || "Not signed"}</p>
+            <p><strong>Materials Used:</strong> ${escapeHtml(note.materialsUsed || "None recorded")}</p>
+            <p><strong>Customer Sign-Off:</strong> ${escapeHtml(note.signatureName || "Not signed")}</p>
         </article>
     `).join("");
 
@@ -793,6 +856,10 @@ app.get("/admin/notes", requireLogin, (req, res) => {
         <h1>Notes <span class="blink">_</span></h1>
 
         <p>Record what was completed on site, what materials were used, and who signed off the job.</p>
+
+        <div class="action-row">
+            ${dropboxButton("notes", "UPLOAD NOTE TO DROPBOX")}
+        </div>
 
         <form method="POST" action="/admin/notes">
             <h2>Create Job Note</h2>
@@ -828,6 +895,10 @@ app.get("/admin/notes", requireLogin, (req, res) => {
         <h2>Saved Notes</h2>
         ${noteList || "<p>No notes saved yet.</p>"}
 
+        <div class="action-row">
+            ${dropboxButton("notes", "UPLOAD NOTE TO DROPBOX")}
+        </div>
+
         <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
     `));
 });
@@ -859,15 +930,12 @@ Address: ${invoice.jobAddress}
 Work / Job Details:
 ${invoice.description}
 
-Amount Due: £${invoice.amount}
+Amount Due: GBP ${invoice.amount}
 
 Thank you,
 NFJ Services LTD
 Directors: Keith Andrews & Chris Lawton`
         );
-
-        const emailSubject = encodeURIComponent(`Invoice ${invoice.invoiceNumber} from NFJ Services LTD`);
-        const emailHref = escapeHtml(`mailto:${invoice.customerEmail}?subject=${emailSubject}&body=${emailBody}`);
 
         return `
             <article class="card">
@@ -880,15 +948,18 @@ Directors: Keith Andrews & Chris Lawton`
                 <p><strong>Email:</strong> ${escapeHtml(invoice.customerEmail)}</p>
                 <p><strong>Address:</strong> ${escapeHtml(invoice.jobAddress)}</p>
                 <p><strong>Details:</strong> ${escapeHtml(invoice.description)}</p>
-                <p><strong>Amount:</strong> £${escapeHtml(invoice.amount)}</p>
+                <p><strong>Amount:</strong> <span class="amount">&pound;${escapeHtml(invoice.amount)}</span></p>
 
-                <a class="terminal-link" href="${emailHref}">
+                <a class="terminal-link"
+                   href="mailto:${escapeHtml(invoice.customerEmail)}?subject=Invoice ${escapeHtml(invoice.invoiceNumber)} from NFJ Services LTD&body=${emailBody}">
                     SEND BY EMAIL
                 </a>
 
                 <a class="terminal-link" href="/admin/invoices/${escapeHtml(invoice.invoiceNumber)}">
                     VIEW A4 INVOICE
                 </a>
+
+                ${dropboxButton("invoices", "UPLOAD INVOICE TO DROPBOX")}
             </article>
         `;
     }).join("");
@@ -898,9 +969,13 @@ Directors: Keith Andrews & Chris Lawton`
 
         <p>
             NFJ Services LTD<br>
-            Electrical • Network Cabling • Tech Installations • Maintenance<br>
+            Electrical - Network Cabling - Tech Installations - Maintenance<br>
             Directors: Keith Andrews & Chris Lawton
         </p>
+
+        <div class="action-row">
+            ${dropboxButton("invoices", "UPLOAD SAVED INVOICE PDF TO DROPBOX")}
+        </div>
 
         <form method="POST" action="/admin/invoices">
             <h2>Create Invoice</h2>
@@ -926,7 +1001,7 @@ Directors: Keith Andrews & Chris Lawton`
             </label>
 
             <label>
-                Amount (£)
+                Amount (&pound;)
                 <input type="number" name="amount" step="0.01" min="0" required>
             </label>
 
@@ -942,6 +1017,11 @@ Directors: Keith Andrews & Chris Lawton`
 
 app.post("/admin/invoices", requireLogin, (req, res) => {
     const amount = Number(req.body.amount);
+
+    if (!Number.isFinite(amount) || amount < 0) {
+        return res.status(400).send("Invalid invoice amount");
+    }
+
     const invoiceNumber = `NFJ-${new Date().getFullYear()}-${String(invoices.length + 1).padStart(4, "0")}`;
 
     invoices.push({
@@ -951,7 +1031,7 @@ app.post("/admin/invoices", requireLogin, (req, res) => {
         customerEmail: req.body.customerEmail,
         jobAddress: req.body.jobAddress,
         description: req.body.description,
-        amount: Number.isFinite(amount) ? amount.toFixed(2) : "0.00"
+        amount: amount.toFixed(2)
     });
 
     res.redirect("/admin/invoices");
@@ -975,14 +1055,11 @@ Date: ${invoice.date}
 Work / Job Details:
 ${invoice.description}
 
-Amount Due: £${invoice.amount}
+Amount Due: GBP ${invoice.amount}
 
 Kind regards,
 NFJ Services LTD`
     );
-
-    const emailSubject = encodeURIComponent(`Invoice ${invoice.invoiceNumber} from NFJ Services LTD`);
-    const emailHref = escapeHtml(`mailto:${invoice.customerEmail}?subject=${emailSubject}&body=${emailBody}`);
 
     res.send(`
         <!DOCTYPE html>
@@ -1024,6 +1101,10 @@ NFJ Services LTD`
                     text-decoration: none;
                     cursor: pointer;
                     font-size: 14px;
+                }
+
+                .toolbar a.dropbox {
+                    background: #0061ff;
                 }
 
                 .invoice-page {
@@ -1222,8 +1303,9 @@ NFJ Services LTD`
         <body>
             <div class="toolbar">
                 <a href="/admin/invoices">Back</a>
-                <a href="${emailHref}">Email</a>
+                <a href="mailto:${escapeHtml(invoice.customerEmail)}?subject=Invoice ${escapeHtml(invoice.invoiceNumber)} from NFJ Services LTD&body=${emailBody}">Email</a>
                 <button onclick="window.print()">Print / Save PDF</button>
+                <a class="dropbox" href="${escapeHtml(DROPBOX_LINKS.invoices)}" target="_blank" rel="noopener noreferrer">Upload to Dropbox</a>
             </div>
 
             <main class="invoice-page">
@@ -1233,7 +1315,7 @@ NFJ Services LTD`
                         <div>
                             <h1>NFJ Services LTD</h1>
                             <p>
-                                Electrical • Network Cabling • Tech Installations • Maintenance<br>
+                                Electrical - Network Cabling - Tech Installations - Maintenance<br>
                                 Directors: Keith Andrews & Chris Lawton
                             </p>
                         </div>
@@ -1272,12 +1354,12 @@ NFJ Services LTD`
                     <tbody>
                         <tr>
                             <td>${escapeHtml(invoice.description)}</td>
-                            <td class="amount">£${escapeHtml(invoice.amount)}</td>
+                            <td class="amount">&pound;${escapeHtml(invoice.amount)}</td>
                         </tr>
 
                         <tr class="total-row">
                             <td>Total Due</td>
-                            <td class="amount">£${escapeHtml(invoice.amount)}</td>
+                            <td class="amount">&pound;${escapeHtml(invoice.amount)}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1291,6 +1373,116 @@ NFJ Services LTD`
         </body>
         </html>
     `);
+});
+
+app.get("/admin/expenses", requireLogin, (req, res) => {
+    const expenseList = expenses.map(expense => {
+        const receiptUrl = expense.receiptUrl ? safeUrl(expense.receiptUrl) : "";
+
+        return `
+            <article class="card">
+                <div class="item-top">
+                    <strong>${escapeHtml(expense.supplierName)}</strong>
+                    <span>${escapeHtml(expense.date)}</span>
+                </div>
+
+                <p><strong>Category:</strong> ${escapeHtml(expense.category)}</p>
+                <p><strong>Amount:</strong> <span class="amount">&pound;${escapeHtml(expense.amount)}</span></p>
+                <p><strong>Payment Method:</strong> ${escapeHtml(expense.paymentMethod || "Not recorded")}</p>
+                <p><strong>Notes:</strong> ${escapeHtml(expense.notes || "No notes recorded")}</p>
+                ${receiptUrl ? `<a class="terminal-link" href="${escapeHtml(receiptUrl)}" target="_blank" rel="noopener noreferrer">OPEN RECEIPT</a>` : ""}
+            </article>
+        `;
+    }).join("");
+
+    res.send(terminalPage("NFJ Expenses", "EXPENSES", `
+        <h1>Expenses <span class="blink">_</span></h1>
+
+        <p>Record business expenses, purchases, receipts and job costs.</p>
+
+        <div class="action-row">
+            ${dropboxButton("expenses", "UPLOAD EXPENSE RECEIPT TO DROPBOX")}
+        </div>
+
+        <form method="POST" action="/admin/expenses">
+            <h2>Add Expense</h2>
+
+            <label>
+                Expense Date
+                <input type="date" name="date" required>
+            </label>
+
+            <label>
+                Supplier / Shop Name
+                <input name="supplierName" required>
+            </label>
+
+            <label>
+                Category
+                <select name="category">
+                    <option>Materials</option>
+                    <option>Tools</option>
+                    <option>Fuel</option>
+                    <option>Parking</option>
+                    <option>Software</option>
+                    <option>Phone / Internet</option>
+                    <option>Subcontractor</option>
+                    <option>Other</option>
+                </select>
+            </label>
+
+            <label>
+                Amount (&pound;)
+                <input type="number" name="amount" step="0.01" min="0" required>
+            </label>
+
+            <label>
+                Payment Method
+                <input name="paymentMethod" placeholder="Card, cash, bank transfer etc">
+            </label>
+
+            <label>
+                Receipt URL
+                <input type="url" name="receiptUrl" placeholder="https://...">
+            </label>
+
+            <label>
+                Notes
+                <textarea name="notes"></textarea>
+            </label>
+
+            <button type="submit">SAVE EXPENSE</button>
+        </form>
+
+        <h2>Saved Expenses</h2>
+        ${expenseList || "<p>No expenses saved yet.</p>"}
+
+        <div class="action-row">
+            ${dropboxButton("expenses", "UPLOAD EXPENSE RECEIPT TO DROPBOX")}
+        </div>
+
+        <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
+    `));
+});
+
+app.post("/admin/expenses", requireLogin, (req, res) => {
+    const amount = Number(req.body.amount);
+
+    if (!Number.isFinite(amount) || amount < 0) {
+        return res.status(400).send("Invalid expense amount");
+    }
+
+    expenses.push({
+        date: req.body.date,
+        supplierName: req.body.supplierName,
+        category: req.body.category,
+        amount: amount.toFixed(2),
+        paymentMethod: req.body.paymentMethod,
+        receiptUrl: req.body.receiptUrl,
+        notes: req.body.notes
+    });
+
+    res.redirect("/admin/expenses");
 });
 
 app.listen(PORT, () => {
