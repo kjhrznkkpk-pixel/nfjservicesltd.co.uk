@@ -48,29 +48,36 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             background: white;
-            padding: 10px 15px;
+            padding: 8px 24px 10px;
             overflow: hidden;
         }
 
+        .header-inner {
+            max-width: 1250px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            gap: 95px;
+        }
+
         .logo {
-            height: 130px;
-            width: 100vw;
-            max-width: 650px;
+            height: 150px;
+            width: auto;
+            max-width: 460px;
             object-fit: contain;
-            transform: scale(1.05);
+            transform: none;
+            flex-shrink: 0;
         }
 
         nav {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             flex-wrap: nowrap;
             gap: 5px;
-            margin-top: 5px;
+            margin: 0 0 14px;
         }
 
         nav a {
@@ -610,10 +617,14 @@
 
         @media (max-width: 600px) {
             header {
-                flex-direction: column;
-                align-items: center;
                 padding: 10px;
                 overflow: hidden;
+            }
+
+            .header-inner {
+                display: block;
+                max-width: none;
+                margin: 0;
             }
 
             nav {
@@ -621,6 +632,8 @@
                 justify-content: center;
                 overflow-x: auto;
                 width: 100%;
+                margin-top: 5px;
+                margin-bottom: 0;
             }
 
             nav a {
@@ -634,6 +647,8 @@
                 max-width: none;
                 object-fit: contain;
                 transform: scale(1.05);
+                display: block;
+                margin: 0 auto;
             }
 
             .hero {
@@ -668,20 +683,22 @@
 <body>
 
 <header>
-    <img src="logo.png" class="logo" alt="NFJ Services LTD Logo">
+    <div class="header-inner">
+        <img src="logo.png" class="logo" alt="NFJ Services LTD Logo">
 
-    <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="services.html">Services</a>
-        <a href="contact.html">Contact</a>
-        <a href="faq.html">FAQ</a>
-        <a href="Reviews.html">Reviews</a>
-    </nav>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="faq.html">FAQ</a>
+            <a href="Reviews.html">Reviews</a>
+        </nav>
+    </div>
 </header>
 
 <section class="hero">
     <h1>NFJ Services LTD</h1>
-    <h2>Electrical • Network Cabling • Tech Installations • Maintenance</h2>
+    <h2>Electrical &bull; Network Cabling &bull; Tech Installations &bull; Maintenance</h2>
 
     <p>
         NFJ Services LTD provides network cabling, WiFi installation, CCTV, TV mounting,
@@ -872,7 +889,7 @@
 </section>
 
 <footer>
-    &copy; 2026 NFJ Services LTD — All rights reserved<br>
+    &copy; 2026 NFJ Services LTD &mdash; All rights reserved<br>
     <span id="visit-counter" class="visit-counter"></span>
 
     <a class="creator-credit"
