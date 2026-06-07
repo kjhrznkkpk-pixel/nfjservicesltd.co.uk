@@ -460,15 +460,22 @@ app.get("/admin", (req, res) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>NFJ Admin Login</title>
         </head>
-        <body style="font-family: Arial; background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
-            <form method="POST" action="/admin/login" style="background: #1e293b; padding: 25px; border-radius: 10px; width: 320px;">
-                <h1>NFJ Admin</h1>
-                <p>Private access only</p>
+        <body style="font-family: Arial; background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
+            <form method="POST" action="/admin/login" style="background: #1e293b; padding: 25px; border-radius: 10px; width: 320px; box-shadow: 0 18px 40px rgba(0,0,0,0.35);">
+                <h1 style="margin-top: 0;">NFJ Admin</h1>
+                <p style="color: #cbd5e1;">Private access only</p>
 
                 <input type="text" name="username" placeholder="Username" required autocomplete="username" style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
                 <input type="password" name="password" placeholder="Password" required autocomplete="current-password" style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
 
-                <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px;">Login</button>
+                <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    Login
+                </button>
+
+                <a href="https://nfjservicesltd.co.uk/"
+                   style="display: block; width: 100%; margin-top: 12px; padding: 12px; box-sizing: border-box; text-align: center; background: transparent; color: #93c5fd; border: 1px solid #3b82f6; border-radius: 6px; text-decoration: none;">
+                    Back to Main Site
+                </a>
             </form>
         </body>
         </html>
