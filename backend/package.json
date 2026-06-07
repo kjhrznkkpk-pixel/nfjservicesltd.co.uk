@@ -5,7 +5,11 @@
   "description": "Private admin backend for NFJ Services LTD",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
