@@ -4,17 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-const adminUsers = [
-    {
-        username: "keith",
-        passwordHash: bcrypt.hashSync("Unicorn1234", 10)
-    },
-    {
-        username: "chris",
-        passwordHash: bcrypt.hashSync("Password1", 10)
-    }
-];
+const isProduction = process.env.NODE_ENV === "production" || process.env.RENDER === "true";
 
 const jobs = [];
 const files = [];
@@ -22,13 +12,123 @@ const photos = [];
 const notes = [];
 const invoices = [];
 
-app.use(express.urlencoded({ extended: true }));
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const MAX_LOGIN_ATTEMPTS = 8;
+const failedLogins = new Map();
+
+app.disable("x-powered-by");
+app.set("trust proxy", 1);
+
+app.use(express.urlencoded({ extended: true, limit: "100kb" }));
+
+app.use((req, res, next) => {
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("X-Frame-Options", "DENY");
+    res.setHeader("Referrer-Policy", "no-referrer");
+    next();
+});
 
 app.use(session({
-    secret: "change-this-secret-later",
+    secret: process.env.SESSION_SECRET || "local-dev-secret-change-this",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: isProduction,
+        maxAge: 1000 * 60 * 60 * 4
+    }
 }));
+
+function getAdminUsers() {
+    const users = [
+        {
+            username: "keith",
+            password: process.env.KEITH_ADMIN_PASSWORD
+        },
+        {
+            username: "chris",
+            password: process.env.CHRIS_ADMIN_PASSWORD
+        }
+    ]
+        .filter(user => user.password)
+        .map(user => ({
+            username: user.username,
+            passwordHash: bcrypt.hashSync(user.password, 10)
+        }));
+
+    if (users.length === 0) {
+        console.warn("No admin passwords set. Add KEITH_ADMIN_PASSWORD and CHRIS_ADMIN_PASSWORD in Render environment variables.");
+    }
+
+    return users;
+}
+
+const adminUsers = getAdminUsers();
+
+function escapeHtml(value) {
+    return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function safeUrl(value) {
+    try {
+        const url = new URL(String(value || ""));
+
+        if (url.protocol !== "http:" && url.protocol !== "https:") {
+            return "#";
+        }
+
+        return escapeHtml(url.toString());
+    } catch {
+        return "#";
+    }
+}
+
+function getLoginKey(req) {
+    return req.ip || req.socket.remoteAddress || "unknown";
+}
+
+function isLoginBlocked(req) {
+    const key = getLoginKey(req);
+    const entry = failedLogins.get(key);
+
+    if (!entry) {
+        return false;
+    }
+
+    if (Date.now() > entry.resetAt) {
+        failedLogins.delete(key);
+        return false;
+    }
+
+    return entry.count >= MAX_LOGIN_ATTEMPTS;
+}
+
+function recordFailedLogin(req) {
+    const key = getLoginKey(req);
+    const now = Date.now();
+    const entry = failedLogins.get(key);
+
+    if (!entry || now > entry.resetAt) {
+        failedLogins.set(key, {
+            count: 1,
+            resetAt: now + LOGIN_WINDOW_MS
+        });
+        return;
+    }
+
+    entry.count += 1;
+    failedLogins.set(key, entry);
+}
+
+function clearFailedLogin(req) {
+    failedLogins.delete(getLoginKey(req));
+}
 
 function requireLogin(req, res, next) {
     if (!req.session.loggedIn) {
@@ -38,7 +138,7 @@ function requireLogin(req, res, next) {
     next();
 }
 
-function accessDeniedPage() {
+function accessDeniedPage(message = "Invalid credentials detected") {
     return `
         <!DOCTYPE html>
         <html lang="en">
@@ -172,7 +272,7 @@ function accessDeniedPage() {
                 <div class="warning">ACCESS DENIED</div>
 
                 <div class="subtext">
-                    Invalid credentials detected<br>
+                    ${escapeHtml(message)}<br>
                     NFJ private system locked
                 </div>
 
@@ -196,7 +296,7 @@ function terminalPage(title, systemName, content) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${title}</title>
+            <title>${escapeHtml(title)}</title>
 
             <style>
                 body {
@@ -336,7 +436,7 @@ function terminalPage(title, systemName, content) {
         <body>
             <main class="screen">
                 <div class="top-bar">
-                    <strong>NFJ SERVICES LTD :: ${systemName}</strong>
+                    <strong>NFJ SERVICES LTD :: ${escapeHtml(systemName)}</strong>
                     <span>STATUS: READY</span>
                 </div>
 
@@ -346,6 +446,10 @@ function terminalPage(title, systemName, content) {
         </html>
     `;
 }
+
+app.get("/", (req, res) => {
+    res.redirect("/admin");
+});
 
 app.get("/admin", (req, res) => {
     res.send(`
@@ -361,8 +465,8 @@ app.get("/admin", (req, res) => {
                 <h1>NFJ Admin</h1>
                 <p>Private access only</p>
 
-                <input type="text" name="username" placeholder="Username" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
-                <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
+                <input type="text" name="username" placeholder="Username" required autocomplete="username" style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
+                <input type="password" name="password" placeholder="Password" required autocomplete="current-password" style="width: 100%; padding: 12px; margin-bottom: 10px; box-sizing: border-box;">
 
                 <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px;">Login</button>
             </form>
@@ -372,16 +476,28 @@ app.get("/admin", (req, res) => {
 });
 
 app.post("/admin/login", (req, res) => {
+    if (isLoginBlocked(req)) {
+        return res.status(429).send(accessDeniedPage("Too many failed attempts. Please wait and try again."));
+    }
+
     const { username, password } = req.body;
     const user = adminUsers.find(admin => admin.username === username);
 
-    if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
-        return res.send(accessDeniedPage());
+    if (!user || !bcrypt.compareSync(password || "", user.passwordHash)) {
+        recordFailedLogin(req);
+        return res.status(401).send(accessDeniedPage());
     }
 
-    req.session.loggedIn = true;
-    req.session.username = user.username;
-    res.redirect("/admin/dashboard");
+    clearFailedLogin(req);
+    req.session.regenerate(error => {
+        if (error) {
+            return res.status(500).send("Login error. Please try again.");
+        }
+
+        req.session.loggedIn = true;
+        req.session.username = user.username;
+        res.redirect("/admin/dashboard");
+    });
 });
 
 app.get("/admin/dashboard", requireLogin, (req, res) => {
@@ -431,14 +547,14 @@ app.get("/admin/jobs", requireLogin, (req, res) => {
     const jobList = jobs.map(job => `
         <article class="card">
             <div class="item-top">
-                <strong>${job.customerName}</strong>
-                <span>${job.date} ${job.time}</span>
+                <strong>${escapeHtml(job.customerName)}</strong>
+                <span>${escapeHtml(job.date)} ${escapeHtml(job.time)}</span>
             </div>
 
-            <p><strong>Status:</strong> ${job.status}</p>
-            <p><strong>Contact:</strong> ${job.contactNumber || "Not recorded"}</p>
-            <p><strong>Address:</strong> ${job.jobAddress}</p>
-            <p><strong>Details:</strong> ${job.details}</p>
+            <p><strong>Status:</strong> ${escapeHtml(job.status)}</p>
+            <p><strong>Contact:</strong> ${escapeHtml(job.contactNumber) || "Not recorded"}</p>
+            <p><strong>Address:</strong> ${escapeHtml(job.jobAddress)}</p>
+            <p><strong>Details:</strong> ${escapeHtml(job.details)}</p>
         </article>
     `).join("");
 
@@ -518,14 +634,14 @@ app.get("/admin/files", requireLogin, (req, res) => {
     const fileList = files.map(file => `
         <article class="card">
             <div class="item-top">
-                <strong>${file.fileName}</strong>
-                <span>${file.date}</span>
+                <strong>${escapeHtml(file.fileName)}</strong>
+                <span>${escapeHtml(file.date)}</span>
             </div>
 
-            <p><strong>Customer:</strong> ${file.customerName}</p>
-            <p><strong>Job Address:</strong> ${file.jobAddress}</p>
-            <p><strong>Description:</strong> ${file.description || "No description recorded"}</p>
-            <a class="terminal-link" href="${file.fileUrl}" target="_blank" rel="noopener noreferrer">OPEN FILE</a>
+            <p><strong>Customer:</strong> ${escapeHtml(file.customerName)}</p>
+            <p><strong>Job Address:</strong> ${escapeHtml(file.jobAddress)}</p>
+            <p><strong>Description:</strong> ${escapeHtml(file.description) || "No description recorded"}</p>
+            <a class="terminal-link" href="${safeUrl(file.fileUrl)}" target="_blank" rel="noopener noreferrer">OPEN FILE</a>
         </article>
     `).join("");
 
@@ -589,15 +705,15 @@ app.get("/admin/photos", requireLogin, (req, res) => {
     const photoList = photos.map(photo => `
         <article class="card">
             <div class="item-top">
-                <strong>${photo.customerName}</strong>
-                <span>${photo.date}</span>
+                <strong>${escapeHtml(photo.customerName)}</strong>
+                <span>${escapeHtml(photo.date)}</span>
             </div>
 
-            <img src="${photo.photoUrl}" alt="Job photo for ${photo.customerName}" class="job-photo">
+            <img src="${safeUrl(photo.photoUrl)}" alt="Job photo for ${escapeHtml(photo.customerName)}" class="job-photo">
 
-            <p><strong>Job Address:</strong> ${photo.jobAddress}</p>
-            <p><strong>Description:</strong> ${photo.description || "No description recorded"}</p>
-            <a class="terminal-link" href="${photo.photoUrl}" target="_blank" rel="noopener noreferrer">OPEN PHOTO</a>
+            <p><strong>Job Address:</strong> ${escapeHtml(photo.jobAddress)}</p>
+            <p><strong>Description:</strong> ${escapeHtml(photo.description) || "No description recorded"}</p>
+            <a class="terminal-link" href="${safeUrl(photo.photoUrl)}" target="_blank" rel="noopener noreferrer">OPEN PHOTO</a>
         </article>
     `).join("");
 
@@ -655,14 +771,14 @@ app.get("/admin/notes", requireLogin, (req, res) => {
     const noteList = notes.map(note => `
         <article class="card">
             <div class="item-top">
-                <strong>${note.customerName}</strong>
-                <span>${note.date}</span>
+                <strong>${escapeHtml(note.customerName)}</strong>
+                <span>${escapeHtml(note.date)}</span>
             </div>
 
-            <p><strong>Job Address:</strong> ${note.jobAddress}</p>
-            <p><strong>Work Completed:</strong> ${note.workCompleted}</p>
-            <p><strong>Materials Used:</strong> ${note.materialsUsed || "None recorded"}</p>
-            <p><strong>Customer Sign-Off:</strong> ${note.signatureName || "Not signed"}</p>
+            <p><strong>Job Address:</strong> ${escapeHtml(note.jobAddress)}</p>
+            <p><strong>Work Completed:</strong> ${escapeHtml(note.workCompleted)}</p>
+            <p><strong>Materials Used:</strong> ${escapeHtml(note.materialsUsed) || "None recorded"}</p>
+            <p><strong>Customer Sign-Off:</strong> ${escapeHtml(note.signatureName) || "Not signed"}</p>
         </article>
     `).join("");
 
@@ -743,25 +859,27 @@ NFJ Services LTD
 Directors: Keith Andrews & Chris Lawton`
         );
 
+        const emailSubject = encodeURIComponent(`Invoice ${invoice.invoiceNumber} from NFJ Services LTD`);
+        const emailHref = escapeHtml(`mailto:${invoice.customerEmail}?subject=${emailSubject}&body=${emailBody}`);
+
         return `
             <article class="card">
                 <div class="item-top">
-                    <strong>${invoice.invoiceNumber}</strong>
-                    <span>${invoice.date}</span>
+                    <strong>${escapeHtml(invoice.invoiceNumber)}</strong>
+                    <span>${escapeHtml(invoice.date)}</span>
                 </div>
 
-                <p><strong>Customer:</strong> ${invoice.customerName}</p>
-                <p><strong>Email:</strong> ${invoice.customerEmail}</p>
-                <p><strong>Address:</strong> ${invoice.jobAddress}</p>
-                <p><strong>Details:</strong> ${invoice.description}</p>
-                <p><strong>Amount:</strong> £${invoice.amount}</p>
+                <p><strong>Customer:</strong> ${escapeHtml(invoice.customerName)}</p>
+                <p><strong>Email:</strong> ${escapeHtml(invoice.customerEmail)}</p>
+                <p><strong>Address:</strong> ${escapeHtml(invoice.jobAddress)}</p>
+                <p><strong>Details:</strong> ${escapeHtml(invoice.description)}</p>
+                <p><strong>Amount:</strong> £${escapeHtml(invoice.amount)}</p>
 
-                <a class="terminal-link"
-                   href="mailto:${invoice.customerEmail}?subject=Invoice ${invoice.invoiceNumber} from NFJ Services LTD&body=${emailBody}">
+                <a class="terminal-link" href="${emailHref}">
                     SEND BY EMAIL
                 </a>
 
-                <a class="terminal-link" href="/admin/invoices/${invoice.invoiceNumber}">
+                <a class="terminal-link" href="/admin/invoices/${escapeHtml(invoice.invoiceNumber)}">
                     VIEW A4 INVOICE
                 </a>
             </article>
@@ -816,6 +934,7 @@ Directors: Keith Andrews & Chris Lawton`
 });
 
 app.post("/admin/invoices", requireLogin, (req, res) => {
+    const amount = Number(req.body.amount);
     const invoiceNumber = `NFJ-${new Date().getFullYear()}-${String(invoices.length + 1).padStart(4, "0")}`;
 
     invoices.push({
@@ -825,7 +944,7 @@ app.post("/admin/invoices", requireLogin, (req, res) => {
         customerEmail: req.body.customerEmail,
         jobAddress: req.body.jobAddress,
         description: req.body.description,
-        amount: Number(req.body.amount).toFixed(2)
+        amount: Number.isFinite(amount) ? amount.toFixed(2) : "0.00"
     });
 
     res.redirect("/admin/invoices");
@@ -855,13 +974,16 @@ Kind regards,
 NFJ Services LTD`
     );
 
+    const emailSubject = encodeURIComponent(`Invoice ${invoice.invoiceNumber} from NFJ Services LTD`);
+    const emailHref = escapeHtml(`mailto:${invoice.customerEmail}?subject=${emailSubject}&body=${emailBody}`);
+
     res.send(`
         <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${invoice.invoiceNumber} - NFJ Services LTD</title>
+            <title>${escapeHtml(invoice.invoiceNumber)} - NFJ Services LTD</title>
 
             <style>
                 * {
@@ -1093,7 +1215,7 @@ NFJ Services LTD`
         <body>
             <div class="toolbar">
                 <a href="/admin/invoices">Back</a>
-                <a href="mailto:${invoice.customerEmail}?subject=Invoice ${invoice.invoiceNumber} from NFJ Services LTD&body=${emailBody}">Email</a>
+                <a href="${emailHref}">Email</a>
                 <button onclick="window.print()">Print / Save PDF</button>
             </div>
 
@@ -1112,8 +1234,8 @@ NFJ Services LTD`
 
                     <div class="invoice-title">
                         <h2>INVOICE</h2>
-                        <p><strong>No:</strong> ${invoice.invoiceNumber}</p>
-                        <p><strong>Date:</strong> ${invoice.date}</p>
+                        <p><strong>No:</strong> ${escapeHtml(invoice.invoiceNumber)}</p>
+                        <p><strong>Date:</strong> ${escapeHtml(invoice.date)}</p>
                     </div>
                 </header>
 
@@ -1121,14 +1243,14 @@ NFJ Services LTD`
                     <div class="box">
                         <h3>Invoice To</h3>
                         <p>
-                            <strong>${invoice.customerName}</strong><br>
-                            ${invoice.customerEmail}
+                            <strong>${escapeHtml(invoice.customerName)}</strong><br>
+                            ${escapeHtml(invoice.customerEmail)}
                         </p>
                     </div>
 
                     <div class="box">
                         <h3>Job Address</h3>
-                        <p>${invoice.jobAddress}</p>
+                        <p>${escapeHtml(invoice.jobAddress)}</p>
                     </div>
                 </section>
 
@@ -1142,13 +1264,13 @@ NFJ Services LTD`
 
                     <tbody>
                         <tr>
-                            <td>${invoice.description}</td>
-                            <td class="amount">£${invoice.amount}</td>
+                            <td>${escapeHtml(invoice.description)}</td>
+                            <td class="amount">£${escapeHtml(invoice.amount)}</td>
                         </tr>
 
                         <tr class="total-row">
                             <td>Total Due</td>
-                            <td class="amount">£${invoice.amount}</td>
+                            <td class="amount">£${escapeHtml(invoice.amount)}</td>
                         </tr>
                     </tbody>
                 </table>
