@@ -83,6 +83,10 @@ function escapeHtml(value) {
         .replace(/'/g, "&#039;");
 }
 
+function nl2br(value) {
+    return escapeHtml(value).replace(/\n/g, "<br>");
+}
+
 function safeUrl(value) {
     try {
         const url = new URL(String(value || ""));
@@ -97,6 +101,10 @@ function safeUrl(value) {
     return "#";
 }
 
+function recordNumber(prefix, collection) {
+    return `${prefix}-${new Date().getFullYear()}-${String(collection.length + 1).padStart(4, "0")}`;
+}
+
 function requireLogin(req, res, next) {
     if (!req.session.loggedIn) {
         return res.redirect("/admin");
@@ -106,11 +114,9 @@ function requireLogin(req, res, next) {
 }
 
 function dropboxButton(type, label) {
-    const url = DROPBOX_LINKS[type];
-
     return `
         <a class="terminal-link"
-           href="${escapeHtml(url)}"
+           href="${escapeHtml(DROPBOX_LINKS[type])}"
            target="_blank"
            rel="noopener noreferrer">
             ${escapeHtml(label)}
@@ -169,7 +175,6 @@ function accessDeniedPage(message = "Invalid credentials detected") {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Access Denied</title>
-
             <style>
                 body {
                     margin: 0;
@@ -181,23 +186,6 @@ function accessDeniedPage(message = "Invalid credentials detected") {
                     align-items: center;
                     justify-content: center;
                     padding: 24px;
-                    overflow: hidden;
-                }
-
-                body::before {
-                    content: "";
-                    position: fixed;
-                    inset: 0;
-                    background:
-                        repeating-linear-gradient(
-                            to bottom,
-                            rgba(255, 0, 0, 0.08),
-                            rgba(255, 0, 0, 0.08) 1px,
-                            transparent 1px,
-                            transparent 6px
-                        );
-                    pointer-events: none;
-                    animation: scan 3s linear infinite;
                 }
 
                 .denied-box {
@@ -205,23 +193,16 @@ function accessDeniedPage(message = "Invalid credentials detected") {
                     border: 3px solid #ff1f1f;
                     padding: 32px;
                     text-align: center;
-                    box-shadow:
-                        0 0 18px rgba(255, 0, 0, 0.7),
-                        inset 0 0 18px rgba(255, 0, 0, 0.25);
+                    box-shadow: 0 0 22px rgba(255, 0, 0, 0.7);
                     background: radial-gradient(circle at center, #260000 0%, #000000 70%);
-                    animation: pulse 0.9s infinite;
                 }
 
                 .warning {
-                    font-size: clamp(48px, 10vw, 96px);
+                    font-size: clamp(44px, 9vw, 88px);
                     font-weight: bold;
                     letter-spacing: 4px;
                     text-transform: uppercase;
-                    text-shadow:
-                        0 0 8px #ff0000,
-                        0 0 18px #ff0000,
-                        0 0 28px #ff0000;
-                    animation: flash 0.55s infinite;
+                    text-shadow: 0 0 18px #ff0000;
                 }
 
                 .subtext {
@@ -230,15 +211,6 @@ function accessDeniedPage(message = "Invalid credentials detected") {
                     font-size: 18px;
                     line-height: 1.6;
                     text-transform: uppercase;
-                }
-
-                .code {
-                    margin-top: 20px;
-                    display: inline-block;
-                    border: 1px solid #ff1f1f;
-                    padding: 10px 14px;
-                    color: #ffb3b3;
-                    background: rgba(255, 0, 0, 0.08);
                 }
 
                 .retry {
@@ -250,42 +222,6 @@ function accessDeniedPage(message = "Invalid credentials detected") {
                     text-decoration: none;
                     font-weight: bold;
                     text-transform: uppercase;
-                    box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
-                }
-
-                .retry:hover {
-                    background: white;
-                    color: #b00000;
-                }
-
-                @keyframes flash {
-                    0%, 100% {
-                        opacity: 1;
-                    }
-
-                    50% {
-                        opacity: 0.35;
-                    }
-                }
-
-                @keyframes pulse {
-                    0%, 100% {
-                        transform: scale(1);
-                    }
-
-                    50% {
-                        transform: scale(1.015);
-                    }
-                }
-
-                @keyframes scan {
-                    from {
-                        transform: translateY(-20px);
-                    }
-
-                    to {
-                        transform: translateY(20px);
-                    }
                 }
             </style>
         </head>
@@ -293,18 +229,10 @@ function accessDeniedPage(message = "Invalid credentials detected") {
         <body>
             <main class="denied-box">
                 <div class="warning">ACCESS DENIED</div>
-
                 <div class="subtext">
                     ${escapeHtml(message)}<br>
                     NFJ private system locked
                 </div>
-
-                <div class="code">
-                    ERROR CODE: NFJ-403-UNAUTHORISED
-                </div>
-
-                <br>
-
                 <a class="retry" href="/admin">Retry Login</a>
             </main>
         </body>
@@ -482,6 +410,291 @@ function terminalPage(title, systemName, content) {
     `;
 }
 
+function documentPage(options) {
+    const dropboxLink = options.dropboxUrl
+        ? `<a class="dropbox" href="${escapeHtml(options.dropboxUrl)}" target="_blank" rel="noopener noreferrer">Upload to Dropbox</a>`
+        : "";
+
+    return `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${escapeHtml(options.title)}</title>
+
+            <style>
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    margin: 0;
+                    background: #e5e7eb;
+                    font-family: Arial, sans-serif;
+                    color: #111827;
+                    padding: 24px;
+                }
+
+                .toolbar {
+                    max-width: 210mm;
+                    margin: 0 auto 16px;
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                }
+
+                .toolbar a,
+                .toolbar button {
+                    border: none;
+                    background: #0f172a;
+                    color: white;
+                    padding: 10px 14px;
+                    border-radius: 6px;
+                    text-decoration: none;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+
+                .toolbar a.dropbox {
+                    background: #0061ff;
+                }
+
+                .document-page {
+                    width: 210mm;
+                    min-height: 297mm;
+                    margin: 0 auto;
+                    background: white;
+                    padding: 18mm;
+                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+                }
+
+                .document-header {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 24px;
+                    border-bottom: 3px solid #0f172a;
+                    padding-bottom: 18px;
+                    margin-bottom: 28px;
+                }
+
+                .brand {
+                    display: flex;
+                    gap: 14px;
+                    align-items: center;
+                }
+
+                .logo-box {
+                    width: 68px;
+                    height: 68px;
+                    border-radius: 10px;
+                    background: #0f172a;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+
+                .brand h1 {
+                    margin: 0;
+                    color: #0f172a;
+                    font-size: 26px;
+                }
+
+                .brand p {
+                    margin: 4px 0 0;
+                    color: #475569;
+                    line-height: 1.4;
+                    font-size: 13px;
+                }
+
+                .document-title {
+                    text-align: right;
+                }
+
+                .document-title h2 {
+                    margin: 0;
+                    font-size: 30px;
+                    color: #0f172a;
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                }
+
+                .document-title p {
+                    margin: 6px 0 0;
+                    color: #475569;
+                }
+
+                .details-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 18px;
+                    margin-bottom: 24px;
+                }
+
+                .box {
+                    border: 1px solid #cbd5e1;
+                    border-radius: 8px;
+                    padding: 14px;
+                }
+
+                .box h3 {
+                    margin: 0 0 10px;
+                    color: #0f172a;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+
+                .box p {
+                    margin: 0;
+                    color: #334155;
+                    line-height: 1.6;
+                    word-break: break-word;
+                }
+
+                .wide {
+                    grid-column: 1 / -1;
+                }
+
+                .amount-box {
+                    margin-top: 20px;
+                    background: #f8fafc;
+                    border: 2px solid #0f172a;
+                    border-radius: 8px;
+                    padding: 18px;
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 16px;
+                    font-size: 22px;
+                    font-weight: bold;
+                }
+
+                .photo-preview {
+                    max-width: 100%;
+                    max-height: 430px;
+                    object-fit: contain;
+                    display: block;
+                    margin-top: 10px;
+                    border: 1px solid #cbd5e1;
+                    border-radius: 8px;
+                }
+
+                .footer-note {
+                    margin-top: 36px;
+                    border-top: 1px solid #cbd5e1;
+                    padding-top: 14px;
+                    color: #64748b;
+                    font-size: 13px;
+                    line-height: 1.6;
+                }
+
+                @media print {
+                    body {
+                        background: white;
+                        padding: 0;
+                    }
+
+                    .toolbar {
+                        display: none;
+                    }
+
+                    .document-page {
+                        box-shadow: none;
+                        margin: 0;
+                        width: 210mm;
+                        min-height: 297mm;
+                    }
+                }
+
+                @media (max-width: 760px) {
+                    body {
+                        padding: 0;
+                        background: white;
+                    }
+
+                    .toolbar {
+                        padding: 12px;
+                        margin: 0;
+                        max-width: none;
+                        justify-content: center;
+                    }
+
+                    .document-page {
+                        width: 100%;
+                        min-height: auto;
+                        padding: 20px;
+                        box-shadow: none;
+                    }
+
+                    .document-header {
+                        display: block;
+                    }
+
+                    .document-title {
+                        text-align: left;
+                        margin-top: 18px;
+                    }
+
+                    .details-grid {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .wide {
+                        grid-column: auto;
+                    }
+
+                    .amount-box {
+                        display: block;
+                    }
+                }
+            </style>
+        </head>
+
+        <body>
+            <div class="toolbar">
+                <a href="${escapeHtml(options.backUrl)}">Back</a>
+                <button onclick="window.print()">Create / Save PDF</button>
+                ${dropboxLink}
+            </div>
+
+            <main class="document-page">
+                <header class="document-header">
+                    <div class="brand">
+                        <div class="logo-box">NFJ</div>
+                        <div>
+                            <h1>NFJ Services LTD</h1>
+                            <p>
+                                Electrical - Network Cabling - Tech Installations - Maintenance<br>
+                                Directors: Keith Andrews & Chris Lawton
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="document-title">
+                        <h2>${escapeHtml(options.heading)}</h2>
+                        <p><strong>No:</strong> ${escapeHtml(options.number)}</p>
+                        <p><strong>Date:</strong> ${escapeHtml(options.date)}</p>
+                    </div>
+                </header>
+
+                ${options.content}
+
+                <div class="footer-note">
+                    <p>
+                        This record was created through the NFJ Services LTD admin system.
+                        Use Create / Save PDF first, then upload the saved file to Dropbox if required.
+                    </p>
+                </div>
+            </main>
+        </body>
+        </html>
+    `;
+}
+
 app.get("/", (req, res) => {
     res.redirect("/admin");
 });
@@ -550,22 +763,22 @@ app.get("/admin/dashboard", requireLogin, (req, res) => {
         <div class="grid">
             <a class="terminal-link card" href="/admin/jobs">
                 CURRENT JOBS
-                <p>Booked work and site details</p>
+                <p>Booked work and printable job sheets</p>
             </a>
 
             <a class="terminal-link card" href="/admin/files">
                 FILES
-                <p>Documents, certificates and receipts</p>
+                <p>Documents, certificates and printable file records</p>
             </a>
 
             <a class="terminal-link card" href="/admin/photos">
                 PHOTOS
-                <p>Job photos and site evidence</p>
+                <p>Job photos and printable photo records</p>
             </a>
 
             <a class="terminal-link card" href="/admin/notes">
                 NOTES
-                <p>Work notes and customer sign-off</p>
+                <p>Work notes and printable customer sign-off</p>
             </a>
 
             <a class="terminal-link card" href="/admin/invoices">
@@ -575,7 +788,7 @@ app.get("/admin/dashboard", requireLogin, (req, res) => {
 
             <a class="terminal-link card" href="/admin/expenses">
                 EXPENSES
-                <p>Record expenses and upload receipts</p>
+                <p>Record expenses and printable expense forms</p>
             </a>
         </div>
 
@@ -593,21 +806,25 @@ app.get("/admin/jobs", requireLogin, (req, res) => {
     const jobList = jobs.map(job => `
         <article class="card">
             <div class="item-top">
-                <strong>${escapeHtml(job.customerName)}</strong>
+                <strong>${escapeHtml(job.jobNumber)}</strong>
                 <span>${escapeHtml(job.date)} ${escapeHtml(job.time)}</span>
             </div>
 
+            <p><strong>Customer:</strong> ${escapeHtml(job.customerName)}</p>
             <p><strong>Status:</strong> ${escapeHtml(job.status)}</p>
             <p><strong>Contact:</strong> ${escapeHtml(job.contactNumber || "Not recorded")}</p>
             <p><strong>Address:</strong> ${escapeHtml(job.jobAddress)}</p>
             <p><strong>Details:</strong> ${escapeHtml(job.details)}</p>
+
+            <a class="terminal-link" href="/admin/jobs/${escapeHtml(job.jobNumber)}">VIEW A4 JOB SHEET</a>
+            ${dropboxButton("files", "UPLOAD JOB SHEET TO DROPBOX")}
         </article>
     `).join("");
 
     res.send(terminalPage("NFJ Current Jobs", "CURRENT JOBS", `
         <h1>Current Jobs <span class="blink">_</span></h1>
 
-        <p>Book and record upcoming work.</p>
+        <p>Book work, create job sheets, save them as PDF and upload if needed.</p>
 
         <form method="POST" action="/admin/jobs">
             <h2>Add Job</h2>
@@ -664,6 +881,7 @@ app.get("/admin/jobs", requireLogin, (req, res) => {
 
 app.post("/admin/jobs", requireLogin, (req, res) => {
     jobs.push({
+        jobNumber: recordNumber("JOB", jobs),
         date: req.body.date,
         time: req.body.time,
         customerName: req.body.customerName,
@@ -676,6 +894,56 @@ app.post("/admin/jobs", requireLogin, (req, res) => {
     res.redirect("/admin/jobs");
 });
 
+app.get("/admin/jobs/:jobNumber", requireLogin, (req, res) => {
+    const job = jobs.find(item => item.jobNumber === req.params.jobNumber);
+
+    if (!job) {
+        return res.send("<h1>Job not found</h1><a href='/admin/jobs'>Back to jobs</a>");
+    }
+
+    res.send(documentPage({
+        title: `${job.jobNumber} - NFJ Job Sheet`,
+        heading: "Job Sheet",
+        number: job.jobNumber,
+        date: job.date,
+        backUrl: "/admin/jobs",
+        dropboxUrl: DROPBOX_LINKS.files,
+        content: `
+            <section class="details-grid">
+                <div class="box">
+                    <h3>Customer</h3>
+                    <p>${escapeHtml(job.customerName)}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Contact Number</h3>
+                    <p>${escapeHtml(job.contactNumber || "Not recorded")}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Job Date / Time</h3>
+                    <p>${escapeHtml(job.date)} ${escapeHtml(job.time || "")}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Status</h3>
+                    <p>${escapeHtml(job.status)}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Job Address</h3>
+                    <p>${escapeHtml(job.jobAddress)}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Job Details</h3>
+                    <p>${nl2br(job.details)}</p>
+                </div>
+            </section>
+        `
+    }));
+});
+
 app.get("/admin/files", requireLogin, (req, res) => {
     const fileList = files.map(file => {
         const fileUrl = safeUrl(file.fileUrl);
@@ -683,14 +951,18 @@ app.get("/admin/files", requireLogin, (req, res) => {
         return `
             <article class="card">
                 <div class="item-top">
-                    <strong>${escapeHtml(file.fileName)}</strong>
+                    <strong>${escapeHtml(file.fileNumber)}</strong>
                     <span>${escapeHtml(file.date)}</span>
                 </div>
 
+                <p><strong>File Name:</strong> ${escapeHtml(file.fileName)}</p>
                 <p><strong>Customer:</strong> ${escapeHtml(file.customerName)}</p>
                 <p><strong>Job Address:</strong> ${escapeHtml(file.jobAddress)}</p>
                 <p><strong>Description:</strong> ${escapeHtml(file.description || "No description recorded")}</p>
+
                 <a class="terminal-link" href="${escapeHtml(fileUrl)}" target="_blank" rel="noopener noreferrer">OPEN FILE</a>
+                <a class="terminal-link" href="/admin/files/${escapeHtml(file.fileNumber)}">VIEW A4 FILE RECORD</a>
+                ${dropboxButton("files", "UPLOAD FILE TO DROPBOX")}
             </article>
         `;
     }).join("");
@@ -738,16 +1010,13 @@ app.get("/admin/files", requireLogin, (req, res) => {
         <h2>Saved Files</h2>
         ${fileList || "<p>No files saved yet.</p>"}
 
-        <div class="action-row">
-            ${dropboxButton("files", "UPLOAD FILE TO DROPBOX")}
-        </div>
-
         <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
     `));
 });
 
 app.post("/admin/files", requireLogin, (req, res) => {
     files.push({
+        fileNumber: recordNumber("FILE", files),
         date: new Date().toLocaleString("en-GB"),
         fileName: req.body.fileName,
         customerName: req.body.customerName,
@@ -759,6 +1028,53 @@ app.post("/admin/files", requireLogin, (req, res) => {
     res.redirect("/admin/files");
 });
 
+app.get("/admin/files/:fileNumber", requireLogin, (req, res) => {
+    const file = files.find(item => item.fileNumber === req.params.fileNumber);
+
+    if (!file) {
+        return res.send("<h1>File record not found</h1><a href='/admin/files'>Back to files</a>");
+    }
+
+    const fileUrl = safeUrl(file.fileUrl);
+
+    res.send(documentPage({
+        title: `${file.fileNumber} - NFJ File Record`,
+        heading: "File Record",
+        number: file.fileNumber,
+        date: file.date,
+        backUrl: "/admin/files",
+        dropboxUrl: DROPBOX_LINKS.files,
+        content: `
+            <section class="details-grid">
+                <div class="box">
+                    <h3>File Name</h3>
+                    <p>${escapeHtml(file.fileName)}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Customer</h3>
+                    <p>${escapeHtml(file.customerName)}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Job Address</h3>
+                    <p>${escapeHtml(file.jobAddress)}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>File Link</h3>
+                    <p><a href="${escapeHtml(fileUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(fileUrl)}</a></p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Description</h3>
+                    <p>${nl2br(file.description || "No description recorded")}</p>
+                </div>
+            </section>
+        `
+    }));
+});
+
 app.get("/admin/photos", requireLogin, (req, res) => {
     const photoList = photos.map(photo => {
         const photoUrl = safeUrl(photo.photoUrl);
@@ -766,15 +1082,19 @@ app.get("/admin/photos", requireLogin, (req, res) => {
         return `
             <article class="card">
                 <div class="item-top">
-                    <strong>${escapeHtml(photo.customerName)}</strong>
+                    <strong>${escapeHtml(photo.photoNumber)}</strong>
                     <span>${escapeHtml(photo.date)}</span>
                 </div>
 
                 <img src="${escapeHtml(photoUrl)}" alt="Job photo for ${escapeHtml(photo.customerName)}" class="job-photo">
 
+                <p><strong>Customer:</strong> ${escapeHtml(photo.customerName)}</p>
                 <p><strong>Job Address:</strong> ${escapeHtml(photo.jobAddress)}</p>
                 <p><strong>Description:</strong> ${escapeHtml(photo.description || "No description recorded")}</p>
+
                 <a class="terminal-link" href="${escapeHtml(photoUrl)}" target="_blank" rel="noopener noreferrer">OPEN PHOTO</a>
+                <a class="terminal-link" href="/admin/photos/${escapeHtml(photo.photoNumber)}">VIEW A4 PHOTO RECORD</a>
+                ${dropboxButton("photos", "UPLOAD PHOTO TO DROPBOX")}
             </article>
         `;
     }).join("");
@@ -817,16 +1137,13 @@ app.get("/admin/photos", requireLogin, (req, res) => {
         <h2>Saved Photos</h2>
         <div class="grid">${photoList || "<p>No photos saved yet.</p>"}</div>
 
-        <div class="action-row">
-            ${dropboxButton("photos", "UPLOAD PHOTO TO DROPBOX")}
-        </div>
-
         <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
     `));
 });
 
 app.post("/admin/photos", requireLogin, (req, res) => {
     photos.push({
+        photoNumber: recordNumber("PHOTO", photos),
         date: new Date().toLocaleString("en-GB"),
         customerName: req.body.customerName,
         jobAddress: req.body.jobAddress,
@@ -837,18 +1154,65 @@ app.post("/admin/photos", requireLogin, (req, res) => {
     res.redirect("/admin/photos");
 });
 
+app.get("/admin/photos/:photoNumber", requireLogin, (req, res) => {
+    const photo = photos.find(item => item.photoNumber === req.params.photoNumber);
+
+    if (!photo) {
+        return res.send("<h1>Photo record not found</h1><a href='/admin/photos'>Back to photos</a>");
+    }
+
+    const photoUrl = safeUrl(photo.photoUrl);
+
+    res.send(documentPage({
+        title: `${photo.photoNumber} - NFJ Photo Record`,
+        heading: "Photo Record",
+        number: photo.photoNumber,
+        date: photo.date,
+        backUrl: "/admin/photos",
+        dropboxUrl: DROPBOX_LINKS.photos,
+        content: `
+            <section class="details-grid">
+                <div class="box">
+                    <h3>Customer</h3>
+                    <p>${escapeHtml(photo.customerName)}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Photo Link</h3>
+                    <p><a href="${escapeHtml(photoUrl)}" target="_blank" rel="noopener noreferrer">Open original photo</a></p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Job Address</h3>
+                    <p>${escapeHtml(photo.jobAddress)}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Description</h3>
+                    <p>${nl2br(photo.description || "No description recorded")}</p>
+                    <img src="${escapeHtml(photoUrl)}" alt="Job photo" class="photo-preview">
+                </div>
+            </section>
+        `
+    }));
+});
+
 app.get("/admin/notes", requireLogin, (req, res) => {
     const noteList = notes.map(note => `
         <article class="card">
             <div class="item-top">
-                <strong>${escapeHtml(note.customerName)}</strong>
+                <strong>${escapeHtml(note.noteNumber)}</strong>
                 <span>${escapeHtml(note.date)}</span>
             </div>
 
+            <p><strong>Customer:</strong> ${escapeHtml(note.customerName)}</p>
             <p><strong>Job Address:</strong> ${escapeHtml(note.jobAddress)}</p>
             <p><strong>Work Completed:</strong> ${escapeHtml(note.workCompleted)}</p>
             <p><strong>Materials Used:</strong> ${escapeHtml(note.materialsUsed || "None recorded")}</p>
             <p><strong>Customer Sign-Off:</strong> ${escapeHtml(note.signatureName || "Not signed")}</p>
+
+            <a class="terminal-link" href="/admin/notes/${escapeHtml(note.noteNumber)}">VIEW A4 NOTE FORM</a>
+            ${dropboxButton("notes", "UPLOAD NOTE TO DROPBOX")}
         </article>
     `).join("");
 
@@ -895,16 +1259,13 @@ app.get("/admin/notes", requireLogin, (req, res) => {
         <h2>Saved Notes</h2>
         ${noteList || "<p>No notes saved yet.</p>"}
 
-        <div class="action-row">
-            ${dropboxButton("notes", "UPLOAD NOTE TO DROPBOX")}
-        </div>
-
         <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
     `));
 });
 
 app.post("/admin/notes", requireLogin, (req, res) => {
     notes.push({
+        noteNumber: recordNumber("NOTE", notes),
         date: new Date().toLocaleString("en-GB"),
         customerName: req.body.customerName,
         jobAddress: req.body.jobAddress,
@@ -914,6 +1275,51 @@ app.post("/admin/notes", requireLogin, (req, res) => {
     });
 
     res.redirect("/admin/notes");
+});
+
+app.get("/admin/notes/:noteNumber", requireLogin, (req, res) => {
+    const note = notes.find(item => item.noteNumber === req.params.noteNumber);
+
+    if (!note) {
+        return res.send("<h1>Note not found</h1><a href='/admin/notes'>Back to notes</a>");
+    }
+
+    res.send(documentPage({
+        title: `${note.noteNumber} - NFJ Job Note`,
+        heading: "Job Note",
+        number: note.noteNumber,
+        date: note.date,
+        backUrl: "/admin/notes",
+        dropboxUrl: DROPBOX_LINKS.notes,
+        content: `
+            <section class="details-grid">
+                <div class="box">
+                    <h3>Customer</h3>
+                    <p>${escapeHtml(note.customerName)}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Customer Sign-Off</h3>
+                    <p>${escapeHtml(note.signatureName || "Not signed")}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Job Address</h3>
+                    <p>${escapeHtml(note.jobAddress)}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Work Completed</h3>
+                    <p>${nl2br(note.workCompleted)}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Materials Used</h3>
+                    <p>${nl2br(note.materialsUsed || "None recorded")}</p>
+                </div>
+            </section>
+        `
+    }));
 });
 
 app.get("/admin/invoices", requireLogin, (req, res) => {
@@ -973,10 +1379,6 @@ Directors: Keith Andrews & Chris Lawton`
             Directors: Keith Andrews & Chris Lawton
         </p>
 
-        <div class="action-row">
-            ${dropboxButton("invoices", "UPLOAD SAVED INVOICE PDF TO DROPBOX")}
-        </div>
-
         <form method="POST" action="/admin/invoices">
             <h2>Create Invoice</h2>
 
@@ -1022,10 +1424,8 @@ app.post("/admin/invoices", requireLogin, (req, res) => {
         return res.status(400).send("Invalid invoice amount");
     }
 
-    const invoiceNumber = `NFJ-${new Date().getFullYear()}-${String(invoices.length + 1).padStart(4, "0")}`;
-
     invoices.push({
-        invoiceNumber,
+        invoiceNumber: recordNumber("NFJ", invoices),
         date: new Date().toLocaleDateString("en-GB"),
         customerName: req.body.customerName,
         customerEmail: req.body.customerEmail,
@@ -1061,318 +1461,49 @@ Kind regards,
 NFJ Services LTD`
     );
 
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${escapeHtml(invoice.invoiceNumber)} - NFJ Services LTD</title>
-
-            <style>
-                * {
-                    box-sizing: border-box;
-                }
-
-                body {
-                    margin: 0;
-                    background: #e5e7eb;
-                    font-family: Arial, sans-serif;
-                    color: #111827;
-                    padding: 24px;
-                }
-
-                .toolbar {
-                    max-width: 210mm;
-                    margin: 0 auto 16px;
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: 10px;
-                    flex-wrap: wrap;
-                }
-
-                .toolbar a,
-                .toolbar button {
-                    border: none;
-                    background: #0f172a;
-                    color: white;
-                    padding: 10px 14px;
-                    border-radius: 6px;
-                    text-decoration: none;
-                    cursor: pointer;
-                    font-size: 14px;
-                }
-
-                .toolbar a.dropbox {
-                    background: #0061ff;
-                }
-
-                .invoice-page {
-                    width: 210mm;
-                    min-height: 297mm;
-                    margin: 0 auto;
-                    background: white;
-                    padding: 18mm;
-                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
-                }
-
-                .invoice-header {
-                    display: flex;
-                    justify-content: space-between;
-                    gap: 24px;
-                    border-bottom: 3px solid #0f172a;
-                    padding-bottom: 18px;
-                    margin-bottom: 28px;
-                }
-
-                .brand {
-                    display: flex;
-                    gap: 14px;
-                    align-items: center;
-                }
-
-                .logo-box {
-                    width: 68px;
-                    height: 68px;
-                    border-radius: 10px;
-                    background: #0f172a;
-                    color: white;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 24px;
-                    font-weight: bold;
-                }
-
-                .brand h1 {
-                    margin: 0;
-                    color: #0f172a;
-                    font-size: 26px;
-                }
-
-                .brand p {
-                    margin: 4px 0 0;
-                    color: #475569;
-                    line-height: 1.4;
-                    font-size: 13px;
-                }
-
-                .invoice-title {
-                    text-align: right;
-                }
-
-                .invoice-title h2 {
-                    margin: 0;
-                    font-size: 34px;
-                    color: #0f172a;
-                    letter-spacing: 2px;
-                }
-
-                .invoice-title p {
-                    margin: 6px 0 0;
-                    color: #475569;
-                }
-
-                .details-grid {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 24px;
-                    margin-bottom: 28px;
-                }
-
-                .box {
-                    border: 1px solid #cbd5e1;
-                    border-radius: 8px;
-                    padding: 14px;
-                }
-
-                .box h3 {
-                    margin: 0 0 10px;
-                    color: #0f172a;
-                    font-size: 14px;
-                    text-transform: uppercase;
-                    letter-spacing: 1px;
-                }
-
-                .box p {
-                    margin: 0;
-                    color: #334155;
-                    line-height: 1.6;
-                }
-
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-top: 18px;
-                }
-
-                th {
-                    background: #0f172a;
-                    color: white;
-                    padding: 12px;
-                    text-align: left;
-                    font-size: 14px;
-                }
-
-                td {
-                    border: 1px solid #cbd5e1;
-                    padding: 14px 12px;
-                    vertical-align: top;
-                    line-height: 1.6;
-                }
-
-                .amount {
-                    width: 130px;
-                    text-align: right;
-                    white-space: nowrap;
-                }
-
-                .total-row td {
-                    font-weight: bold;
-                    font-size: 18px;
-                    background: #f8fafc;
-                }
-
-                .footer-note {
-                    margin-top: 36px;
-                    border-top: 1px solid #cbd5e1;
-                    padding-top: 14px;
-                    color: #64748b;
-                    font-size: 13px;
-                    line-height: 1.6;
-                }
-
-                @media print {
-                    body {
-                        background: white;
-                        padding: 0;
-                    }
-
-                    .toolbar {
-                        display: none;
-                    }
-
-                    .invoice-page {
-                        box-shadow: none;
-                        margin: 0;
-                        width: 210mm;
-                        min-height: 297mm;
-                    }
-                }
-
-                @media (max-width: 760px) {
-                    body {
-                        padding: 0;
-                        background: white;
-                    }
-
-                    .toolbar {
-                        padding: 12px;
-                        margin: 0;
-                        max-width: none;
-                        justify-content: center;
-                    }
-
-                    .invoice-page {
-                        width: 100%;
-                        min-height: auto;
-                        padding: 20px;
-                        box-shadow: none;
-                    }
-
-                    .invoice-header {
-                        display: block;
-                    }
-
-                    .details-grid {
-                        grid-template-columns: 1fr;
-                    }
-
-                    .invoice-title {
-                        text-align: left;
-                        margin-top: 18px;
-                    }
-
-                    .box {
-                        margin-bottom: 16px;
-                    }
-                }
-            </style>
-        </head>
-
-        <body>
-            <div class="toolbar">
-                <a href="/admin/invoices">Back</a>
-                <a href="mailto:${escapeHtml(invoice.customerEmail)}?subject=Invoice ${escapeHtml(invoice.invoiceNumber)} from NFJ Services LTD&body=${emailBody}">Email</a>
-                <button onclick="window.print()">Print / Save PDF</button>
-                <a class="dropbox" href="${escapeHtml(DROPBOX_LINKS.invoices)}" target="_blank" rel="noopener noreferrer">Upload to Dropbox</a>
-            </div>
-
-            <main class="invoice-page">
-                <header class="invoice-header">
-                    <div class="brand">
-                        <div class="logo-box">NFJ</div>
-                        <div>
-                            <h1>NFJ Services LTD</h1>
-                            <p>
-                                Electrical - Network Cabling - Tech Installations - Maintenance<br>
-                                Directors: Keith Andrews & Chris Lawton
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="invoice-title">
-                        <h2>INVOICE</h2>
-                        <p><strong>No:</strong> ${escapeHtml(invoice.invoiceNumber)}</p>
-                        <p><strong>Date:</strong> ${escapeHtml(invoice.date)}</p>
-                    </div>
-                </header>
-
-                <section class="details-grid">
-                    <div class="box">
-                        <h3>Invoice To</h3>
-                        <p>
-                            <strong>${escapeHtml(invoice.customerName)}</strong><br>
-                            ${escapeHtml(invoice.customerEmail)}
-                        </p>
-                    </div>
-
-                    <div class="box">
-                        <h3>Job Address</h3>
-                        <p>${escapeHtml(invoice.jobAddress)}</p>
-                    </div>
-                </section>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th class="amount">Amount</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td>${escapeHtml(invoice.description)}</td>
-                            <td class="amount">&pound;${escapeHtml(invoice.amount)}</td>
-                        </tr>
-
-                        <tr class="total-row">
-                            <td>Total Due</td>
-                            <td class="amount">&pound;${escapeHtml(invoice.amount)}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="footer-note">
+    res.send(documentPage({
+        title: `${invoice.invoiceNumber} - NFJ Invoice`,
+        heading: "Invoice",
+        number: invoice.invoiceNumber,
+        date: invoice.date,
+        backUrl: "/admin/invoices",
+        dropboxUrl: DROPBOX_LINKS.invoices,
+        content: `
+            <section class="details-grid">
+                <div class="box">
+                    <h3>Invoice To</h3>
                     <p>
-                        Thank you for choosing NFJ Services LTD. Please contact us if you have any questions about this invoice.
+                        <strong>${escapeHtml(invoice.customerName)}</strong><br>
+                        ${escapeHtml(invoice.customerEmail)}
                     </p>
                 </div>
-            </main>
-        </body>
-        </html>
-    `);
+
+                <div class="box">
+                    <h3>Email Invoice</h3>
+                    <p>
+                        <a href="mailto:${escapeHtml(invoice.customerEmail)}?subject=Invoice ${escapeHtml(invoice.invoiceNumber)} from NFJ Services LTD&body=${emailBody}">
+                            Send invoice by email
+                        </a>
+                    </p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Job Address</h3>
+                    <p>${escapeHtml(invoice.jobAddress)}</p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Work / Job Details</h3>
+                    <p>${nl2br(invoice.description)}</p>
+                </div>
+            </section>
+
+            <div class="amount-box">
+                <span>Total Due</span>
+                <span>&pound;${escapeHtml(invoice.amount)}</span>
+            </div>
+        `
+    }));
 });
 
 app.get("/admin/expenses", requireLogin, (req, res) => {
@@ -1382,15 +1513,19 @@ app.get("/admin/expenses", requireLogin, (req, res) => {
         return `
             <article class="card">
                 <div class="item-top">
-                    <strong>${escapeHtml(expense.supplierName)}</strong>
+                    <strong>${escapeHtml(expense.expenseNumber)}</strong>
                     <span>${escapeHtml(expense.date)}</span>
                 </div>
 
+                <p><strong>Supplier:</strong> ${escapeHtml(expense.supplierName)}</p>
                 <p><strong>Category:</strong> ${escapeHtml(expense.category)}</p>
                 <p><strong>Amount:</strong> <span class="amount">&pound;${escapeHtml(expense.amount)}</span></p>
                 <p><strong>Payment Method:</strong> ${escapeHtml(expense.paymentMethod || "Not recorded")}</p>
                 <p><strong>Notes:</strong> ${escapeHtml(expense.notes || "No notes recorded")}</p>
+
                 ${receiptUrl ? `<a class="terminal-link" href="${escapeHtml(receiptUrl)}" target="_blank" rel="noopener noreferrer">OPEN RECEIPT</a>` : ""}
+                <a class="terminal-link" href="/admin/expenses/${escapeHtml(expense.expenseNumber)}">VIEW A4 EXPENSE FORM</a>
+                ${dropboxButton("expenses", "UPLOAD EXPENSE RECEIPT TO DROPBOX")}
             </article>
         `;
     }).join("");
@@ -1457,10 +1592,6 @@ app.get("/admin/expenses", requireLogin, (req, res) => {
         <h2>Saved Expenses</h2>
         ${expenseList || "<p>No expenses saved yet.</p>"}
 
-        <div class="action-row">
-            ${dropboxButton("expenses", "UPLOAD EXPENSE RECEIPT TO DROPBOX")}
-        </div>
-
         <a class="back-link" href="/admin/dashboard">BACK TO DASHBOARD</a>
     `));
 });
@@ -1473,6 +1604,7 @@ app.post("/admin/expenses", requireLogin, (req, res) => {
     }
 
     expenses.push({
+        expenseNumber: recordNumber("EXP", expenses),
         date: req.body.date,
         supplierName: req.body.supplierName,
         category: req.body.category,
@@ -1483,6 +1615,60 @@ app.post("/admin/expenses", requireLogin, (req, res) => {
     });
 
     res.redirect("/admin/expenses");
+});
+
+app.get("/admin/expenses/:expenseNumber", requireLogin, (req, res) => {
+    const expense = expenses.find(item => item.expenseNumber === req.params.expenseNumber);
+
+    if (!expense) {
+        return res.send("<h1>Expense not found</h1><a href='/admin/expenses'>Back to expenses</a>");
+    }
+
+    const receiptUrl = expense.receiptUrl ? safeUrl(expense.receiptUrl) : "";
+
+    res.send(documentPage({
+        title: `${expense.expenseNumber} - NFJ Expense Form`,
+        heading: "Expense Form",
+        number: expense.expenseNumber,
+        date: expense.date,
+        backUrl: "/admin/expenses",
+        dropboxUrl: DROPBOX_LINKS.expenses,
+        content: `
+            <section class="details-grid">
+                <div class="box">
+                    <h3>Supplier / Shop</h3>
+                    <p>${escapeHtml(expense.supplierName)}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Category</h3>
+                    <p>${escapeHtml(expense.category)}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Payment Method</h3>
+                    <p>${escapeHtml(expense.paymentMethod || "Not recorded")}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Receipt</h3>
+                    <p>
+                        ${receiptUrl ? `<a href="${escapeHtml(receiptUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(receiptUrl)}</a>` : "No receipt URL recorded"}
+                    </p>
+                </div>
+
+                <div class="box wide">
+                    <h3>Notes</h3>
+                    <p>${nl2br(expense.notes || "No notes recorded")}</p>
+                </div>
+            </section>
+
+            <div class="amount-box">
+                <span>Total Expense</span>
+                <span>&pound;${escapeHtml(expense.amount)}</span>
+            </div>
+        `
+    }));
 });
 
 app.listen(PORT, () => {
