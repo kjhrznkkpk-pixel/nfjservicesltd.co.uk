@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Services - NFJ Services LTD | Network Cabling, CCTV, WiFi, Fibre & Starlink</title>
-<meta name="description" content="NFJ Services LTD provides network cabling, WiFi installation, CCTV, fibre optic cabling, Starlink setup, TV mounting, home automation and maintenance across Cheshire, Lancashire and Merseyside.">
-<meta name="keywords" content="NFJ Services, network cabling Cheshire, network cabling Lancashire, network cabling Merseyside, CCTV installation, WiFi installation, mesh WiFi, fibre optic cabling, Starlink installation, home automation, AV systems, network fault finding">
+<title>Services | NFJ Services LTD | Cabling, WiFi, CCTV, Fibre & Starlink</title>
+<meta name="description" content="NFJ Services LTD provides network cabling, WiFi installation, CCTV, fibre optic cabling, Starlink setup, TV mounting, smart home installation, garden room connectivity and maintenance across Cheshire, Lancashire and Merseyside.">
+<meta name="keywords" content="NFJ Services, network cabling Cheshire, network cabling Lancashire, network cabling Merseyside, CCTV installation, WiFi installation, mesh WiFi, fibre optic cabling, Starlink installation, home automation, TV mounting, AV systems, network fault finding, garden room internet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -86,8 +86,8 @@ h1 {
 }
 
 .intro {
-    max-width: 850px;
-    margin: 0 auto 34px;
+    max-width: 900px;
+    margin: 0 auto 28px;
     color: #cbd5e1;
     line-height: 1.7;
 }
@@ -95,6 +95,31 @@ h1 {
 .service-area {
     color: #93c5fd;
     font-weight: 600;
+}
+
+.quick-links {
+    max-width: 980px;
+    margin: 0 auto 34px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.quick-links a {
+    color: #93c5fd;
+    border: 1px solid #334155;
+    background: #0b1220;
+    border-radius: 999px;
+    padding: 9px 12px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.quick-links a:hover {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
 }
 
 .grid {
@@ -133,13 +158,149 @@ h1 {
     margin: 0;
 }
 
-.areas {
-    margin: 45px auto 0;
-    max-width: 950px;
+.section {
+    max-width: 1100px;
+    margin: 48px auto 0;
+    text-align: left;
+}
+
+.section h2 {
+    color: white;
+    font-size: 30px;
+    margin: 0 0 12px;
+    text-align: center;
+}
+
+.section-intro {
+    max-width: 850px;
+    margin: 0 auto 24px;
+    color: #cbd5e1;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.detail-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.detail-card h3 {
+    color: #3b82f6;
+    margin: 0 0 10px;
+    font-size: 21px;
+}
+
+.detail-card p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin: 0 0 12px;
+}
+
+.detail-card ul,
+.list-panel ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.detail-card li,
+.list-panel li {
+    color: #cbd5e1;
+    line-height: 1.55;
+    margin-bottom: 7px;
+}
+
+.split-section {
+    max-width: 1100px;
+    margin: 48px auto 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
+    gap: 20px;
+    text-align: left;
+}
+
+.panel {
     background: #0b1220;
     border: 1px solid #334155;
     border-radius: 12px;
     padding: 24px;
+}
+
+.panel h2 {
+    color: #3b82f6;
+    margin: 0 0 12px;
+    font-size: 24px;
+}
+
+.panel p {
+    color: #cbd5e1;
+    line-height: 1.7;
+    margin: 0 0 12px;
+}
+
+.list-panel {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.step {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+}
+
+.step-number {
+    width: 34px;
+    height: 34px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    background: #3b82f6;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.step h3 {
+    margin: 0 0 8px;
+    color: white;
+    font-size: 18px;
+}
+
+.step p {
+    color: #cbd5e1;
+    line-height: 1.55;
+    margin: 0;
+    font-size: 14px;
+}
+
+.areas {
+    margin: 48px auto 0;
+    max-width: 1000px;
+    background: #0b1220;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
 }
 
 .areas h2 {
@@ -150,12 +311,81 @@ h1 {
 .areas p {
     color: #cbd5e1;
     line-height: 1.7;
-    margin-bottom: 0;
+    margin-bottom: 18px;
+}
+
+.area-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    text-align: left;
+}
+
+.area-list div {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+.faq-mini {
+    max-width: 1000px;
+    margin: 48px auto 0;
+    text-align: left;
+}
+
+.faq-mini h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.faq-item {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+}
+
+.faq-item h3 {
+    color: #3b82f6;
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.faq-item p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.cta-panel {
+    margin: 48px auto 0;
+    max-width: 950px;
+    background: #1e293b;
+    border: 1px solid #3b82f6;
+    border-radius: 14px;
+    padding: 28px;
+    text-align: center;
+}
+
+.cta-panel h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+}
+
+.cta-panel p {
+    color: #cbd5e1;
+    line-height: 1.7;
+    max-width: 760px;
+    margin: 0 auto 18px;
 }
 
 .btn {
     display: inline-block;
-    margin-top: 35px;
+    margin-top: 20px;
     background: #3b82f6;
     padding: 12px 26px;
     color: white;
@@ -165,6 +395,18 @@ h1 {
 
 .btn:hover {
     background: #2563eb;
+}
+
+.btn.secondary {
+    background: transparent;
+    border: 1px solid #3b82f6;
+    color: #93c5fd;
+    margin-left: 8px;
+}
+
+.btn.secondary:hover {
+    background: #3b82f6;
+    color: white;
 }
 
 footer {
@@ -225,6 +467,16 @@ footer {
     border: 1px solid #334155;
 }
 
+@media (max-width: 760px) {
+    .split-section {
+        grid-template-columns: 1fr;
+    }
+
+    .btn.secondary {
+        margin-left: 0;
+    }
+}
+
 @media (max-width: 600px) {
     header {
         flex-direction: column;
@@ -261,8 +513,22 @@ footer {
         font-size: 30px;
     }
 
-    .card {
-        text-align: center;
+    .card,
+    .detail-card,
+    .panel,
+    .list-panel {
+        text-align: left;
+    }
+
+    .section h2,
+    .cta-panel h2 {
+        font-size: 25px;
+    }
+
+    .btn {
+        display: block;
+        margin: 14px auto 0;
+        max-width: 260px;
     }
 }
 </style>
@@ -290,7 +556,18 @@ footer {
     NFJ Services LTD provides practical, professional installation, cabling,
     WiFi, CCTV and maintenance services for homes, small businesses and commercial premises across
     <span class="service-area">Cheshire, Lancashire and Merseyside</span>.
+    We focus on clean workmanship, reliable connections and clear advice without unnecessary jargon.
 </p>
+
+<div class="quick-links">
+    <a href="#network-cabling">Network Cabling</a>
+    <a href="#wifi">WiFi & Mesh</a>
+    <a href="#cctv">CCTV</a>
+    <a href="#tv-av">TV & AV</a>
+    <a href="#smart-home">Smart Home</a>
+    <a href="#starlink">Starlink</a>
+    <a href="#maintenance">Maintenance</a>
+</div>
 
 <div class="grid">
 
@@ -346,16 +623,420 @@ footer {
 
 </div>
 
+<section class="section" id="network-cabling">
+    <h2>Network Cabling Services</h2>
+    <p class="section-intro">
+        Wired network cabling is one of the best ways to improve reliability. It is ideal for fixed devices
+        that need a strong, stable connection, such as TVs, computers, CCTV, access points and garden rooms.
+    </p>
+
+    <div class="detail-grid">
+        <div class="detail-card">
+            <h3>Home Network Cabling</h3>
+            <p>We install neat Ethernet points around the home so important devices do not have to rely only on WiFi.</p>
+            <ul>
+                <li>Home office data points</li>
+                <li>TV and media area cabling</li>
+                <li>Gaming console connections</li>
+                <li>Loft, bedroom and garden room network points</li>
+                <li>Router relocation support where suitable</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Business Network Cabling</h3>
+            <p>We help small businesses and commercial premises with practical, tidy cabling for everyday connectivity.</p>
+            <ul>
+                <li>Office Ethernet points</li>
+                <li>Shop and workspace cabling</li>
+                <li>Access point cabling</li>
+                <li>Printer, till and desk connections</li>
+                <li>Patch panel and cabinet support</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Fault Finding & Testing</h3>
+            <p>If cables, sockets or network points are not working correctly, we can help trace and identify the issue.</p>
+            <ul>
+                <li>Testing network points</li>
+                <li>Tracing unknown cables</li>
+                <li>Replacing damaged connectors</li>
+                <li>Checking poor or unreliable connections</li>
+                <li>Labelling and documenting cable routes</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="wifi">
+    <h2>WiFi, Mesh WiFi & Access Points</h2>
+    <p class="section-intro">
+        Weak WiFi is one of the most common problems in homes and businesses. Thick walls, poor router location,
+        distance and too many connected devices can all cause slow or unreliable WiFi.
+    </p>
+
+    <div class="detail-grid">
+        <div class="detail-card">
+            <h3>WiFi Improvement</h3>
+            <p>We look at where your router is, where the weak signal areas are and what equipment would give the best result.</p>
+            <ul>
+                <li>Better coverage around the property</li>
+                <li>Advice on router and access point placement</li>
+                <li>Help with poor signal rooms</li>
+                <li>Support for busy homes with many devices</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Mesh WiFi Installation</h3>
+            <p>Mesh WiFi uses more than one WiFi point to spread signal around the property more evenly.</p>
+            <ul>
+                <li>Whole-home WiFi coverage</li>
+                <li>Better signal upstairs, extensions and outbuildings</li>
+                <li>Cleaner setup than basic plug-in boosters</li>
+                <li>Ideal for homes with dead spots</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Wired Access Points</h3>
+            <p>For the best results, WiFi access points can be wired back to the main network using Ethernet cabling.</p>
+            <ul>
+                <li>Reliable WiFi in larger properties</li>
+                <li>Better performance than repeating weak signal</li>
+                <li>Good for offices, garden rooms and extensions</li>
+                <li>Neat cabling and practical positioning</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="cctv">
+    <h2>CCTV Installation</h2>
+    <p class="section-intro">
+        CCTV works best when cameras are positioned sensibly, cables are installed neatly and the system is set up properly.
+        We can help with domestic and commercial CCTV installation.
+    </p>
+
+    <div class="detail-grid">
+        <div class="detail-card">
+            <h3>Home CCTV</h3>
+            <p>Security cameras for homes, driveways, entrances, side paths, gardens and outbuildings.</p>
+            <ul>
+                <li>Camera position advice</li>
+                <li>Neat cable routes where possible</li>
+                <li>Recorder and app setup support</li>
+                <li>Practical advice on useful coverage</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Business CCTV</h3>
+            <p>CCTV installation for shops, offices, units and small commercial premises.</p>
+            <ul>
+                <li>Indoor and outdoor camera support</li>
+                <li>Entrances, stock areas and work areas</li>
+                <li>Network and recorder connectivity</li>
+                <li>Clean, tidy installation approach</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Wired Camera Systems</h3>
+            <p>Wired CCTV is usually more reliable than depending on WiFi, especially for long-term use.</p>
+            <ul>
+                <li>More stable connection</li>
+                <li>Less reliance on WiFi signal</li>
+                <li>Better for key security areas</li>
+                <li>Suitable for homes and businesses</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="tv-av">
+    <h2>TV Mounting, Media Walls & Audio Visual</h2>
+    <p class="section-intro">
+        A clean TV or media setup is not just about hanging a screen on a wall. Cable routes, power, network,
+        sound equipment and future access all need to be considered.
+    </p>
+
+    <div class="detail-grid">
+        <div class="detail-card">
+            <h3>TV Wall Mounting</h3>
+            <p>TV mounting support for living rooms, bedrooms, offices, meeting rooms and media spaces.</p>
+            <ul>
+                <li>Wall mount positioning</li>
+                <li>Clean cable management</li>
+                <li>Advice on equipment placement</li>
+                <li>Support for TVs, soundbars and media boxes</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Media Wall Cabling</h3>
+            <p>Planning and cable support for media walls, hidden cables and neat entertainment setups.</p>
+            <ul>
+                <li>HDMI and network cabling</li>
+                <li>First fix cable planning</li>
+                <li>Cleaner equipment layout</li>
+                <li>Future-ready cable routes where possible</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Multi-Room AV</h3>
+            <p>Audio visual support for homes and businesses that need sound, video or media equipment across more than one room.</p>
+            <ul>
+                <li>Multi-room audio support</li>
+                <li>TV and media distribution planning</li>
+                <li>Speaker and device connectivity</li>
+                <li>Network support for streaming devices</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="smart-home">
+    <h2>Smart Home & Connected Technology</h2>
+    <p class="section-intro">
+        Smart devices are useful when they are installed properly and connected to a reliable network.
+        We help make smart home technology easier to use and less frustrating.
+    </p>
+
+    <div class="detail-grid">
+        <div class="detail-card">
+            <h3>Smart Device Setup</h3>
+            <p>Support for everyday smart devices used around the home or workplace.</p>
+            <ul>
+                <li>Smart cameras and doorbells</li>
+                <li>Smart speakers and displays</li>
+                <li>Smart plugs and connected devices</li>
+                <li>App setup and basic configuration</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Home Automation Support</h3>
+            <p>Help with connecting devices together so your setup is easier to control.</p>
+            <ul>
+                <li>Simple automation advice</li>
+                <li>Connected lighting support</li>
+                <li>Home network checks</li>
+                <li>Plain-English guidance on options</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Network Ready Smart Homes</h3>
+            <p>Smart homes need strong WiFi and reliable cabling. We can help build the network behind the devices.</p>
+            <ul>
+                <li>WiFi coverage for smart devices</li>
+                <li>Cabling for fixed equipment</li>
+                <li>Garden room and outbuilding connectivity</li>
+                <li>Reliable setup for daily use</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="starlink">
+    <h2>Starlink, Fibre & Garden Room Connectivity</h2>
+    <p class="section-intro">
+        Some properties need more than a standard router in the hallway. Rural properties, outbuildings,
+        garden offices and larger premises often need a more planned approach.
+    </p>
+
+    <div class="detail-grid">
+        <div class="detail-card">
+            <h3>Starlink Installation</h3>
+            <p>Starlink can be a strong option where normal broadband is slow or unavailable.</p>
+            <ul>
+                <li>Dish positioning support</li>
+                <li>Cable routing</li>
+                <li>Network connection advice</li>
+                <li>Integration with existing WiFi or cabling</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Fibre Optic Cabling</h3>
+            <p>Fibre can be useful for high-speed links, longer cable runs and links between buildings.</p>
+            <ul>
+                <li>Building-to-building links</li>
+                <li>High-speed network support</li>
+                <li>Cabinet and infrastructure projects</li>
+                <li>Advice on when fibre is worth using</li>
+            </ul>
+        </div>
+
+        <div class="detail-card">
+            <h3>Garden Room Internet</h3>
+            <p>Garden rooms and outbuildings often need a proper wired connection for reliable WiFi and work use.</p>
+            <ul>
+                <li>Home office connectivity</li>
+                <li>WiFi access points for outbuildings</li>
+                <li>Network cabling from the main property</li>
+                <li>Smart tech and media setup support</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="split-section" id="maintenance">
+    <div class="panel">
+        <h2>Electrical & Maintenance Support</h2>
+        <p>
+            Alongside cabling and technology installation, we also help with practical electrical and maintenance tasks.
+            This can be useful when a project needs more than one type of support, such as a TV area, garden room,
+            CCTV install or office setup.
+        </p>
+        <p>
+            We focus on tidy workmanship, practical problem solving and leaving the job clean and usable.
+        </p>
+    </div>
+
+    <div class="list-panel">
+        <ul>
+            <li>Small electrical jobs and installation support</li>
+            <li>General property maintenance</li>
+            <li>Practical repairs and tidy-up work</li>
+            <li>Support for home offices and small businesses</li>
+            <li>Technology installation and setup assistance</li>
+            <li>Garden room and outbuilding project support</li>
+        </ul>
+    </div>
+</section>
+
+<section class="split-section">
+    <div class="panel">
+        <h2>Common Problems We Help With</h2>
+        <p>
+            Customers often contact us because something technically works, but does not work well enough.
+            Slow WiFi, messy cables, poor camera coverage or unreliable connections can make daily life harder than it needs to be.
+        </p>
+    </div>
+
+    <div class="list-panel">
+        <ul>
+            <li>WiFi dropping out in certain rooms</li>
+            <li>Poor internet in garden rooms or offices</li>
+            <li>Messy router or network cabinet areas</li>
+            <li>Smart TVs buffering or losing connection</li>
+            <li>CCTV cameras not covering the right area</li>
+            <li>Old or damaged network cables</li>
+            <li>Unclear cable routes around a property</li>
+            <li>Internet provider router not giving enough coverage</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2>How We Work</h2>
+    <p class="section-intro">
+        We keep things straightforward. You tell us what you need, we look at the best way to do it,
+        and we explain the options clearly before work is carried out.
+    </p>
+
+    <div class="process-grid">
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Tell Us The Problem</h3>
+            <p>Send a message with what you need, where you are based and photos if useful.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>We Check The Best Option</h3>
+            <p>Some jobs can be advised from photos. Others may need a visit to inspect properly.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Clear Quote Or Advice</h3>
+            <p>We explain what is needed in plain English and confirm the agreed work.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">4</div>
+            <h3>Tidy Installation</h3>
+            <p>Work is completed with a focus on practical routing, clean finish and reliable use.</p>
+        </div>
+    </div>
+</section>
+
 <section class="areas">
     <h2>Areas We Cover</h2>
     <p>
-        We cover Cheshire, Lancashire and Merseyside, including Warrington, Runcorn, Widnes,
-        Chester, Ellesmere Port, Liverpool, St Helens, Southport, Preston, Chorley, Leyland,
-        Wigan, Skelmersdale and surrounding areas.
+        We cover Cheshire, Lancashire and Merseyside, including surrounding towns and local areas.
+        If your town is not listed, please contact us and we can confirm whether we can help.
     </p>
+
+    <div class="area-list">
+        <div>Warrington</div>
+        <div>Runcorn</div>
+        <div>Widnes</div>
+        <div>Chester</div>
+        <div>Ellesmere Port</div>
+        <div>Liverpool</div>
+        <div>St Helens</div>
+        <div>Southport</div>
+        <div>Preston</div>
+        <div>Chorley</div>
+        <div>Leyland</div>
+        <div>Wigan</div>
+        <div>Skelmersdale</div>
+        <div>Northwich</div>
+        <div>Wirral</div>
+    </div>
 </section>
 
-<a class="btn" href="contact.html">Message Us</a>
+<section class="faq-mini">
+    <h2>Service Questions</h2>
+
+    <div class="faq-item">
+        <h3>Do I need network cabling if I already have WiFi?</h3>
+        <p>
+            WiFi is useful for phones and tablets, but fixed devices like TVs, offices, CCTV and games consoles
+            are often better with a cable because it is usually more stable.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Can you improve WiFi without changing my broadband provider?</h3>
+        <p>
+            Yes. Many WiFi problems are caused by poor coverage inside the property rather than the broadband line itself.
+            Better router placement, access points, mesh WiFi or cabling can make a big difference.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Can you help if I do not know what I need?</h3>
+        <p>
+            Yes. You do not need to know the technical terms. Tell us what is not working or what you want to achieve,
+            and we can explain the options clearly.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Do you work on both homes and businesses?</h3>
+        <p>
+            Yes. We support homes, small businesses, offices, shops, outbuildings, garden rooms and commercial premises.
+        </p>
+    </div>
+</section>
+
+<section class="cta-panel">
+    <h2>Need Help With A Project?</h2>
+    <p>
+        Whether you need better WiFi, network cabling, CCTV, TV mounting, Starlink setup,
+        smart home support or general installation work, send us a message and we will advise the best next step.
+    </p>
+
+    <a class="btn" href="contact.html">Message Us</a>
+    <a class="btn secondary" href="faq.html">Read FAQs</a>
+</section>
 
 </div>
 
