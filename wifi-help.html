@@ -351,6 +351,27 @@ h1 {
     line-height: 1.55;
 }
 
+.specifics-box {
+    width: 100%;
+    min-height: 95px;
+    resize: vertical;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #020617;
+    color: white;
+    padding: 14px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.specifics-hint {
+    color: #cbd5e1;
+    line-height: 1.55;
+    margin: 0 0 10px;
+}
+
 .button-row {
     display: flex;
     flex-wrap: wrap;
@@ -656,7 +677,7 @@ footer {
                         </button>
                     </div>
                     <div class="step-actions">
-                        <button class="btn step-next" type="button" disabled>Complete Web</button>
+                        <button class="btn step-next" type="button" disabled>Results</button>
                     </div>
                 </div>
 
@@ -679,6 +700,12 @@ footer {
                 <li><strong>Location:</strong> <span id="selected-location"></span></li>
                 <li><strong>Cables:</strong> <span id="selected-cables"></span></li>
             </ul>
+
+            <label for="customer-specifics" class="result-label">Extra comments or specifics</label>
+            <p class="specifics-hint">
+                Add anything useful, such as the rooms affected, router location, property type, garden room distance, photos available, or the best time to contact you.
+            </p>
+            <textarea id="customer-specifics" class="specifics-box" placeholder="Example: WiFi is poor in the back bedroom and garden office. Router is in the front room."></textarea>
 
             <label for="enquiry-message" class="result-label">Generated enquiry message</label>
             <textarea id="enquiry-message" class="message-box" readonly></textarea>
@@ -790,6 +817,9 @@ function formatSelection(values) {
 }
 
 function buildMessage(service) {
+    const specifics = document.getElementById("customer-specifics")?.value.trim() || "";
+    const details = specifics || "No extra comments added yet.";
+
     return [
         "Hi NFJ Services,",
         "",
@@ -800,6 +830,9 @@ function buildMessage(service) {
         "Problem: " + formatSelection(selections.problem),
         "Location: " + formatSelection(selections.location),
         "Cables: " + formatSelection(selections.cables),
+        "",
+        "Extra comments or specifics:",
+        details,
         "",
         "Please could you advise the best next step?",
         "",
@@ -913,9 +946,16 @@ document.getElementById("start-over").addEventListener("click", () => {
     });
 
     document.getElementById("copy-status").textContent = "";
+    document.getElementById("customer-specifics").value = "";
     showStep(0);
     updateRecommendation();
     updateWeb();
+});
+
+document.getElementById("customer-specifics").addEventListener("input", () => {
+    if (allOptionsChosen()) {
+        updateRecommendation();
+    }
 });
 
 document.getElementById("copy-message").addEventListener("click", async () => {
