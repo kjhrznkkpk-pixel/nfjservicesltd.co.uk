@@ -100,7 +100,9 @@
         .hero {
             position: relative;
             text-align: center;
-            padding: 70px 20px 50px;
+            padding: 70px 310px 50px 20px;
+            min-height: 300px;
+            box-sizing: border-box;
         }
 
         .hero h1 {
@@ -741,7 +743,12 @@
             }
         }
 
-        @media (max-width: 950px) {
+        @media (max-width: 1050px) {
+            .hero {
+                padding: 35px 20px 50px;
+                min-height: auto;
+            }
+
             .quick-access-panel {
                 position: static;
                 width: min(100%, 360px);
