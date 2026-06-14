@@ -117,8 +117,20 @@ h1 {
     box-sizing: border-box;
 }
 
+.picker-progress {
+    color: #93c5fd;
+    font-weight: bold;
+    margin: 0 0 18px;
+    text-align: center;
+}
+
 .question-group {
+    display: none;
     margin-bottom: 28px;
+}
+
+.question-group.active {
+    display: block;
 }
 
 .question-group:last-child {
@@ -177,9 +189,37 @@ h1 {
     line-height: 1.45;
 }
 
+.step-actions {
+    margin-top: 16px;
+    text-align: right;
+}
+
+.step-actions .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
 .recommendation {
     position: sticky;
     top: 180px;
+}
+
+.recommendation.hidden {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.waiting-panel {
+    background: #0b1220;
+    border: 1px dashed #334155;
+    border-radius: 12px;
+    padding: 24px;
+    color: #cbd5e1;
+    line-height: 1.6;
+    text-align: center;
 }
 
 .result-label {
@@ -469,10 +509,13 @@ footer {
 
     <section class="picker" aria-label="WiFi help picker">
         <div class="question-panel">
-            <div class="question-group">
+            <p id="picker-progress" class="picker-progress">Step 1 of 3</p>
+
+            <div class="question-group active" data-step="0">
                 <h2>What problem are you having?</h2>
+                <p class="reason">Select all that apply.</p>
                 <div class="option-grid" data-question="problem">
-                    <button class="option-card selected" type="button" data-value="Dead spots or weak signal">
+                    <button class="option-card" type="button" data-value="Dead spots or weak signal">
                         <strong>Dead spots or weak signal</strong>
                         <span>Some rooms work fine, but other areas barely connect.</span>
                     </button>
@@ -489,12 +532,16 @@ footer {
                         <span>A busy home, shop, office or workspace needs stronger WiFi.</span>
                     </button>
                 </div>
+                <div class="step-actions">
+                    <button class="btn step-next" type="button" disabled>Continue</button>
+                </div>
             </div>
 
-            <div class="question-group">
+            <div class="question-group" data-step="1">
                 <h2>Where is the problem?</h2>
+                <p class="reason">Select all that apply.</p>
                 <div class="option-grid" data-question="location">
-                    <button class="option-card selected" type="button" data-value="A few rooms in the house">
+                    <button class="option-card" type="button" data-value="A few rooms in the house">
                         <strong>A few rooms in the house</strong>
                         <span>Bedrooms, extensions, kitchens or rooms away from the router.</span>
                     </button>
@@ -511,12 +558,16 @@ footer {
                         <span>Office, shop, unit, salon, workspace or customer WiFi area.</span>
                     </button>
                 </div>
+                <div class="step-actions">
+                    <button class="btn step-next" type="button" disabled>Continue</button>
+                </div>
             </div>
 
-            <div class="question-group">
+            <div class="question-group" data-step="2">
                 <h2>Would you be happy with cables if it gives a better result?</h2>
+                <p class="reason">Select all that apply.</p>
                 <div class="option-grid" data-question="cables">
-                    <button class="option-card selected" type="button" data-value="Prefer no new cables">
+                    <button class="option-card" type="button" data-value="Prefer no new cables">
                         <strong>Prefer no new cables</strong>
                         <span>You would like a clean, low-disruption option if suitable.</span>
                     </button>
@@ -529,10 +580,17 @@ footer {
                         <span>You want the most reliable option for fixed devices and WiFi points.</span>
                     </button>
                 </div>
+                <div class="step-actions">
+                    <button class="btn step-next" type="button" disabled>Show Recommendation</button>
+                </div>
             </div>
         </div>
 
-        <aside class="recommendation" aria-live="polite">
+        <aside id="waiting-panel" class="waiting-panel">
+            Choose the options on the left and your recommended WiFi service will appear here.
+        </aside>
+
+        <aside id="recommendation-panel" class="recommendation hidden" aria-live="polite">
             <span class="result-label">Recommended service</span>
             <h2 id="service-name" class="service-name">Mesh WiFi System</h2>
             <p id="reason" class="reason"></p>
@@ -549,6 +607,7 @@ footer {
             <div class="button-row">
                 <button id="copy-message" class="btn secondary" type="button">Copy Message</button>
                 <a id="send-enquiry" class="btn" href="mailto:info@nfjservicesltd.co.uk">Send WiFi Enquiry</a>
+                <button id="start-over" class="btn secondary" type="button">Start Over</button>
             </div>
             <p id="copy-status" class="copy-status" aria-live="polite"></p>
         </aside>
@@ -597,10 +656,12 @@ footer {
 
 <script>
 const selections = {
-    problem: "Dead spots or weak signal",
-    location: "A few rooms in the house",
-    cables: "Prefer no new cables"
+    problem: [],
+    location: [],
+    cables: []
 };
+
+let currentStep = 0;
 
 const serviceDetails = {
     "Mesh WiFi System": "A mesh WiFi system is likely to suit this because it can spread coverage around the home without relying on one router to reach every room.",
@@ -614,28 +675,39 @@ function getRecommendation() {
     const problem = selections.problem;
     const location = selections.location;
     const cables = selections.cables;
+    const hasProblem = value => problem.includes(value);
+    const hasLocation = value => location.includes(value);
+    const hasCable = value => cables.includes(value);
 
-    if (location === "Business premises" || problem === "Lots of users or business devices") {
+    if (hasLocation("Business premises") || hasProblem("Lots of users or business devices")) {
         return "Business WiFi & Access Points";
     }
 
-    if (location === "A garden room or outbuilding") {
+    if (hasLocation("A garden room or outbuilding")) {
         return "Outbuilding Internet & WiFi Setup";
     }
 
-    if (cables === "Yes, I want the best result" && (location === "Whole home coverage" || problem === "Gaming lag or work calls dropping")) {
+    if (hasCable("Yes, I want the best result") && (hasLocation("Whole home coverage") || hasProblem("Gaming lag or work calls dropping"))) {
         return "Full Hardwired Home Network";
     }
 
-    if (cables !== "Prefer no new cables" && (problem === "Gaming lag or work calls dropping" || location === "A few rooms in the house")) {
+    if (!hasCable("Prefer no new cables") && (hasProblem("Gaming lag or work calls dropping") || hasLocation("A few rooms in the house"))) {
         return "Wired Access Point";
     }
 
-    if (cables === "Yes, I want the best result" && location === "Whole home coverage") {
+    if (hasCable("Yes, I want the best result") && hasLocation("Whole home coverage")) {
         return "Full Hardwired Home Network";
     }
 
     return "Mesh WiFi System";
+}
+
+function allOptionsChosen() {
+    return Boolean(selections.problem.length && selections.location.length && selections.cables.length);
+}
+
+function formatSelection(values) {
+    return values.length ? values.join(", ") : "Not selected";
 }
 
 function buildMessage(service) {
@@ -646,9 +718,9 @@ function buildMessage(service) {
         service,
         "",
         "My selected options were:",
-        "Problem: " + selections.problem,
-        "Location: " + selections.location,
-        "Cables: " + selections.cables,
+        "Problem: " + formatSelection(selections.problem),
+        "Location: " + formatSelection(selections.location),
+        "Cables: " + formatSelection(selections.cables),
         "",
         "Please could you advise the best next step?",
         "",
@@ -657,17 +729,35 @@ function buildMessage(service) {
 }
 
 function updateRecommendation() {
+    if (!allOptionsChosen()) {
+        document.getElementById("waiting-panel").classList.remove("hidden");
+        document.getElementById("recommendation-panel").classList.add("hidden");
+        return;
+    }
+
     const service = getRecommendation();
     const message = buildMessage(service);
     const subject = "WiFi Enquiry - " + service;
 
     document.getElementById("service-name").textContent = service;
     document.getElementById("reason").textContent = serviceDetails[service];
-    document.getElementById("selected-problem").textContent = selections.problem;
-    document.getElementById("selected-location").textContent = selections.location;
-    document.getElementById("selected-cables").textContent = selections.cables;
+    document.getElementById("selected-problem").textContent = formatSelection(selections.problem);
+    document.getElementById("selected-location").textContent = formatSelection(selections.location);
+    document.getElementById("selected-cables").textContent = formatSelection(selections.cables);
     document.getElementById("enquiry-message").value = message;
     document.getElementById("send-enquiry").href = "mailto:info@nfjservicesltd.co.uk?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message);
+    document.getElementById("waiting-panel").classList.add("hidden");
+    document.getElementById("recommendation-panel").classList.remove("hidden");
+}
+
+function showStep(step) {
+    currentStep = step;
+
+    document.querySelectorAll(".question-group").forEach(group => {
+        group.classList.toggle("active", Number(group.dataset.step) === currentStep);
+    });
+
+    document.getElementById("picker-progress").textContent = "Step " + (currentStep + 1) + " of 3";
 }
 
 document.querySelectorAll(".option-grid").forEach(group => {
@@ -679,15 +769,51 @@ document.querySelectorAll(".option-grid").forEach(group => {
         }
 
         const question = group.dataset.question;
-        selections[question] = card.dataset.value;
+        const value = card.dataset.value;
 
-        group.querySelectorAll(".option-card").forEach(option => {
-            option.classList.toggle("selected", option === card);
-        });
+        if (selections[question].includes(value)) {
+            selections[question] = selections[question].filter(item => item !== value);
+        } else {
+            selections[question].push(value);
+        }
+
+        card.classList.toggle("selected", selections[question].includes(value));
+
+        const stepGroup = group.closest(".question-group");
+        const nextButton = stepGroup.querySelector(".step-next");
+        nextButton.disabled = selections[question].length === 0;
 
         document.getElementById("copy-status").textContent = "";
+    });
+});
+
+document.querySelectorAll(".step-next").forEach(button => {
+    button.addEventListener("click", () => {
+        if (currentStep < 2) {
+            showStep(currentStep + 1);
+            return;
+        }
+
         updateRecommendation();
     });
+});
+
+document.getElementById("start-over").addEventListener("click", () => {
+    selections.problem = [];
+    selections.location = [];
+    selections.cables = [];
+
+    document.querySelectorAll(".option-card").forEach(option => {
+        option.classList.remove("selected");
+    });
+
+    document.querySelectorAll(".step-next").forEach(button => {
+        button.disabled = true;
+    });
+
+    document.getElementById("copy-status").textContent = "";
+    showStep(0);
+    updateRecommendation();
 });
 
 document.getElementById("copy-message").addEventListener("click", async () => {
@@ -760,6 +886,7 @@ function handleSwipe() {
     }
 }
 
+showStep(0);
 updateRecommendation();
 </script>
 </body>
