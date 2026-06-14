@@ -98,6 +98,7 @@
         }
 
         .hero {
+            position: relative;
             text-align: center;
             padding: 70px 20px 50px;
         }
@@ -281,45 +282,63 @@
             left: 18px;
         }
 
-        .wifi-spotlight {
-            max-width: 760px;
-            margin: 28px auto 0;
-            border: 1px solid rgba(147, 197, 253, 0.65);
+        .quick-access-panel {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 245px;
+            border: 1px solid rgba(147, 197, 253, 0.55);
             border-radius: 12px;
-            background: linear-gradient(135deg, #0b1220, #172554);
-            box-shadow: 0 18px 42px rgba(37, 99, 235, 0.28);
-            padding: 18px 20px;
+            background: rgba(11, 18, 32, 0.92);
+            box-shadow: 0 14px 34px rgba(15, 23, 42, 0.35);
+            padding: 12px;
             text-align: left;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 18px;
-            align-items: center;
+            box-sizing: border-box;
         }
 
-        .wifi-spotlight h3 {
-            color: white;
-            margin: 0 0 6px;
-            font-size: 22px;
-        }
-
-        .wifi-spotlight p {
-            color: #cbd5e1;
-            margin: 0;
+        .quick-access-panel h3 {
+            color: #93c5fd;
+            margin: 0 0 8px;
             font-size: 15px;
-            line-height: 1.5;
         }
 
-        .wifi-spotlight .btn {
-            margin: 0;
-            white-space: nowrap;
-            background: #38bdf8;
-            color: #082f49;
-            font-weight: 700;
+        .quick-access-list {
+            display: grid;
+            gap: 8px;
         }
 
-        .wifi-spotlight .btn:hover {
-            background: #7dd3fc;
-            color: #082f49;
+        .quick-access-link {
+            display: block;
+            padding: 10px 11px;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            background: #1e293b;
+            color: white;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .quick-access-link:hover {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .quick-access-link strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .quick-access-link span {
+            display: block;
+            color: #cbd5e1;
+            font-size: 12px;
+            line-height: 1.35;
+        }
+
+        .quick-access-link:hover span {
+            color: white;
         }
 
         .services {
@@ -688,17 +707,6 @@
 
             .social-button-group { gap: 30px; }
 
-            .wifi-spotlight {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding: 18px;
-            }
-
-            .wifi-spotlight .btn {
-                width: 100%;
-                box-sizing: border-box;
-            }
-
             .map-wrap iframe { height: 300px; }
 
             .payment-image { max-width: 350px; }
@@ -713,6 +721,15 @@
 
             .contact-section h2 {
                 font-size: 22px;
+            }
+        }
+
+        @media (max-width: 950px) {
+            .quick-access-panel {
+                position: static;
+                width: min(100%, 360px);
+                margin: 22px auto 0;
+                text-align: center;
             }
         }
     </style>
@@ -733,6 +750,16 @@
 </header>
 
 <section class="hero">
+    <aside class="quick-access-panel" aria-label="Quick access services">
+        <h3>Quick Help</h3>
+        <div class="quick-access-list">
+            <a class="quick-access-link" href="wifi-help.html">
+                <strong>Weak WiFi?</strong>
+                <span>Find the best fix in under a minute.</span>
+            </a>
+        </div>
+    </aside>
+
     <h1>NFJ Services LTD</h1>
     <h2>Electrical • Network Cabling • Tech Installations • Maintenance</h2>
 
@@ -741,14 +768,6 @@
         smart home setup, media wall cabling and maintenance services across Cheshire,
         Lancashire and Merseyside, with clean workmanship and practical advice for homes and businesses.
     </p>
-
-    <a class="wifi-spotlight" href="wifi-help.html">
-        <span>
-            <h3>Weak WiFi, Dead Spots Or Buffering?</h3>
-            <p>Use the quick WiFi help picker to find the best fix for your home, garden room or business.</p>
-        </span>
-        <span class="btn">Start WiFi Help</span>
-    </a>
 
     <div class="button-group">
         <a class="btn primary"
