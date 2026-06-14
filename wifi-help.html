@@ -212,14 +212,95 @@ h1 {
     display: none;
 }
 
-.waiting-panel {
+.tree-panel {
     background: #0b1220;
-    border: 1px dashed #334155;
+    border: 1px solid #334155;
     border-radius: 12px;
     padding: 24px;
     color: #cbd5e1;
     line-height: 1.6;
-    text-align: center;
+}
+
+.tree-panel.hidden {
+    display: none;
+}
+
+.tree-panel h2 {
+    color: #3b82f6;
+    margin: 0 0 8px;
+    font-size: 24px;
+}
+
+.tree-intro {
+    margin: 0 0 18px;
+    color: #cbd5e1;
+}
+
+.flow-tree {
+    display: grid;
+    gap: 12px;
+}
+
+.tree-row {
+    position: relative;
+    padding-left: 22px;
+}
+
+.tree-row::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: -12px;
+    left: 7px;
+    width: 2px;
+    background: #334155;
+}
+
+.tree-row:last-child::before {
+    bottom: 50%;
+}
+
+.tree-row::after {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 7px;
+    width: 12px;
+    height: 2px;
+    background: #334155;
+}
+
+.tree-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #93c5fd;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.tree-branches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tree-branch {
+    border: 1px solid #334155;
+    border-radius: 999px;
+    background: #1e293b;
+    color: white;
+    padding: 7px 10px;
+    font-size: 13px;
+}
+
+.tree-branch.empty {
+    color: #94a3b8;
+    border-style: dashed;
+}
+
+.tree-branch.result {
+    background: #3b82f6;
+    border-color: #3b82f6;
 }
 
 .result-label {
@@ -586,8 +667,46 @@ footer {
             </div>
         </div>
 
-        <aside id="waiting-panel" class="waiting-panel">
-            Choose the options on the left and your recommended WiFi service will appear here.
+        <aside id="tree-panel" class="tree-panel">
+            <h2>Your WiFi Help Tree</h2>
+            <p class="tree-intro">Your choices will build a simple route to the best recommendation.</p>
+
+            <div class="flow-tree">
+                <div class="tree-row">
+                    <span class="tree-label">Start</span>
+                    <div class="tree-branches">
+                        <span class="tree-branch">Weak WiFi help</span>
+                    </div>
+                </div>
+
+                <div class="tree-row">
+                    <span class="tree-label">Problem</span>
+                    <div id="tree-problem" class="tree-branches">
+                        <span class="tree-branch empty">Choose one or more</span>
+                    </div>
+                </div>
+
+                <div class="tree-row">
+                    <span class="tree-label">Location</span>
+                    <div id="tree-location" class="tree-branches">
+                        <span class="tree-branch empty">Next step</span>
+                    </div>
+                </div>
+
+                <div class="tree-row">
+                    <span class="tree-label">Cable preference</span>
+                    <div id="tree-cables" class="tree-branches">
+                        <span class="tree-branch empty">Final choice</span>
+                    </div>
+                </div>
+
+                <div class="tree-row">
+                    <span class="tree-label">End</span>
+                    <div id="tree-result" class="tree-branches">
+                        <span class="tree-branch empty">Contact section appears here</span>
+                    </div>
+                </div>
+            </div>
         </aside>
 
         <aside id="recommendation-panel" class="recommendation hidden" aria-live="polite">
@@ -730,8 +849,9 @@ function buildMessage(service) {
 
 function updateRecommendation() {
     if (!allOptionsChosen()) {
-        document.getElementById("waiting-panel").classList.remove("hidden");
+        document.getElementById("tree-panel").classList.remove("hidden");
         document.getElementById("recommendation-panel").classList.add("hidden");
+        updateTree();
         return;
     }
 
@@ -746,8 +866,31 @@ function updateRecommendation() {
     document.getElementById("selected-cables").textContent = formatSelection(selections.cables);
     document.getElementById("enquiry-message").value = message;
     document.getElementById("send-enquiry").href = "mailto:info@nfjservicesltd.co.uk?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message);
-    document.getElementById("waiting-panel").classList.add("hidden");
+    updateTree(service);
+    document.getElementById("tree-panel").classList.add("hidden");
     document.getElementById("recommendation-panel").classList.remove("hidden");
+}
+
+function renderTreeBranches(elementId, values, emptyText) {
+    const element = document.getElementById(elementId);
+
+    if (!values.length) {
+        element.innerHTML = '<span class="tree-branch empty">' + emptyText + '</span>';
+        return;
+    }
+
+    element.innerHTML = values.map(value => '<span class="tree-branch">' + value + '</span>').join("");
+}
+
+function updateTree(resultService = "") {
+    renderTreeBranches("tree-problem", selections.problem, "Choose one or more");
+    renderTreeBranches("tree-location", selections.location, "Next step");
+    renderTreeBranches("tree-cables", selections.cables, "Final choice");
+
+    const result = document.getElementById("tree-result");
+    result.innerHTML = resultService
+        ? '<span class="tree-branch result">' + resultService + '</span>'
+        : '<span class="tree-branch empty">Contact section appears here</span>';
 }
 
 function showStep(step) {
@@ -784,6 +927,7 @@ document.querySelectorAll(".option-grid").forEach(group => {
         nextButton.disabled = selections[question].length === 0;
 
         document.getElementById("copy-status").textContent = "";
+        updateTree();
     });
 });
 
@@ -814,6 +958,7 @@ document.getElementById("start-over").addEventListener("click", () => {
     document.getElementById("copy-status").textContent = "";
     showStep(0);
     updateRecommendation();
+    updateTree();
 });
 
 document.getElementById("copy-message").addEventListener("click", async () => {
@@ -888,6 +1033,7 @@ function handleSwipe() {
 
 showStep(0);
 updateRecommendation();
+updateTree();
 </script>
 </body>
 </html>
