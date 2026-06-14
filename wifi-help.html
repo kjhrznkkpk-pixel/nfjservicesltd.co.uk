@@ -200,8 +200,8 @@ h1 {
 }
 
 .recommendation {
-    position: sticky;
-    top: 180px;
+    grid-column: 1 / -1;
+    position: static;
 }
 
 .recommendation.hidden {
@@ -212,65 +212,56 @@ h1 {
     display: none;
 }
 
-.tree-panel {
+.web-panel {
     background: #0b1220;
     border: 1px solid #334155;
     border-radius: 12px;
     padding: 24px;
     color: #cbd5e1;
     line-height: 1.6;
+    overflow: hidden;
 }
 
-.tree-panel.hidden {
+.web-panel.hidden {
     display: none;
 }
 
-.tree-panel h2 {
+.web-panel h2 {
     color: #3b82f6;
     margin: 0 0 8px;
     font-size: 24px;
 }
 
-.tree-intro {
+.web-intro {
     margin: 0 0 18px;
     color: #cbd5e1;
 }
 
-.flow-tree {
+.flow-web {
     display: grid;
-    gap: 12px;
+    grid-template-columns: repeat(5, minmax(115px, 1fr));
+    gap: 16px;
+    align-items: stretch;
+    overflow-x: auto;
+    padding: 4px 2px 10px;
 }
 
-.tree-row {
+.web-column {
     position: relative;
-    padding-left: 22px;
+    min-width: 115px;
 }
 
-.tree-row::before {
+.web-column:not(:last-child)::after {
     content: "";
     position: absolute;
-    top: 0;
-    bottom: -12px;
-    left: 7px;
-    width: 2px;
-    background: #334155;
-}
-
-.tree-row:last-child::before {
-    bottom: 50%;
-}
-
-.tree-row::after {
-    content: "";
-    position: absolute;
-    top: 18px;
-    left: 7px;
+    top: 53px;
+    left: calc(100% + 2px);
     width: 12px;
     height: 2px;
     background: #334155;
 }
 
-.tree-label {
+.web-label {
     display: inline-block;
     margin-bottom: 8px;
     color: #93c5fd;
@@ -278,29 +269,48 @@ h1 {
     font-size: 13px;
 }
 
-.tree-branches {
-    display: flex;
-    flex-wrap: wrap;
+.web-nodes {
+    display: grid;
     gap: 8px;
 }
 
-.tree-branch {
+.web-node {
+    position: relative;
     border: 1px solid #334155;
-    border-radius: 999px;
+    border-radius: 8px;
     background: #1e293b;
     color: white;
-    padding: 7px 10px;
+    padding: 8px 9px;
     font-size: 13px;
+    line-height: 1.25;
+    text-align: center;
 }
 
-.tree-branch.empty {
+.web-node:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -9px;
+    width: 2px;
+    height: 8px;
+    background: #334155;
+}
+
+.web-node.empty {
     color: #94a3b8;
     border-style: dashed;
+    background: rgba(30, 41, 59, 0.45);
 }
 
-.tree-branch.result {
+.web-node.result {
     background: #3b82f6;
     border-color: #3b82f6;
+    font-weight: bold;
+}
+
+.web-panel.complete .web-column:not(:last-child)::after,
+.web-panel.complete .web-node:not(:first-child)::before {
+    background: #3b82f6;
 }
 
 .result-label {
@@ -667,43 +677,43 @@ footer {
             </div>
         </div>
 
-        <aside id="tree-panel" class="tree-panel">
-            <h2>Your WiFi Help Tree</h2>
-            <p class="tree-intro">Your choices will build a simple route to the best recommendation.</p>
+        <aside id="web-panel" class="web-panel">
+            <h2>Your WiFi Help Web</h2>
+            <p class="web-intro">Your selected boxes will build from left to right. The contact section appears when the web is complete.</p>
 
-            <div class="flow-tree">
-                <div class="tree-row">
-                    <span class="tree-label">Start</span>
-                    <div class="tree-branches">
-                        <span class="tree-branch">Weak WiFi help</span>
+            <div class="flow-web">
+                <div class="web-column">
+                    <span class="web-label">Start</span>
+                    <div class="web-nodes">
+                        <span class="web-node">Weak WiFi help</span>
                     </div>
                 </div>
 
-                <div class="tree-row">
-                    <span class="tree-label">Problem</span>
-                    <div id="tree-problem" class="tree-branches">
-                        <span class="tree-branch empty">Choose one or more</span>
+                <div class="web-column">
+                    <span class="web-label">Problem</span>
+                    <div id="web-problem" class="web-nodes">
+                        <span class="web-node empty">Choose one or more</span>
                     </div>
                 </div>
 
-                <div class="tree-row">
-                    <span class="tree-label">Location</span>
-                    <div id="tree-location" class="tree-branches">
-                        <span class="tree-branch empty">Next step</span>
+                <div class="web-column">
+                    <span class="web-label">Location</span>
+                    <div id="web-location" class="web-nodes">
+                        <span class="web-node empty">Next step</span>
                     </div>
                 </div>
 
-                <div class="tree-row">
-                    <span class="tree-label">Cable preference</span>
-                    <div id="tree-cables" class="tree-branches">
-                        <span class="tree-branch empty">Final choice</span>
+                <div class="web-column">
+                    <span class="web-label">Cable preference</span>
+                    <div id="web-cables" class="web-nodes">
+                        <span class="web-node empty">Final choice</span>
                     </div>
                 </div>
 
-                <div class="tree-row">
-                    <span class="tree-label">End</span>
-                    <div id="tree-result" class="tree-branches">
-                        <span class="tree-branch empty">Contact section appears here</span>
+                <div class="web-column">
+                    <span class="web-label">End</span>
+                    <div id="web-result" class="web-nodes">
+                        <span class="web-node empty">Contact appears when complete</span>
                     </div>
                 </div>
             </div>
@@ -849,9 +859,9 @@ function buildMessage(service) {
 
 function updateRecommendation() {
     if (!allOptionsChosen()) {
-        document.getElementById("tree-panel").classList.remove("hidden");
+        document.getElementById("web-panel").classList.remove("hidden");
         document.getElementById("recommendation-panel").classList.add("hidden");
-        updateTree();
+        updateWeb();
         return;
     }
 
@@ -866,31 +876,33 @@ function updateRecommendation() {
     document.getElementById("selected-cables").textContent = formatSelection(selections.cables);
     document.getElementById("enquiry-message").value = message;
     document.getElementById("send-enquiry").href = "mailto:info@nfjservicesltd.co.uk?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message);
-    updateTree(service);
-    document.getElementById("tree-panel").classList.add("hidden");
+    updateWeb(service);
+    document.getElementById("web-panel").classList.remove("hidden");
     document.getElementById("recommendation-panel").classList.remove("hidden");
 }
 
-function renderTreeBranches(elementId, values, emptyText) {
+function renderWebNodes(elementId, values, emptyText) {
     const element = document.getElementById(elementId);
 
     if (!values.length) {
-        element.innerHTML = '<span class="tree-branch empty">' + emptyText + '</span>';
+        element.innerHTML = '<span class="web-node empty">' + emptyText + '</span>';
         return;
     }
 
-    element.innerHTML = values.map(value => '<span class="tree-branch">' + value + '</span>').join("");
+    element.innerHTML = values.map(value => '<span class="web-node">' + value + '</span>').join("");
 }
 
-function updateTree(resultService = "") {
-    renderTreeBranches("tree-problem", selections.problem, "Choose one or more");
-    renderTreeBranches("tree-location", selections.location, "Next step");
-    renderTreeBranches("tree-cables", selections.cables, "Final choice");
+function updateWeb(resultService = "") {
+    renderWebNodes("web-problem", selections.problem, "Choose one or more");
+    renderWebNodes("web-location", selections.location, "Next step");
+    renderWebNodes("web-cables", selections.cables, "Final choice");
 
-    const result = document.getElementById("tree-result");
+    const result = document.getElementById("web-result");
     result.innerHTML = resultService
-        ? '<span class="tree-branch result">' + resultService + '</span>'
-        : '<span class="tree-branch empty">Contact section appears here</span>';
+        ? '<span class="web-node result">' + resultService + '</span>'
+        : '<span class="web-node empty">Contact appears when complete</span>';
+
+    document.getElementById("web-panel").classList.toggle("complete", Boolean(resultService));
 }
 
 function showStep(step) {
@@ -927,7 +939,7 @@ document.querySelectorAll(".option-grid").forEach(group => {
         nextButton.disabled = selections[question].length === 0;
 
         document.getElementById("copy-status").textContent = "";
-        updateTree();
+        updateWeb();
     });
 });
 
@@ -958,7 +970,7 @@ document.getElementById("start-over").addEventListener("click", () => {
     document.getElementById("copy-status").textContent = "";
     showStep(0);
     updateRecommendation();
-    updateTree();
+    updateWeb();
 });
 
 document.getElementById("copy-message").addEventListener("click", async () => {
@@ -1033,7 +1045,7 @@ function handleSwipe() {
 
 showStep(0);
 updateRecommendation();
-updateTree();
+updateWeb();
 </script>
 </body>
 </html>
