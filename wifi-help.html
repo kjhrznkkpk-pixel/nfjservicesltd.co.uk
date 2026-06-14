@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WiFi Help Picker | NFJ Services LTD</title>
+<meta name="description" content="Use the NFJ Services LTD WiFi help picker to choose the best option for weak WiFi, dead spots, buffering, gaming lag, outbuilding internet or business access points.">
+<meta name="keywords" content="WiFi help, mesh WiFi, wired access point, outbuilding WiFi, home network cabling, business WiFi, NFJ Services LTD">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://www.nfjservicesltd.co.uk/wifi-help.html">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<style>
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #0f172a;
+    color: white;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 10px 15px;
+    overflow: hidden;
+}
+
+.logo {
+    height: 130px;
+    width: 100vw;
+    max-width: 650px;
+    object-fit: contain;
+    transform: scale(1.05);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 10px;
+    position: relative;
+    white-space: nowrap;
+}
+
+nav a:hover,
+nav a.active {
+    color: #3b82f6;
+}
+
+nav a:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 18px;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    padding: 55px 20px;
+}
+
+.hero {
+    max-width: 950px;
+    margin: 0 auto 34px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 12px;
+    font-size: 40px;
+}
+
+.intro {
+    max-width: 860px;
+    margin: 0 auto;
+    color: #cbd5e1;
+    line-height: 1.7;
+    font-size: 17px;
+}
+
+.picker {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(310px, 0.8fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.question-panel,
+.recommendation {
+    background: #0b1220;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.question-group {
+    margin-bottom: 28px;
+}
+
+.question-group:last-child {
+    margin-bottom: 0;
+}
+
+.question-group h2,
+.recommendation h2 {
+    color: #3b82f6;
+    margin: 0 0 14px;
+    font-size: 24px;
+}
+
+.option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+}
+
+.option-card {
+    min-height: 108px;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    background: #1e293b;
+    color: white;
+    text-align: left;
+    padding: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    transition: 0.2s;
+    box-sizing: border-box;
+}
+
+.option-card:hover,
+.option-card.selected {
+    transform: translateY(-3px);
+    border-color: #3b82f6;
+    background: #172554;
+}
+
+.option-card.selected {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
+}
+
+.option-card strong {
+    display: block;
+    color: #93c5fd;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.option-card span {
+    color: #cbd5e1;
+    display: block;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.recommendation {
+    position: sticky;
+    top: 180px;
+}
+
+.result-label {
+    display: inline-block;
+    margin: 0 0 12px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(59, 130, 246, 0.18);
+    color: #93c5fd;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.service-name {
+    margin: 0 0 10px;
+    color: white;
+    font-size: 28px;
+}
+
+.reason {
+    color: #cbd5e1;
+    line-height: 1.65;
+    margin: 0 0 18px;
+}
+
+.selection-list {
+    margin: 0 0 18px;
+    padding: 0;
+    list-style: none;
+}
+
+.selection-list li {
+    border-top: 1px solid #334155;
+    padding: 10px 0;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+.selection-list strong {
+    color: #93c5fd;
+}
+
+.message-box {
+    width: 100%;
+    min-height: 175px;
+    resize: vertical;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #020617;
+    color: white;
+    padding: 14px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    color: white;
+    background: #3b82f6;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+
+.btn:hover {
+    background: #2563eb;
+}
+
+.btn.secondary {
+    background: transparent;
+    border: 1px solid #3b82f6;
+    color: #93c5fd;
+}
+
+.btn.secondary:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+.copy-status {
+    min-height: 20px;
+    margin: 10px 0 0;
+    color: #93c5fd;
+    font-size: 14px;
+}
+
+.service-notes {
+    max-width: 1100px;
+    margin: 34px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.note-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.note-card h3 {
+    color: #3b82f6;
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.note-card p {
+    color: #cbd5e1;
+    line-height: 1.55;
+    margin: 0;
+    font-size: 14px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #020617;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 40px;
+    line-height: 1.6;
+}
+
+.footer-link,
+.admin-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #94a3b8;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.admin-link {
+    color: #64748b;
+    font-size: 11px;
+}
+
+.footer-link:hover,
+.admin-link:hover {
+    color: #3b82f6;
+}
+
+.creator-credit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.creator-credit:hover {
+    color: #3b82f6;
+}
+
+.creator-logo {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e293b;
+    color: #3b82f6;
+    font-weight: bold;
+    font-size: 12px;
+    border: 1px solid #334155;
+}
+
+@media (max-width: 880px) {
+    .picker {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendation {
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        overflow: hidden;
+    }
+
+    .logo {
+        height: 120px;
+        width: 100vw;
+        max-width: none;
+        object-fit: contain;
+        transform: scale(1.05);
+    }
+
+    nav {
+        flex-wrap: nowrap;
+        justify-content: center;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .container {
+        padding: 35px 16px 55px;
+    }
+
+    h1 {
+        font-size: 31px;
+    }
+
+    .intro {
+        font-size: 16px;
+    }
+
+    .question-panel,
+    .recommendation {
+        padding: 18px;
+    }
+
+    .option-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .option-card {
+        min-height: auto;
+    }
+
+    .service-name {
+        font-size: 24px;
+    }
+
+    .btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" class="logo" alt="NFJ Services LTD Logo">
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
+        <a href="Reviews.html">Reviews</a>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <h1>Weak WiFi Around Your Home?</h1>
+        <p class="intro">
+            Dead spots, buffering, gaming lag and poor coverage are usually caused by weak signal,
+            awkward router placement, thick walls or too many devices fighting for the same WiFi.
+            Pick the options below and NFJ Services LTD will suggest the most suitable next step.
+        </p>
+    </section>
+
+    <section class="picker" aria-label="WiFi help picker">
+        <div class="question-panel">
+            <div class="question-group">
+                <h2>What problem are you having?</h2>
+                <div class="option-grid" data-question="problem">
+                    <button class="option-card selected" type="button" data-value="Dead spots or weak signal">
+                        <strong>Dead spots or weak signal</strong>
+                        <span>Some rooms work fine, but other areas barely connect.</span>
+                    </button>
+                    <button class="option-card" type="button" data-value="Buffering or slow streaming">
+                        <strong>Buffering or slow streaming</strong>
+                        <span>TVs, phones or tablets keep pausing or dropping quality.</span>
+                    </button>
+                    <button class="option-card" type="button" data-value="Gaming lag or work calls dropping">
+                        <strong>Gaming lag or work calls dropping</strong>
+                        <span>You need a steadier connection for games, calls or office use.</span>
+                    </button>
+                    <button class="option-card" type="button" data-value="Lots of users or business devices">
+                        <strong>Lots of users or business devices</strong>
+                        <span>A busy home, shop, office or workspace needs stronger WiFi.</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <h2>Where is the problem?</h2>
+                <div class="option-grid" data-question="location">
+                    <button class="option-card selected" type="button" data-value="A few rooms in the house">
+                        <strong>A few rooms in the house</strong>
+                        <span>Bedrooms, extensions, kitchens or rooms away from the router.</span>
+                    </button>
+                    <button class="option-card" type="button" data-value="A garden room or outbuilding">
+                        <strong>A garden room or outbuilding</strong>
+                        <span>Internet needs to reach an office, shed, annex or separate building.</span>
+                    </button>
+                    <button class="option-card" type="button" data-value="Whole home coverage">
+                        <strong>Whole home coverage</strong>
+                        <span>You want a stronger setup across the full property.</span>
+                    </button>
+                    <button class="option-card" type="button" data-value="Business premises">
+                        <strong>Business premises</strong>
+                        <span>Office, shop, unit, salon, workspace or customer WiFi area.</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <h2>Would you be happy with cables if it gives a better result?</h2>
+                <div class="option-grid" data-question="cables">
+                    <button class="option-card selected" type="button" data-value="Prefer no new cables">
+                        <strong>Prefer no new cables</strong>
+                        <span>You would like a clean, low-disruption option if suitable.</span>
+                    </button>
+                    <button class="option-card" type="button" data-value="Yes, if it is neat">
+                        <strong>Yes, if it is neat</strong>
+                        <span>You are open to tidy cabling for better long-term performance.</span>
+                    </button>
+                    <button class="option-card" type="button" data-value="Yes, I want the best result">
+                        <strong>Yes, I want the best result</strong>
+                        <span>You want the most reliable option for fixed devices and WiFi points.</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <aside class="recommendation" aria-live="polite">
+            <span class="result-label">Recommended service</span>
+            <h2 id="service-name" class="service-name">Mesh WiFi System</h2>
+            <p id="reason" class="reason"></p>
+
+            <ul class="selection-list">
+                <li><strong>Problem:</strong> <span id="selected-problem"></span></li>
+                <li><strong>Location:</strong> <span id="selected-location"></span></li>
+                <li><strong>Cables:</strong> <span id="selected-cables"></span></li>
+            </ul>
+
+            <label for="enquiry-message" class="result-label">Generated enquiry message</label>
+            <textarea id="enquiry-message" class="message-box" readonly></textarea>
+
+            <div class="button-row">
+                <button id="copy-message" class="btn secondary" type="button">Copy Message</button>
+                <a id="send-enquiry" class="btn" href="mailto:info@nfjservicesltd.co.uk">Send WiFi Enquiry</a>
+            </div>
+            <p id="copy-status" class="copy-status" aria-live="polite"></p>
+        </aside>
+    </section>
+
+    <section class="service-notes" aria-label="WiFi service options">
+        <div class="note-card">
+            <h3>Mesh WiFi System</h3>
+            <p>Often suitable when you want better coverage around the home without running new cables everywhere.</p>
+        </div>
+        <div class="note-card">
+            <h3>Wired Access Point</h3>
+            <p>A strong choice for a specific weak area where a neat cable can feed a proper WiFi point.</p>
+        </div>
+        <div class="note-card">
+            <h3>Outbuilding Internet & WiFi Setup</h3>
+            <p>Best for garden rooms, home offices, annexes and separate buildings that need reliable internet.</p>
+        </div>
+        <div class="note-card">
+            <h3>Full Hardwired Home Network</h3>
+            <p>Ideal when fixed devices, gaming, offices, TVs and WiFi points all need stable connections.</p>
+        </div>
+        <div class="note-card">
+            <h3>Business WiFi & Access Points</h3>
+            <p>Designed for shops, offices and workspaces that need planned coverage for staff, tills or visitors.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 NFJ Services LTD - All rights reserved<br>
+
+    <a class="creator-credit"
+       href="https://www.keith-andrews.co.uk"
+       target="_blank"
+       rel="noopener noreferrer">
+        <span class="creator-logo">KA</span>
+        <span>Designed and created by Keith-Andrews Web Development</span>
+    </a>
+
+    <br>
+    <a href="terms.html" class="footer-link">Terms & Conditions</a>
+    <br>
+    <a href="https://nfj-admin.onrender.com/admin" class="admin-link">Admin Login</a>
+</footer>
+
+<script>
+const selections = {
+    problem: "Dead spots or weak signal",
+    location: "A few rooms in the house",
+    cables: "Prefer no new cables"
+};
+
+const serviceDetails = {
+    "Mesh WiFi System": "A mesh WiFi system is likely to suit this because it can spread coverage around the home without relying on one router to reach every room.",
+    "Wired Access Point": "A wired access point is likely to give a stronger result in the problem area because it uses a cable back to the network instead of repeating a weak signal.",
+    "Outbuilding Internet & WiFi Setup": "An outbuilding normally needs a planned connection from the main property, then a WiFi point inside the garden room, office or separate building.",
+    "Full Hardwired Home Network": "A full hardwired home network is the strongest option when reliability matters across the whole property, especially for offices, TVs, gaming and access points.",
+    "Business WiFi & Access Points": "Business premises usually need planned access point positions, tidy cabling and enough capacity for staff, visitors and connected equipment."
+};
+
+function getRecommendation() {
+    const problem = selections.problem;
+    const location = selections.location;
+    const cables = selections.cables;
+
+    if (location === "Business premises" || problem === "Lots of users or business devices") {
+        return "Business WiFi & Access Points";
+    }
+
+    if (location === "A garden room or outbuilding") {
+        return "Outbuilding Internet & WiFi Setup";
+    }
+
+    if (cables === "Yes, I want the best result" && (location === "Whole home coverage" || problem === "Gaming lag or work calls dropping")) {
+        return "Full Hardwired Home Network";
+    }
+
+    if (cables !== "Prefer no new cables" && (problem === "Gaming lag or work calls dropping" || location === "A few rooms in the house")) {
+        return "Wired Access Point";
+    }
+
+    if (cables === "Yes, I want the best result" && location === "Whole home coverage") {
+        return "Full Hardwired Home Network";
+    }
+
+    return "Mesh WiFi System";
+}
+
+function buildMessage(service) {
+    return [
+        "Hi NFJ Services,",
+        "",
+        "I used the WiFi help picker on your website and would like to enquire about:",
+        service,
+        "",
+        "My selected options were:",
+        "Problem: " + selections.problem,
+        "Location: " + selections.location,
+        "Cables: " + selections.cables,
+        "",
+        "Please could you advise the best next step?",
+        "",
+        "Thanks"
+    ].join("\n");
+}
+
+function updateRecommendation() {
+    const service = getRecommendation();
+    const message = buildMessage(service);
+    const subject = "WiFi Enquiry - " + service;
+
+    document.getElementById("service-name").textContent = service;
+    document.getElementById("reason").textContent = serviceDetails[service];
+    document.getElementById("selected-problem").textContent = selections.problem;
+    document.getElementById("selected-location").textContent = selections.location;
+    document.getElementById("selected-cables").textContent = selections.cables;
+    document.getElementById("enquiry-message").value = message;
+    document.getElementById("send-enquiry").href = "mailto:info@nfjservicesltd.co.uk?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message);
+}
+
+document.querySelectorAll(".option-grid").forEach(group => {
+    group.addEventListener("click", event => {
+        const card = event.target.closest(".option-card");
+
+        if (!card) {
+            return;
+        }
+
+        const question = group.dataset.question;
+        selections[question] = card.dataset.value;
+
+        group.querySelectorAll(".option-card").forEach(option => {
+            option.classList.toggle("selected", option === card);
+        });
+
+        document.getElementById("copy-status").textContent = "";
+        updateRecommendation();
+    });
+});
+
+document.getElementById("copy-message").addEventListener("click", async () => {
+    const message = document.getElementById("enquiry-message").value;
+    const status = document.getElementById("copy-status");
+
+    try {
+        await navigator.clipboard.writeText(message);
+        status.textContent = "Message copied.";
+    } catch (error) {
+        const messageBox = document.getElementById("enquiry-message");
+        messageBox.removeAttribute("readonly");
+        messageBox.select();
+        document.execCommand("copy");
+        messageBox.setAttribute("readonly", "readonly");
+        status.textContent = "Message copied.";
+    }
+});
+
+const pages = [
+    "index.html",
+    "services.html",
+    "contact.html",
+    "faq.html",
+    "Reviews.html"
+];
+
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+const currentIndex = pages.indexOf(currentPage);
+
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+document.addEventListener("touchstart", event => {
+    touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
+}, { passive: true });
+
+document.addEventListener("touchend", event => {
+    touchEndX = event.changedTouches[0].screenX;
+    touchEndY = event.changedTouches[0].screenY;
+    handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+    const swipeX = touchEndX - touchStartX;
+    const swipeY = touchEndY - touchStartY;
+    const minimumSwipe = 70;
+
+    if (currentIndex === -1) {
+        return;
+    }
+
+    if (Math.abs(swipeX) < minimumSwipe) {
+        return;
+    }
+
+    if (Math.abs(swipeY) > Math.abs(swipeX)) {
+        return;
+    }
+
+    if (swipeX < 0 && currentIndex < pages.length - 1) {
+        window.location.href = pages[currentIndex + 1];
+    }
+
+    if (swipeX > 0 && currentIndex > 0) {
+        window.location.href = pages[currentIndex - 1];
+    }
+}
+
+updateRecommendation();
+</script>
+</body>
+</html>
