@@ -308,19 +308,22 @@
         }
 
         .quick-access-link {
-            display: block;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            align-items: center;
             padding: 10px 11px;
             border: 1px solid #334155;
             border-radius: 8px;
-            background: #1e293b;
+            background: #3b82f6;
             color: white;
             text-decoration: none;
             transition: 0.2s;
         }
 
         .quick-access-link:hover {
-            background: #3b82f6;
-            border-color: #3b82f6;
+            background: #2563eb;
+            border-color: #93c5fd;
             transform: translateY(-2px);
         }
 
@@ -332,13 +335,27 @@
 
         .quick-access-link span {
             display: block;
-            color: #cbd5e1;
+            color: #dbeafe;
             font-size: 12px;
             line-height: 1.35;
         }
 
         .quick-access-link:hover span {
             color: white;
+        }
+
+        .quick-access-arrow {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            color: #1d4ed8;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 1;
         }
 
         .services {
@@ -754,8 +771,11 @@
         <h3>Quick Help</h3>
         <div class="quick-access-list">
             <a class="quick-access-link" href="wifi-help.html">
-                <strong>Weak WiFi?</strong>
-                <span>Find the best fix in under a minute.</span>
+                <span>
+                    <strong>Weak WiFi?</strong>
+                    <span>Tap to find the best fix.</span>
+                </span>
+                <span class="quick-access-arrow" aria-hidden="true">›</span>
             </a>
         </div>
     </aside>
