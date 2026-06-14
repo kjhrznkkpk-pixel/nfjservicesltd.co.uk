@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Outbuilding Connection Helper | NFJ Services LTD</title>
+<meta name="description" content="Use the NFJ Services LTD outbuilding helper to choose the right setup for power, WiFi, internet, sockets and TV in a garden room, bar, office or outbuilding.">
+<meta name="keywords" content="garden room internet, outbuilding WiFi, garden office power, outbuilding sockets, internet TV setup, NFJ Services LTD">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://www.nfjservicesltd.co.uk/outbuilding-help.html">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<style>
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #0f172a;
+    color: white;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 10px 15px;
+    overflow: hidden;
+}
+
+.logo {
+    height: 130px;
+    width: 100vw;
+    max-width: 650px;
+    object-fit: contain;
+    transform: scale(1.05);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 10px;
+    position: relative;
+    white-space: nowrap;
+}
+
+nav a:hover,
+nav a.active {
+    color: #3b82f6;
+}
+
+nav a:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 18px;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    padding: 55px 20px;
+}
+
+.hero {
+    max-width: 950px;
+    margin: 0 auto 34px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 12px;
+    font-size: 40px;
+}
+
+.intro {
+    max-width: 860px;
+    margin: 0 auto;
+    color: #cbd5e1;
+    line-height: 1.7;
+    font-size: 17px;
+}
+
+.picker {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.recommendation {
+    max-width: 900px;
+    margin: 28px auto 0;
+    background: #0b1220;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.recommendation h2 {
+    color: #3b82f6;
+    margin: 0 0 14px;
+    font-size: 24px;
+}
+
+.option-card {
+    width: 100%;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background: #1e293b;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    transition: 0.2s;
+    box-sizing: border-box;
+}
+
+.option-card:hover,
+.option-card.selected {
+    transform: translateY(-3px);
+    border-color: #3b82f6;
+    background: #172554;
+}
+
+.option-card.selected {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
+}
+
+.option-card strong {
+    display: block;
+    color: #93c5fd;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.option-card span {
+    color: #cbd5e1;
+    display: block;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.step-actions {
+    margin-top: 12px;
+}
+
+.step-actions .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.recommendation {
+    position: static;
+}
+
+.recommendation.hidden {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.web-panel {
+    color: #cbd5e1;
+    line-height: 1.6;
+    overflow: visible;
+}
+
+.web-panel.hidden {
+    display: none;
+}
+
+.web-panel h2 {
+    display: none;
+}
+
+.web-intro {
+    max-width: 760px;
+    margin: 0 auto 22px;
+    color: #cbd5e1;
+    text-align: center;
+}
+
+.flow-web {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(150px, 1fr));
+    gap: 18px;
+    align-items: start;
+    overflow-x: auto;
+    padding: 8px 2px 16px;
+}
+
+.web-column {
+    position: relative;
+    min-width: 150px;
+}
+
+.web-column.locked {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.web-column.complete .option-card:not(.selected) {
+    display: none;
+}
+
+.web-column.complete .step-actions {
+    display: none;
+}
+
+.web-column:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 76px;
+    left: calc(100% + 2px);
+    width: 14px;
+    height: 2px;
+    background: #334155;
+}
+
+.web-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #93c5fd;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.web-nodes {
+    display: grid;
+    gap: 8px;
+}
+
+.web-node {
+    position: relative;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background: #1e293b;
+    color: white;
+    padding: 10px;
+    font-size: 13px;
+    line-height: 1.25;
+    text-align: center;
+}
+
+.web-node:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -9px;
+    width: 2px;
+    height: 8px;
+    background: #334155;
+}
+
+.web-node.empty {
+    color: #94a3b8;
+    border-style: dashed;
+    background: rgba(30, 41, 59, 0.45);
+}
+
+.web-choice-list {
+    display: grid;
+    gap: 8px;
+}
+
+.web-node.result {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    font-weight: bold;
+}
+
+.web-panel.complete .web-column:not(:last-child)::after,
+.web-panel.complete .web-node:not(:first-child)::before {
+    background: #3b82f6;
+}
+
+.result-label {
+    display: inline-block;
+    margin: 0 0 12px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(59, 130, 246, 0.18);
+    color: #93c5fd;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.service-name {
+    margin: 0 0 10px;
+    color: white;
+    font-size: 28px;
+}
+
+.reason {
+    color: #cbd5e1;
+    line-height: 1.65;
+    margin: 0 0 18px;
+}
+
+.selection-list {
+    margin: 0 0 18px;
+    padding: 0;
+    list-style: none;
+}
+
+.selection-list li {
+    border-top: 1px solid #334155;
+    padding: 10px 0;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+.selection-list strong {
+    color: #93c5fd;
+}
+
+.message-box {
+    width: 100%;
+    min-height: 175px;
+    resize: vertical;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #020617;
+    color: white;
+    padding: 14px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.specifics-box {
+    width: 100%;
+    min-height: 95px;
+    resize: vertical;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #020617;
+    color: white;
+    padding: 14px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.specifics-hint {
+    color: #cbd5e1;
+    line-height: 1.55;
+    margin: 0 0 10px;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    color: white;
+    background: #3b82f6;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+
+.btn:hover {
+    background: #2563eb;
+}
+
+.btn.secondary {
+    background: transparent;
+    border: 1px solid #3b82f6;
+    color: #93c5fd;
+}
+
+.btn.secondary:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+.copy-status {
+    min-height: 20px;
+    margin: 10px 0 0;
+    color: #93c5fd;
+    font-size: 14px;
+}
+
+.service-notes {
+    max-width: 1100px;
+    margin: 34px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.note-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.note-card h3 {
+    color: #3b82f6;
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.note-card p {
+    color: #cbd5e1;
+    line-height: 1.55;
+    margin: 0;
+    font-size: 14px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #020617;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 40px;
+    line-height: 1.6;
+}
+
+.footer-link,
+.admin-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #94a3b8;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.admin-link {
+    color: #64748b;
+    font-size: 11px;
+}
+
+.footer-link:hover,
+.admin-link:hover {
+    color: #3b82f6;
+}
+
+.creator-credit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.creator-credit:hover {
+    color: #3b82f6;
+}
+
+.creator-logo {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e293b;
+    color: #3b82f6;
+    font-weight: bold;
+    font-size: 12px;
+    border: 1px solid #334155;
+}
+
+@media (max-width: 880px) {
+    .picker {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendation {
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        overflow: hidden;
+    }
+
+    .logo {
+        height: 120px;
+        width: 100vw;
+        max-width: none;
+        object-fit: contain;
+        transform: scale(1.05);
+    }
+
+    nav {
+        flex-wrap: nowrap;
+        justify-content: center;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .container {
+        padding: 35px 16px 55px;
+    }
+
+    h1 {
+        font-size: 31px;
+    }
+
+    .intro {
+        font-size: 16px;
+    }
+
+    .recommendation {
+        padding: 18px;
+    }
+
+    .option-card {
+        min-height: auto;
+    }
+
+    .service-name {
+        font-size: 24px;
+    }
+
+    .btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" class="logo" alt="NFJ Services LTD Logo">
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
+        <a href="Reviews.html">Reviews</a>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <h1>Need Your Outbuilding Connected?</h1>
+        <p class="intro">
+            Need power, WiFi or internet TV in your garden room, bar, office or outbuilding?
+            We can help get your outside space connected properly with neat cabling, sockets,
+            WiFi coverage and TV setup.
+        </p>
+    </section>
+
+    <section class="picker" aria-label="WiFi help picker">
+        <aside id="web-panel" class="web-panel">
+            <h2>Your WiFi Help Web</h2>
+            <p id="picker-progress" class="web-intro">Choose one or more boxes, then continue. The page will build from left to right.</p>
+
+            <div class="flow-web">
+                <div class="web-column">
+                    <span class="web-label">Start</span>
+                    <div class="web-nodes">
+                        <span class="web-node">Outbuilding connection help</span>
+                    </div>
+                </div>
+
+                <div class="web-column active" data-step="0">
+                    <span class="web-label">What do you need?</span>
+                    <div class="web-choice-list" data-question="problem">
+                        <button class="option-card" type="button" data-value="Power sockets">
+                            <strong>Power sockets</strong>
+                            <span>Useful sockets for lights, heating, tools or office equipment.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="WiFi coverage">
+                            <strong>WiFi coverage</strong>
+                            <span>Reliable WiFi inside the outside space.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Internet data point">
+                            <strong>Internet data point</strong>
+                            <span>A wired connection for office work, gaming or streaming.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Internet TV or media setup">
+                            <strong>Internet TV or media setup</strong>
+                            <span>TV, streaming, bar screens or media equipment.</span>
+                        </button>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn step-next" type="button" disabled>Continue</button>
+                    </div>
+                </div>
+
+                <div class="web-column locked" data-step="1">
+                    <span class="web-label">Outside space</span>
+                    <div class="web-choice-list" data-question="location">
+                        <button class="option-card" type="button" data-value="Garden room or home office">
+                            <strong>Garden room or home office</strong>
+                            <span>Work, calls, computers and everyday internet use.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Garden bar or entertainment space">
+                            <strong>Garden bar or entertainment space</strong>
+                            <span>TV, music, lighting, WiFi and social use.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Workshop or shed">
+                            <strong>Workshop or shed</strong>
+                            <span>Practical power, tools, cameras or basic connectivity.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Annex or separate outbuilding">
+                            <strong>Annex or separate outbuilding</strong>
+                            <span>A more complete setup away from the main property.</span>
+                        </button>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn step-next" type="button" disabled>Continue</button>
+                    </div>
+                </div>
+
+                <div class="web-column locked" data-step="2">
+                    <span class="web-label">Finish preference</span>
+                    <div class="web-choice-list" data-question="cables">
+                        <button class="option-card" type="button" data-value="Keep it as hidden and tidy as possible">
+                            <strong>Hidden and tidy</strong>
+                            <span>Neat routes with minimal visible cabling where possible.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Surface cabling is fine if neat">
+                            <strong>Surface cabling is fine</strong>
+                            <span>Practical, tidy cabling is acceptable.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Best reliable result matters most">
+                            <strong>Best reliable result</strong>
+                            <span>Performance and reliability are the priority.</span>
+                        </button>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn step-next" type="button" disabled>Results</button>
+                    </div>
+                </div>
+
+                <div class="web-column locked" data-step="3">
+                    <span class="web-label">End</span>
+                    <div id="web-result" class="web-nodes">
+                        <span class="web-node empty">Contact appears when complete</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <aside id="recommendation-panel" class="recommendation hidden" aria-live="polite">
+            <span class="result-label">Recommended outbuilding setup</span>
+            <h2 id="service-name" class="service-name">Outbuilding Internet & WiFi Setup</h2>
+            <p id="reason" class="reason"></p>
+
+            <ul class="selection-list">
+                <li><strong>Needed:</strong> <span id="selected-problem"></span></li>
+                <li><strong>Outside space:</strong> <span id="selected-location"></span></li>
+                <li><strong>Finish preference:</strong> <span id="selected-cables"></span></li>
+            </ul>
+
+            <label for="customer-specifics" class="result-label">Extra comments or specifics</label>
+            <p class="specifics-hint">
+                Add anything useful, such as the distance from the house, whether power is already installed, what equipment you want connected, photos available, or the best time to contact you.
+            </p>
+            <textarea id="customer-specifics" class="specifics-box" placeholder="Example: Garden office is around 20 metres from the house. I need WiFi, sockets and a TV point if possible."></textarea>
+
+            <label for="enquiry-message" class="result-label">Generated enquiry message</label>
+            <textarea id="enquiry-message" class="message-box" readonly></textarea>
+
+            <div class="button-row">
+                <button id="copy-message" class="btn secondary" type="button">Copy Message</button>
+                <a id="send-enquiry" class="btn" href="mailto:info@nfjservicesltd.co.uk">Send Outbuilding Enquiry</a>
+                <button id="start-over" class="btn secondary" type="button">Start Over</button>
+            </div>
+            <p id="copy-status" class="copy-status" aria-live="polite"></p>
+        </aside>
+    </section>
+
+    <section class="service-notes" aria-label="Outbuilding service options">
+        <div class="note-card">
+            <h3>Outbuilding Internet & WiFi Setup</h3>
+            <p>Reliable internet and WiFi for garden rooms, offices, bars, sheds and separate buildings.</p>
+        </div>
+        <div class="note-card">
+            <h3>Power & Socket Installation</h3>
+            <p>Practical socket and power support for outside spaces where suitable and safe.</p>
+        </div>
+        <div class="note-card">
+            <h3>Garden Room TV & Media Setup</h3>
+            <p>TV, streaming, media, bar screen and entertainment setup with neat cabling.</p>
+        </div>
+        <div class="note-card">
+            <h3>Full Outbuilding Power, Internet & TV Setup</h3>
+            <p>A joined-up setup when the outside space needs power, sockets, WiFi, data and media.</p>
+        </div>
+        <div class="note-card">
+            <h3>Business Or Office Outbuilding Connectivity</h3>
+            <p>Reliable connectivity for work calls, computers, printers, cameras and business use.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 NFJ Services LTD - All rights reserved<br>
+
+    <a class="creator-credit"
+       href="https://www.keith-andrews.co.uk"
+       target="_blank"
+       rel="noopener noreferrer">
+        <span class="creator-logo">KA</span>
+        <span>Designed and created by Keith-Andrews Web Development</span>
+    </a>
+
+    <br>
+    <a href="terms.html" class="footer-link">Terms & Conditions</a>
+    <br>
+    <a href="https://nfj-admin.onrender.com/admin" class="admin-link">Admin Login</a>
+</footer>
+
+<script>
+const selections = {
+    problem: [],
+    location: [],
+    cables: []
+};
+
+let currentStep = 0;
+
+const serviceDetails = {
+    "Outbuilding Internet & WiFi Setup": "This is likely to suit you if the main need is getting reliable internet and WiFi into the outside space using a proper connection from the house.",
+    "Power & Socket Installation": "This is likely to suit you if the main requirement is safe, practical power and sockets for the outside space.",
+    "Garden Room TV & Media Setup": "This is likely to suit you if the space is mainly for entertainment, streaming, TV or a garden bar media setup.",
+    "Full Outbuilding Power, Internet & TV Setup": "This is likely to suit you if the outside space needs a joined-up setup covering power, sockets, internet, WiFi and TV/media.",
+    "Business Or Office Outbuilding Connectivity": "This is likely to suit you if the space is used for work and needs reliable connectivity for calls, computers, printers or business equipment."
+};
+
+function getRecommendation() {
+    const needs = selections.problem;
+    const spaces = selections.location;
+    const hasNeed = value => needs.includes(value);
+    const hasSpace = value => spaces.includes(value);
+    const needsConnectivity = hasNeed("WiFi coverage") || hasNeed("Internet data point");
+    const needsPower = hasNeed("Power sockets");
+    const needsMedia = hasNeed("Internet TV or media setup");
+    const isWorkSpace = hasSpace("Garden room or home office") || hasSpace("Annex or separate outbuilding");
+
+    if (needsPower && (needsConnectivity || needsMedia)) {
+        return "Full Outbuilding Power, Internet & TV Setup";
+    }
+
+    if (isWorkSpace && needsConnectivity) {
+        return "Business Or Office Outbuilding Connectivity";
+    }
+
+    if (needsMedia) {
+        return "Garden Room TV & Media Setup";
+    }
+
+    if (needsPower) {
+        return "Power & Socket Installation";
+    }
+
+    return "Outbuilding Internet & WiFi Setup";
+}
+
+function allOptionsChosen() {
+    return Boolean(selections.problem.length && selections.location.length && selections.cables.length);
+}
+
+function formatSelection(values) {
+    return values.length ? values.join(", ") : "Not selected";
+}
+
+function buildMessage(service) {
+    const specifics = document.getElementById("customer-specifics")?.value.trim() || "";
+    const details = specifics || "No extra comments added yet.";
+
+    return [
+        "Hi NFJ Services,",
+        "",
+        "I used the outbuilding connection helper on your website and would like to enquire about:",
+        service,
+        "",
+        "My selected options were:",
+        "Needed: " + formatSelection(selections.problem),
+        "Outside space: " + formatSelection(selections.location),
+        "Finish preference: " + formatSelection(selections.cables),
+        "",
+        "Extra comments or specifics:",
+        details,
+        "",
+        "Please could you advise the best next step?",
+        "",
+        "Thanks"
+    ].join("\n");
+}
+
+function updateRecommendation() {
+    if (!allOptionsChosen()) {
+        document.getElementById("web-panel").classList.remove("hidden");
+        document.getElementById("recommendation-panel").classList.add("hidden");
+        updateWeb();
+        return;
+    }
+
+    const service = getRecommendation();
+    const message = buildMessage(service);
+    const subject = "Outbuilding Enquiry - " + service;
+
+    document.getElementById("service-name").textContent = service;
+    document.getElementById("reason").textContent = serviceDetails[service];
+    document.getElementById("selected-problem").textContent = formatSelection(selections.problem);
+    document.getElementById("selected-location").textContent = formatSelection(selections.location);
+    document.getElementById("selected-cables").textContent = formatSelection(selections.cables);
+    document.getElementById("enquiry-message").value = message;
+    document.getElementById("send-enquiry").href = "mailto:info@nfjservicesltd.co.uk?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message);
+    updateWeb(service);
+    document.getElementById("web-panel").classList.remove("hidden");
+    document.getElementById("recommendation-panel").classList.remove("hidden");
+}
+
+function updateWeb(resultService = "") {
+    const result = document.getElementById("web-result");
+    result.innerHTML = resultService
+        ? '<span class="web-node result">' + resultService + '</span>'
+        : '<span class="web-node empty">Contact appears when complete</span>';
+
+    document.getElementById("web-panel").classList.toggle("complete", Boolean(resultService));
+}
+
+function showStep(step) {
+    currentStep = step;
+
+    document.querySelectorAll(".web-column[data-step]").forEach(column => {
+        const columnStep = Number(column.dataset.step);
+        column.classList.toggle("active", columnStep === currentStep);
+        column.classList.toggle("locked", columnStep > currentStep);
+        column.classList.toggle("complete", columnStep < currentStep);
+    });
+
+    if (currentStep < 3) {
+        document.getElementById("picker-progress").textContent = "Choose one or more boxes, then continue. The page will build from left to right.";
+        return;
+    }
+
+    document.getElementById("picker-progress").textContent = "Your web is complete. The contact section is ready below.";
+}
+
+document.querySelectorAll(".web-choice-list").forEach(group => {
+    group.addEventListener("click", event => {
+        const card = event.target.closest(".option-card");
+
+        if (!card) {
+            return;
+        }
+
+        const question = group.dataset.question;
+        const value = card.dataset.value;
+
+        if (selections[question].includes(value)) {
+            selections[question] = selections[question].filter(item => item !== value);
+        } else {
+            selections[question].push(value);
+        }
+
+        card.classList.toggle("selected", selections[question].includes(value));
+
+        const stepGroup = group.closest(".web-column");
+        const nextButton = stepGroup.querySelector(".step-next");
+        nextButton.disabled = selections[question].length === 0;
+
+        document.getElementById("copy-status").textContent = "";
+        updateWeb();
+    });
+});
+
+document.querySelectorAll(".step-next").forEach(button => {
+    button.addEventListener("click", () => {
+        if (currentStep < 2) {
+            showStep(currentStep + 1);
+            return;
+        }
+
+        showStep(3);
+        updateRecommendation();
+    });
+});
+
+document.getElementById("start-over").addEventListener("click", () => {
+    selections.problem = [];
+    selections.location = [];
+    selections.cables = [];
+
+    document.querySelectorAll(".option-card").forEach(option => {
+        option.classList.remove("selected");
+        option.style.display = "";
+    });
+
+    document.querySelectorAll(".step-next").forEach(button => {
+        button.disabled = true;
+    });
+
+    document.getElementById("copy-status").textContent = "";
+    document.getElementById("customer-specifics").value = "";
+    showStep(0);
+    updateRecommendation();
+    updateWeb();
+});
+
+document.getElementById("customer-specifics").addEventListener("input", () => {
+    if (allOptionsChosen()) {
+        updateRecommendation();
+    }
+});
+
+document.getElementById("copy-message").addEventListener("click", async () => {
+    const message = document.getElementById("enquiry-message").value;
+    const status = document.getElementById("copy-status");
+
+    try {
+        await navigator.clipboard.writeText(message);
+        status.textContent = "Message copied.";
+    } catch (error) {
+        const messageBox = document.getElementById("enquiry-message");
+        messageBox.removeAttribute("readonly");
+        messageBox.select();
+        document.execCommand("copy");
+        messageBox.setAttribute("readonly", "readonly");
+        status.textContent = "Message copied.";
+    }
+});
+
+const pages = [
+    "index.html",
+    "services.html",
+    "contact.html",
+    "faq.html",
+    "Reviews.html"
+];
+
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+const currentIndex = pages.indexOf(currentPage);
+
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+document.addEventListener("touchstart", event => {
+    touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
+}, { passive: true });
+
+document.addEventListener("touchend", event => {
+    touchEndX = event.changedTouches[0].screenX;
+    touchEndY = event.changedTouches[0].screenY;
+    handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+    const swipeX = touchEndX - touchStartX;
+    const swipeY = touchEndY - touchStartY;
+    const minimumSwipe = 70;
+
+    if (currentIndex === -1) {
+        return;
+    }
+
+    if (Math.abs(swipeX) < minimumSwipe) {
+        return;
+    }
+
+    if (Math.abs(swipeY) > Math.abs(swipeX)) {
+        return;
+    }
+
+    if (swipeX < 0 && currentIndex < pages.length - 1) {
+        window.location.href = pages[currentIndex + 1];
+    }
+
+    if (swipeX > 0 && currentIndex > 0) {
+        window.location.href = pages[currentIndex - 1];
+    }
+}
+
+showStep(0);
+updateRecommendation();
+updateWeb();
+</script>
+</body>
+</html>
