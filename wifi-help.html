@@ -100,16 +100,13 @@ h1 {
 }
 
 .picker {
-    max-width: 1100px;
+    max-width: 1180px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(310px, 0.8fr);
-    gap: 22px;
-    align-items: start;
 }
 
-.question-panel,
 .recommendation {
+    max-width: 900px;
+    margin: 28px auto 0;
     background: #0b1220;
     border: 1px solid #334155;
     border-radius: 12px;
@@ -117,47 +114,20 @@ h1 {
     box-sizing: border-box;
 }
 
-.picker-progress {
-    color: #93c5fd;
-    font-weight: bold;
-    margin: 0 0 18px;
-    text-align: center;
-}
-
-.question-group {
-    display: none;
-    margin-bottom: 28px;
-}
-
-.question-group.active {
-    display: block;
-}
-
-.question-group:last-child {
-    margin-bottom: 0;
-}
-
-.question-group h2,
 .recommendation h2 {
     color: #3b82f6;
     margin: 0 0 14px;
     font-size: 24px;
 }
 
-.option-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 12px;
-}
-
 .option-card {
-    min-height: 108px;
+    width: 100%;
     border: 1px solid #334155;
-    border-radius: 12px;
+    border-radius: 8px;
     background: #1e293b;
     color: white;
     text-align: left;
-    padding: 16px;
+    padding: 10px;
     font-family: Arial, sans-serif;
     cursor: pointer;
     transition: 0.2s;
@@ -178,20 +148,19 @@ h1 {
 .option-card strong {
     display: block;
     color: #93c5fd;
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 13px;
+    margin-bottom: 4px;
 }
 
 .option-card span {
     color: #cbd5e1;
     display: block;
-    font-size: 14px;
-    line-height: 1.45;
+    font-size: 12px;
+    line-height: 1.35;
 }
 
 .step-actions {
-    margin-top: 16px;
-    text-align: right;
+    margin-top: 12px;
 }
 
 .step-actions .btn:disabled {
@@ -200,7 +169,6 @@ h1 {
 }
 
 .recommendation {
-    grid-column: 1 / -1;
     position: static;
 }
 
@@ -213,13 +181,9 @@ h1 {
 }
 
 .web-panel {
-    background: #0b1220;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 24px;
     color: #cbd5e1;
     line-height: 1.6;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .web-panel.hidden {
@@ -227,36 +191,50 @@ h1 {
 }
 
 .web-panel h2 {
-    color: #3b82f6;
-    margin: 0 0 8px;
-    font-size: 24px;
+    display: none;
 }
 
 .web-intro {
-    margin: 0 0 18px;
+    max-width: 760px;
+    margin: 0 auto 22px;
     color: #cbd5e1;
+    text-align: center;
 }
 
 .flow-web {
     display: grid;
-    grid-template-columns: repeat(5, minmax(115px, 1fr));
-    gap: 16px;
-    align-items: stretch;
+    grid-template-columns: repeat(5, minmax(150px, 1fr));
+    gap: 18px;
+    align-items: start;
     overflow-x: auto;
-    padding: 4px 2px 10px;
+    padding: 8px 2px 16px;
 }
 
 .web-column {
     position: relative;
-    min-width: 115px;
+    min-width: 150px;
+}
+
+.web-column.locked {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.web-column.complete .option-card:not(.selected) {
+    display: none;
+}
+
+.web-column.complete .step-actions {
+    display: none;
 }
 
 .web-column:not(:last-child)::after {
     content: "";
     position: absolute;
-    top: 53px;
+    top: 76px;
     left: calc(100% + 2px);
-    width: 12px;
+    width: 14px;
     height: 2px;
     background: #334155;
 }
@@ -266,7 +244,7 @@ h1 {
     margin-bottom: 8px;
     color: #93c5fd;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .web-nodes {
@@ -280,7 +258,7 @@ h1 {
     border-radius: 8px;
     background: #1e293b;
     color: white;
-    padding: 8px 9px;
+    padding: 10px;
     font-size: 13px;
     line-height: 1.25;
     text-align: center;
@@ -300,6 +278,11 @@ h1 {
     color: #94a3b8;
     border-style: dashed;
     background: rgba(30, 41, 59, 0.45);
+}
+
+.web-choice-list {
+    display: grid;
+    gap: 8px;
 }
 
 .web-node.result {
@@ -549,13 +532,8 @@ footer {
         font-size: 16px;
     }
 
-    .question-panel,
     .recommendation {
         padding: 18px;
-    }
-
-    .option-grid {
-        grid-template-columns: 1fr;
     }
 
     .option-card {
@@ -599,87 +577,9 @@ footer {
     </section>
 
     <section class="picker" aria-label="WiFi help picker">
-        <div class="question-panel">
-            <p id="picker-progress" class="picker-progress">Step 1 of 3</p>
-
-            <div class="question-group active" data-step="0">
-                <h2>What problem are you having?</h2>
-                <p class="reason">Select all that apply.</p>
-                <div class="option-grid" data-question="problem">
-                    <button class="option-card" type="button" data-value="Dead spots or weak signal">
-                        <strong>Dead spots or weak signal</strong>
-                        <span>Some rooms work fine, but other areas barely connect.</span>
-                    </button>
-                    <button class="option-card" type="button" data-value="Buffering or slow streaming">
-                        <strong>Buffering or slow streaming</strong>
-                        <span>TVs, phones or tablets keep pausing or dropping quality.</span>
-                    </button>
-                    <button class="option-card" type="button" data-value="Gaming lag or work calls dropping">
-                        <strong>Gaming lag or work calls dropping</strong>
-                        <span>You need a steadier connection for games, calls or office use.</span>
-                    </button>
-                    <button class="option-card" type="button" data-value="Lots of users or business devices">
-                        <strong>Lots of users or business devices</strong>
-                        <span>A busy home, shop, office or workspace needs stronger WiFi.</span>
-                    </button>
-                </div>
-                <div class="step-actions">
-                    <button class="btn step-next" type="button" disabled>Continue</button>
-                </div>
-            </div>
-
-            <div class="question-group" data-step="1">
-                <h2>Where is the problem?</h2>
-                <p class="reason">Select all that apply.</p>
-                <div class="option-grid" data-question="location">
-                    <button class="option-card" type="button" data-value="A few rooms in the house">
-                        <strong>A few rooms in the house</strong>
-                        <span>Bedrooms, extensions, kitchens or rooms away from the router.</span>
-                    </button>
-                    <button class="option-card" type="button" data-value="A garden room or outbuilding">
-                        <strong>A garden room or outbuilding</strong>
-                        <span>Internet needs to reach an office, shed, annex or separate building.</span>
-                    </button>
-                    <button class="option-card" type="button" data-value="Whole home coverage">
-                        <strong>Whole home coverage</strong>
-                        <span>You want a stronger setup across the full property.</span>
-                    </button>
-                    <button class="option-card" type="button" data-value="Business premises">
-                        <strong>Business premises</strong>
-                        <span>Office, shop, unit, salon, workspace or customer WiFi area.</span>
-                    </button>
-                </div>
-                <div class="step-actions">
-                    <button class="btn step-next" type="button" disabled>Continue</button>
-                </div>
-            </div>
-
-            <div class="question-group" data-step="2">
-                <h2>Would you be happy with cables if it gives a better result?</h2>
-                <p class="reason">Select all that apply.</p>
-                <div class="option-grid" data-question="cables">
-                    <button class="option-card" type="button" data-value="Prefer no new cables">
-                        <strong>Prefer no new cables</strong>
-                        <span>You would like a clean, low-disruption option if suitable.</span>
-                    </button>
-                    <button class="option-card" type="button" data-value="Yes, if it is neat">
-                        <strong>Yes, if it is neat</strong>
-                        <span>You are open to tidy cabling for better long-term performance.</span>
-                    </button>
-                    <button class="option-card" type="button" data-value="Yes, I want the best result">
-                        <strong>Yes, I want the best result</strong>
-                        <span>You want the most reliable option for fixed devices and WiFi points.</span>
-                    </button>
-                </div>
-                <div class="step-actions">
-                    <button class="btn step-next" type="button" disabled>Show Recommendation</button>
-                </div>
-            </div>
-        </div>
-
         <aside id="web-panel" class="web-panel">
             <h2>Your WiFi Help Web</h2>
-            <p class="web-intro">Your selected boxes will build from left to right. The contact section appears when the web is complete.</p>
+            <p id="picker-progress" class="web-intro">Choose one or more boxes, then continue. The page will build from left to right.</p>
 
             <div class="flow-web">
                 <div class="web-column">
@@ -689,28 +589,78 @@ footer {
                     </div>
                 </div>
 
-                <div class="web-column">
+                <div class="web-column active" data-step="0">
                     <span class="web-label">Problem</span>
-                    <div id="web-problem" class="web-nodes">
-                        <span class="web-node empty">Choose one or more</span>
+                    <div class="web-choice-list" data-question="problem">
+                        <button class="option-card" type="button" data-value="Dead spots or weak signal">
+                            <strong>Dead spots or weak signal</strong>
+                            <span>Some rooms barely connect.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Buffering or slow streaming">
+                            <strong>Buffering or streaming</strong>
+                            <span>TV or devices keep pausing.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Gaming lag or work calls dropping">
+                            <strong>Gaming lag or calls dropping</strong>
+                            <span>You need a steadier connection.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Lots of users or business devices">
+                            <strong>Lots of users or devices</strong>
+                            <span>Busy home or business WiFi.</span>
+                        </button>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn step-next" type="button" disabled>Continue</button>
                     </div>
                 </div>
 
-                <div class="web-column">
+                <div class="web-column locked" data-step="1">
                     <span class="web-label">Location</span>
-                    <div id="web-location" class="web-nodes">
-                        <span class="web-node empty">Next step</span>
+                    <div class="web-choice-list" data-question="location">
+                        <button class="option-card" type="button" data-value="A few rooms in the house">
+                            <strong>A few rooms</strong>
+                            <span>Bedrooms, extensions or rooms away from the router.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="A garden room or outbuilding">
+                            <strong>Garden room or outbuilding</strong>
+                            <span>Office, shed, annex or separate building.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Whole home coverage">
+                            <strong>Whole home coverage</strong>
+                            <span>Stronger WiFi across the property.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Business premises">
+                            <strong>Business premises</strong>
+                            <span>Office, shop, workspace or customer area.</span>
+                        </button>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn step-next" type="button" disabled>Continue</button>
                     </div>
                 </div>
 
-                <div class="web-column">
+                <div class="web-column locked" data-step="2">
                     <span class="web-label">Cable preference</span>
-                    <div id="web-cables" class="web-nodes">
-                        <span class="web-node empty">Final choice</span>
+                    <div class="web-choice-list" data-question="cables">
+                        <button class="option-card" type="button" data-value="Prefer no new cables">
+                            <strong>Prefer no new cables</strong>
+                            <span>Low-disruption option if suitable.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Yes, if it is neat">
+                            <strong>Yes, if it is neat</strong>
+                            <span>Tidy cabling is acceptable.</span>
+                        </button>
+                        <button class="option-card" type="button" data-value="Yes, I want the best result">
+                            <strong>Yes, best result</strong>
+                            <span>Most reliable long-term option.</span>
+                        </button>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn step-next" type="button" disabled>Complete Web</button>
                     </div>
                 </div>
 
-                <div class="web-column">
+                <div class="web-column locked" data-step="3">
                     <span class="web-label">End</span>
                     <div id="web-result" class="web-nodes">
                         <span class="web-node empty">Contact appears when complete</span>
@@ -881,22 +831,7 @@ function updateRecommendation() {
     document.getElementById("recommendation-panel").classList.remove("hidden");
 }
 
-function renderWebNodes(elementId, values, emptyText) {
-    const element = document.getElementById(elementId);
-
-    if (!values.length) {
-        element.innerHTML = '<span class="web-node empty">' + emptyText + '</span>';
-        return;
-    }
-
-    element.innerHTML = values.map(value => '<span class="web-node">' + value + '</span>').join("");
-}
-
 function updateWeb(resultService = "") {
-    renderWebNodes("web-problem", selections.problem, "Choose one or more");
-    renderWebNodes("web-location", selections.location, "Next step");
-    renderWebNodes("web-cables", selections.cables, "Final choice");
-
     const result = document.getElementById("web-result");
     result.innerHTML = resultService
         ? '<span class="web-node result">' + resultService + '</span>'
@@ -908,14 +843,22 @@ function updateWeb(resultService = "") {
 function showStep(step) {
     currentStep = step;
 
-    document.querySelectorAll(".question-group").forEach(group => {
-        group.classList.toggle("active", Number(group.dataset.step) === currentStep);
+    document.querySelectorAll(".web-column[data-step]").forEach(column => {
+        const columnStep = Number(column.dataset.step);
+        column.classList.toggle("active", columnStep === currentStep);
+        column.classList.toggle("locked", columnStep > currentStep);
+        column.classList.toggle("complete", columnStep < currentStep);
     });
 
-    document.getElementById("picker-progress").textContent = "Step " + (currentStep + 1) + " of 3";
+    if (currentStep < 3) {
+        document.getElementById("picker-progress").textContent = "Choose one or more boxes, then continue. The page will build from left to right.";
+        return;
+    }
+
+    document.getElementById("picker-progress").textContent = "Your web is complete. The contact section is ready below.";
 }
 
-document.querySelectorAll(".option-grid").forEach(group => {
+document.querySelectorAll(".web-choice-list").forEach(group => {
     group.addEventListener("click", event => {
         const card = event.target.closest(".option-card");
 
@@ -934,7 +877,7 @@ document.querySelectorAll(".option-grid").forEach(group => {
 
         card.classList.toggle("selected", selections[question].includes(value));
 
-        const stepGroup = group.closest(".question-group");
+        const stepGroup = group.closest(".web-column");
         const nextButton = stepGroup.querySelector(".step-next");
         nextButton.disabled = selections[question].length === 0;
 
@@ -950,6 +893,7 @@ document.querySelectorAll(".step-next").forEach(button => {
             return;
         }
 
+        showStep(3);
         updateRecommendation();
     });
 });
@@ -961,6 +905,7 @@ document.getElementById("start-over").addEventListener("click", () => {
 
     document.querySelectorAll(".option-card").forEach(option => {
         option.classList.remove("selected");
+        option.style.display = "";
     });
 
     document.querySelectorAll(".step-next").forEach(button => {
