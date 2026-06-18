@@ -213,6 +213,28 @@
             min-width: 170px;
         }
 
+        .form-status {
+            display: none;
+            border-radius: 8px;
+            padding: 12px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .form-status.success {
+            display: block;
+            background: rgba(16, 185, 129, 0.14);
+            border: 1px solid #10b981;
+            color: #bbf7d0;
+        }
+
+        .form-status.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.14);
+            border: 1px solid #ef4444;
+            color: #fecaca;
+        }
+
         .review-empty {
             border: 1px dashed #475569;
             background: #0f172a;
@@ -445,7 +467,9 @@
                 A short, honest review is perfect.
             </p>
 
-            <form action="https://formspree.io/f/xojblzeo" method="POST">
+            <form id="review-form" action="https://formspree.io/f/xojblzeo" method="POST">
+                <input type="hidden" name="_subject" value="New NFJ Services LTD Website Review">
+
                 <div class="input-row">
                     <input type="text" name="name" placeholder="Your Name" required>
                     <input type="text" name="location" placeholder="Town / Area">
@@ -476,25 +500,22 @@
 
                 <textarea name="review" placeholder="Write your review here..." required></textarea>
 
-                <div class="button-row">
-                    <button type="submit" class="btn primary">Send Review</button>
+                <div id="review-status" class="form-status" role="status" aria-live="polite"></div>
 
-                    <a class="btn secondary"
-                       href="mailto:info@nfjservicesltd.co.uk?subject=NFJ Services Review&body=Hi NFJ Services,%0D%0A%0D%0AI would like to leave a review...">
-                        Email Review
-                    </a>
+                <div class="button-row">
+                    <button type="submit" class="btn primary">Save Review</button>
                 </div>
             </form>
         </section>
 
         <aside class="panel">
-            <h2>Reviews Coming Soon</h2>
+            <h2>Customer Reviews</h2>
 
-            <div class="review-empty">
+            <div id="review-empty" class="review-empty">
                 <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <strong>Real customer reviews will appear here soon.</strong>
+                <strong>Reviews are checked before being added.</strong>
                 <p>
-                    We are collecting feedback for completed work and will add genuine customer reviews once received.
+                    Customer reviews are sent privately to NFJ Services LTD first, then genuine feedback can be added to the website manually.
                 </p>
             </div>
 
@@ -551,6 +572,47 @@
 </footer>
 
 <script>
+    const reviewForm = document.getElementById("review-form");
+    const reviewStatus = document.getElementById("review-status");
+
+    function setReviewStatus(type, message) {
+        reviewStatus.className = `form-status ${type}`;
+        reviewStatus.textContent = message;
+    }
+
+    reviewForm.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const submitButton = reviewForm.querySelector("button[type='submit']");
+        const formData = new FormData(reviewForm);
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+        setReviewStatus("success", "Sending your review to NFJ Services LTD...");
+
+        try {
+            const response = await fetch(reviewForm.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Review could not be sent");
+            }
+
+            reviewForm.reset();
+            setReviewStatus("success", "Thank you. Your review has been sent to NFJ Services LTD and will be checked before being added to the website.");
+        } catch (error) {
+            setReviewStatus("error", "Sorry, the review could not be sent just now. Please try again in a moment.");
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Save Review";
+        }
+    });
+
     const pages = [
         "index.html",
         "services.html",
@@ -606,3 +668,4 @@
 </script>
 </body>
 </html>
+
