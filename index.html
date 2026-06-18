@@ -6,7 +6,7 @@
     <meta name="description" content="NFJ Services LTD provides network cabling, WiFi, CCTV, TV mounting, smart tech, electrical work and maintenance across Cheshire, Lancashire and Merseyside.">
     <meta name="keywords" content="NFJ Services LTD, electrician Cheshire, electrician Lancashire, electrician Merseyside, CCTV installation Cheshire, CCTV installation Lancashire, CCTV installation Merseyside, network cabling Cheshire, network cabling Lancashire, network cabling Merseyside, TV mounting Cheshire, TV mounting Lancashire, TV mounting Merseyside, smart tech installation, property maintenance">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://nfjservicesltd.co.uk/">
+    <link rel="canonical" href="https://www.nfjservicesltd.co.uk/">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon">
 
@@ -15,7 +15,7 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "NFJ Services LTD",
-      "url": "https://nfjservicesltd.co.uk/",
+      "url": "https://www.nfjservicesltd.co.uk/",
       "description": "Electrical work, CCTV installation, network cabling, TV mounting, smart tech setup and property maintenance across Cheshire, Lancashire and Merseyside.",
       "areaServed": ["Cheshire", "Lancashire", "Merseyside"],
       "email": "info@nfjservicesltd.co.uk",
@@ -290,7 +290,6 @@
         .quick-access-panel {
             position: absolute;
             top: 42px;
-            right: 18px;
             width: 245px;
             border: 1px solid rgba(147, 197, 253, 0.55);
             border-radius: 12px;
@@ -299,6 +298,14 @@
             padding: 12px;
             text-align: left;
             box-sizing: border-box;
+        }
+
+        .quick-access-panel.left {
+            left: 18px;
+        }
+
+        .quick-access-panel.right {
+            right: 18px;
         }
 
         .quick-access-panel h3 {
@@ -787,7 +794,7 @@
 
 <section class="hero">
 
-    <aside class="quick-access-panel" aria-label="Quick access services">
+    <aside class="quick-access-panel left" aria-label="Quick access services">
         <h3>Quick Help</h3>
         <div class="quick-access-list">
             <a class="quick-access-link" href="wifi-help.html">
@@ -800,10 +807,31 @@
 
             <a class="quick-access-link" href="outbuilding-help.html">
                 <span>
-                    <strong>Connect My garden room?</strong>
+                    <strong>Connect My Outbuilding</strong>
                     <span>Power, WiFi, sockets and TV.</span>
                 </span>
                 <span class="quick-access-arrow" aria-hidden="true">›</span>
+            </a>
+        </div>
+    </aside>
+
+    <aside class="quick-access-panel right" aria-label="Streaming and gaming help">
+        <h3>Connection Help</h3>
+        <div class="quick-access-list">
+            <a class="quick-access-link" href="wifi-help.html">
+                <span>
+                    <strong>Streaming Problems?</strong>
+                    <span>Fix buffering, freezing and stuttering.</span>
+                </span>
+                <span class="quick-access-arrow" aria-hidden="true">â€º</span>
+            </a>
+
+            <a class="quick-access-link" href="wifi-help.html">
+                <span>
+                    <strong>Gaming Lag?</strong>
+                    <span>Stable setups for consoles, PCs and advanced gaming.</span>
+                </span>
+                <span class="quick-access-arrow" aria-hidden="true">â€º</span>
             </a>
         </div>
     </aside>
