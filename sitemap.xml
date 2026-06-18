@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-<url>
-  <loc>https://nfjservicesltd.co.uk/</loc>
-  <lastmod>2026-06-07</lastmod>
-  <priority>1.00</priority>
-</url>
-
-<url>
-  <loc>https://nfjservicesltd.co.uk/services.html</loc>
-  <lastmod>2026-06-07</lastmod>
-  <priority>0.90</priority>
-</url>
-
-<url>
-  <loc>https://nfjservicesltd.co.uk/contact.html</loc>
-  <lastmod>2026-06-07</lastmod>
-  <priority>0.90</priority>
-</url>
-
-<url>
-  <loc>https://nfjservicesltd.co.uk/faq.html</loc>
-  <lastmod>2026-06-07</lastmod>
-  <priority>0.80</priority>
-</url>
-
-<url>
-  <loc>https://nfjservicesltd.co.uk/Reviews.html</loc>
-  <lastmod>2026-06-07</lastmod>
-  <priority>0.60</priority>
-</url>
-
-<url>
-  <loc>https://nfjservicesltd.co.uk/terms.html</loc>
-  <lastmod>2026-06-07</lastmod>
-  <priority>0.30</priority>
-</url>
-
+  <url>
+    <loc>https://www.nfjservicesltd.co.uk/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://www.nfjservicesltd.co.uk/services.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.nfjservicesltd.co.uk/wifi-help.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.nfjservicesltd.co.uk/outbuilding-help.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.nfjservicesltd.co.uk/contact.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.nfjservicesltd.co.uk/faq.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.nfjservicesltd.co.uk/Reviews.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://www.nfjservicesltd.co.uk/terms.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <priority>0.30</priority>
+  </url>
 </urlset>
