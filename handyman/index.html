@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFJ Handyman | Home Repairs & Small Jobs</title>
+    <meta name="description" content="Reliable handyman help for home repairs, flat-pack assembly, shelving, mounting, maintenance and small jobs across Cheshire, Lancashire and Merseyside.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.nfjservicesltd.co.uk/handyman/">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="NFJ Handyman">
+    <meta property="og:title" content="NFJ Handyman | Reliable Help With Small Jobs">
+    <meta property="og:description" content="Practical home repairs, installation and maintenance. No job is too small.">
+    <meta property="og:url" content="https://www.nfjservicesltd.co.uk/handyman/">
+    <meta property="og:image" content="https://www.nfjservicesltd.co.uk/logo.png">
+    <style>
+        :root {
+            --blue: #0347a6;
+            --blue-dark: #072f6b;
+            --orange: #f59e0b;
+            --ink: #172033;
+            --muted: #5d6778;
+            --paper: #f6f8fb;
+            --white: #ffffff;
+            --line: #dce3ec;
+            --shadow: 0 18px 50px rgba(7, 47, 107, .12);
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+
+        a { color: inherit; }
+
+        .wrap {
+            width: min(1120px, calc(100% - 36px));
+            margin: 0 auto;
+        }
+
+        .topbar {
+            background: var(--blue-dark);
+            color: var(--white);
+            font-size: .92rem;
+        }
+
+        .topbar .wrap {
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .topbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        header {
+            background: rgba(255, 255, 255, .96);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav {
+            min-height: 84px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-decoration: none;
+        }
+
+        .brand img {
+            width: 66px;
+            height: 66px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .brand-copy strong {
+            display: block;
+            color: var(--blue-dark);
+            font-size: 1.35rem;
+            letter-spacing: .02em;
+        }
+
+        .brand-copy span {
+            color: var(--muted);
+            font-size: .86rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 22px;
+            border-radius: 10px;
+            border: 0;
+            background: var(--orange);
+            color: #211600;
+            text-decoration: none;
+            font-weight: 800;
+            box-shadow: 0 10px 22px rgba(245, 158, 11, .22);
+            cursor: pointer;
+        }
+
+        .button.secondary {
+            background: var(--blue);
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(3, 71, 166, .2);
+        }
+
+        .hero {
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 88% 18%, rgba(245, 158, 11, .24), transparent 26%),
+                linear-gradient(135deg, #062b61 0%, #0347a6 100%);
+            color: #fff;
+        }
+
+        .hero-grid {
+            min-height: 610px;
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            align-items: center;
+            gap: 60px;
+            padding: 76px 0;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 18px;
+            padding: 7px 12px;
+            border: 1px solid rgba(255, 255, 255, .28);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .09);
+            color: #ffe3a6;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            font-size: .78rem;
+        }
+
+        h1 {
+            max-width: 720px;
+            margin: 0 0 22px;
+            font-size: clamp(2.65rem, 6vw, 5.3rem);
+            line-height: .98;
+            letter-spacing: -.045em;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: 0 0 30px;
+            color: #e8eef8;
+            font-size: 1.16rem;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .promise-card {
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, .1);
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow);
+        }
+
+        .promise-card h2 {
+            margin: 0 0 18px;
+            font-size: 1.55rem;
+        }
+
+        .promise-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 14px;
+        }
+
+        .promise-list li {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+        }
+
+        .promise-list li::before {
+            content: "✓";
+            flex: 0 0 25px;
+            width: 25px;
+            height: 25px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--orange);
+            color: #251800;
+            font-weight: 900;
+        }
+
+        section { padding: 82px 0; }
+
+        .section-heading {
+            max-width: 720px;
+            margin-bottom: 36px;
+        }
+
+        .section-heading span {
+            color: var(--blue);
+            font-size: .82rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+        }
+
+        .section-heading h2 {
+            margin: 8px 0 12px;
+            color: var(--blue-dark);
+            font-size: clamp(2rem, 4vw, 3.1rem);
+            line-height: 1.08;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            padding: 28px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #fff;
+            box-shadow: 0 10px 32px rgba(7, 47, 107, .06);
+        }
+
+        .service-card .icon {
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            background: #e8f0fb;
+            color: var(--blue);
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+
+        .service-card h3 {
+            margin: 0 0 8px;
+            color: var(--blue-dark);
+            font-size: 1.22rem;
+        }
+
+        .service-card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .band { background: #fff; }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            counter-reset: steps;
+        }
+
+        .step {
+            counter-increment: steps;
+            padding: 26px 0;
+            border-top: 4px solid var(--orange);
+        }
+
+        .step::before {
+            content: "0" counter(steps);
+            color: var(--blue);
+            font-size: .9rem;
+            font-weight: 900;
+            letter-spacing: .1em;
+        }
+
+        .step h3 {
+            margin: 10px 0 8px;
+            color: var(--blue-dark);
+        }
+
+        .step p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .cta {
+            padding-top: 0;
+        }
+
+        .cta-box {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 30px;
+            padding: 42px;
+            border-radius: 22px;
+            background: var(--blue-dark);
+            color: #fff;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-box h2 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 4vw, 2.7rem);
+        }
+
+        .cta-box p {
+            margin: 0;
+            color: #dbe7f7;
+        }
+
+        footer {
+            padding: 34px 0;
+            background: #061d40;
+            color: #c8d5e8;
+            text-align: center;
+        }
+
+        footer a { color: #fff; }
+
+        @media (max-width: 850px) {
+            .hero-grid { grid-template-columns: 1fr; min-height: auto; gap: 36px; }
+            .services { grid-template-columns: repeat(2, 1fr); }
+            .nav-links a:not(.button) { display: none; }
+            .cta-box { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 560px) {
+            .topbar .wrap { justify-content: center; }
+            .topbar span { display: none; }
+            nav { min-height: 72px; }
+            .brand img { width: 54px; height: 54px; }
+            .brand-copy strong { font-size: 1.08rem; }
+            .brand-copy span { display: none; }
+            .nav-links .button { min-height: 42px; padding: 0 14px; }
+            .hero-grid { padding: 58px 0; }
+            .services, .steps { grid-template-columns: 1fr; }
+            section { padding: 62px 0; }
+            .cta-box { padding: 30px 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="wrap">
+            <span>Serving Cheshire, Lancashire and Merseyside</span>
+            <a href="../index.html">Part of NFJ Services LTD &rarr;</a>
+        </div>
+    </div>
+
+    <header>
+        <nav class="wrap" aria-label="Main navigation">
+            <a class="brand" href="./">
+                <img src="../logo.png" alt="NFJ Services LTD logo">
+                <span class="brand-copy">
+                    <strong>NFJ Handyman</strong>
+                    <span>Repairs, installation &amp; maintenance</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="#services">Services</a>
+                <a href="#how-it-works">How it works</a>
+                <a class="button" href="../contact.html">Get a quote</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="wrap hero-grid">
+                <div>
+                    <span class="eyebrow">No job is too small</span>
+                    <h1>The small jobs, properly sorted.</h1>
+                    <p>
+                        Friendly, reliable handyman help for repairs, mounting, assembly,
+                        maintenance and those jobs that have been waiting too long.
+                    </p>
+                    <div class="actions">
+                        <a class="button" href="../contact.html">Tell us about your job</a>
+                        <button class="button secondary random-phone-button" type="button">Call NFJ Handyman</button>
+                    </div>
+                </div>
+                <aside class="promise-card" aria-label="Our service promise">
+                    <h2>Simple, practical help</h2>
+                    <ul class="promise-list">
+                        <li>Clear advice before work starts</li>
+                        <li>Clean, careful workmanship</li>
+                        <li>Small one-off jobs welcome</li>
+                        <li>Homes and small businesses</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="wrap">
+                <div class="section-heading">
+                    <span>Handyman services</span>
+                    <h2>Help around your home or workplace</h2>
+                    <p>
+                        From putting things up safely to taking care of practical repairs,
+                        we can help with a wide range of everyday jobs.
+                    </p>
+                </div>
+                <div class="services">
+                    <article class="service-card">
+                        <div class="icon" aria-hidden="true">01</div>
+                        <h3>Shelves, pictures &amp; mirrors</h3>
+                        <p>Careful positioning and secure wall mounting for everyday fixtures and finishing touches.</p>
+                    </article>
+                    <article class="service-card">
+                        <div class="icon" aria-hidden="true">02</div>
+                        <h3>Flat-pack assembly</h3>
+                        <p>Furniture assembled correctly and placed where you need it, without the usual frustration.</p>
+                    </article>
+                    <article class="service-card">
+                        <div class="icon" aria-hidden="true">03</div>
+                        <h3>TV mounting</h3>
+                        <p>Neat TV and soundbar mounting, sensible positioning and tidy cable management.</p>
+                    </article>
+                    <article class="service-card">
+                        <div class="icon" aria-hidden="true">04</div>
+                        <h3>Blinds &amp; curtain poles</h3>
+                        <p>Accurate measuring, fitting and adjustment for blinds, rails and curtain poles.</p>
+                    </article>
+                    <article class="service-card">
+                        <div class="icon" aria-hidden="true">05</div>
+                        <h3>Minor repairs</h3>
+                        <p>Loose handles, sticking doors, damaged fittings and other small practical repairs.</p>
+                    </article>
+                    <article class="service-card">
+                        <div class="icon" aria-hidden="true">06</div>
+                        <h3>Property maintenance</h3>
+                        <p>One-off maintenance, tidy-up work and practical support for homes and small businesses.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="band" id="how-it-works">
+            <div class="wrap">
+                <div class="section-heading">
+                    <span>How it works</span>
+                    <h2>Getting a job sorted is easy</h2>
+                </div>
+                <div class="steps">
+                    <article class="step">
+                        <h3>Send the details</h3>
+                        <p>Tell us what needs doing, where you are and include a photo if it helps explain the job.</p>
+                    </article>
+                    <article class="step">
+                        <h3>We confirm the plan</h3>
+                        <p>We will ask any useful questions and agree the next step before arranging the work.</p>
+                    </article>
+                    <article class="step">
+                        <h3>We get it sorted</h3>
+                        <p>Your job is completed carefully, with your home or workplace left clean and tidy.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="wrap">
+                <div class="cta-box">
+                    <div>
+                        <h2>Have a job in mind?</h2>
+                        <p>Send us the details and we will let you know the best next step.</p>
+                    </div>
+                    <div class="actions">
+                        <a class="button" href="../contact.html">Request a quote</a>
+                        <button class="button secondary random-phone-button" type="button">Call us</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            &copy; 2026 NFJ Services LTD &mdash; All rights reserved<br>
+            <a href="../terms.html">Terms &amp; Conditions</a>
+            &nbsp;&middot;&nbsp;
+            <a href="../index.html">Main NFJ website</a>
+        </div>
+    </footer>
+
+    <script>
+        const contactNumbers = ["tel:+447469871468", "tel:+447709099811"];
+        document.querySelectorAll(".random-phone-button").forEach(button => {
+            button.addEventListener("click", () => {
+                window.location.href = contactNumbers[Math.floor(Math.random() * contactNumbers.length)];
+            });
+        });
+    </script>
+</body>
+</html>
